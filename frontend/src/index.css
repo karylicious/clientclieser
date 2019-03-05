@@ -1,0 +1,599 @@
+body {
+  margin: 0;
+  padding: 0;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen",
+    "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue",
+    sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+
+.main{
+  background-image: url( './imgs/coding.jpg'); 
+  height: 100vh; 
+  background-size: cover;
+  margin-left: -20px;
+  margin-right: 0px;
+  border-bottom-left-radius: 45%;
+
+}
+
+.mainresponsive{
+  background-image: url( './imgs/coding.jpg'); 
+  height: 100%; 
+  background-size: cover;
+}
+
+.row{
+  margin-left: 0px;
+  margin-right: 0px;
+}
+.clisermargin{
+  margin-top:20px; 
+}
+
+.myh4{
+  margin-top: 30px;
+}
+
+.myk{
+  width: 10vw;
+  height: 10vw;
+  background-color: #021730;
+  font-family: 'Archivo Black', sans-serif;
+  color:white;
+  margin-top:15%;
+  border-radius: 50%
+
+}
+
+.highlighted{
+  
+  
+  background:#021730;  
+  font-family: 'Archivo Black', sans-serif;
+  color:white;
+  padding: 20px;
+  margin-top:5%;
+  border-radius:20px
+}
+
+.blueborder{
+  border: 1px solid #1eaecb;
+  padding: 15px;
+  
+}
+
+.openingtext{
+  font-size: x-large;
+}
+.mylogo{
+  font-family: monospace;
+  font-size: xx-large;
+  color: white;
+}
+.logo{
+  color: coral;
+}
+
+.bluespan{
+  color:#1eaecb;
+}
+
+.navigation{
+  color: white;
+  background-color: #021730;
+  border-radius:60vw;
+  margin-top: 2%;
+}
+
+.navigation div ul li a{
+  color: white;
+}
+
+
+.mylink{
+  color:white !important; 
+  font-weight: bold;
+}
+
+.mylink:hover{
+  color: #cacbd1ef !important;
+}
+
+
+/* Add a black background color to the top navigation */
+.topnav {
+  color: white;
+  background-color: #021730;
+  border-radius:3vw;
+  margin-top: 2%;
+  overflow: hidden;
+}
+
+/* Style the links inside the navigation bar */
+.topnav a {
+  float: left;
+  display: block;
+  color: #f2f2f2;
+  text-align: center;
+  padding: 14px 16px;
+  text-decoration: none;
+  font-size: 17px;
+}
+
+/* Change the color of links on hover */
+.topnav a:hover:not(.active) {
+  background-color: #022958;
+  color: white;
+  transition: 0.8s;
+}
+
+/* Add an active class to highlight the current page */
+.active {
+  background-color: #4CAF50;
+  color: white;
+}
+
+/* Hide the link that should open and close the topnav on small screens */
+.topnav .icon {
+  display: none;
+}
+
+
+/* When the screen is less than 600 pixels wide, hide all links, except for the first one ("Home"). Show the link that contains should open and close the topnav (.icon) */
+@media screen and (max-width: 1200px) {
+  .topnav a:not(:first-child) {display: none;}
+  .topnav a.icon {
+    float: right;
+    display: block;
+  }
+  .main{
+    background-image: url( './imgs/coding.jpg'); 
+   
+    background-size: cover;
+  }
+  .mainreponsive{
+    background-image: url( './imgs/coding.jpg'); 
+    
+    background-size: cover;
+  }
+}
+
+/* The "responsive" class is added to the topnav with JavaScript when the user clicks on the icon. This class makes the topnav look good on small screens (display the links vertically instead of horizontally) */
+@media screen and (max-width: 1200px) {
+  .topnav.responsive {position: relative;}
+  .topnav.responsive a.icon {
+    position: absolute;
+    right: 0;
+    top: 0;
+  }
+  .topnav.responsive a {
+    float: none;
+    display: block;
+    text-align: left;
+  }
+  .main{
+    background-image: url( './imgs/coding.jpg'); 
+   
+    background-size: cover;
+  }
+  .mainresponsive{
+    background-image: url( './imgs/coding.jpg'); 
+   
+    background-size: cover;
+  }
+}
+
+.modalmenu{
+  background-color: #022958;
+
+}
+
+.menuicon {
+  width: 35px;
+  height: 4px;
+  background-color: white;
+  margin-top: 4px;
+}
+
+
+
+
+
+
+
+
+.overlay {
+  height: 100%;
+  width: 0;
+  position: fixed;
+  z-index: 1;
+  top: 0;
+  left: 0;
+  background-color: rgb(1, 9, 46);
+  background-color: rgba(1,9,46, 0.9);
+  overflow-x: hidden;
+  transition: 0.5s;
+}
+
+.overlay-content {
+  position: relative;
+  top: 25%;
+  width: 100%;
+  text-align: center;
+  margin-top: 30px;
+}
+
+.overlay a {
+  padding: 8px;
+  text-decoration: none;
+  font-size: 36px;
+  color: white;
+  display: block;
+  transition: 0.3s;
+}
+
+.overlay a:hover:not(.active) {
+  color: #f1f1f1;
+  background-color: #022958;
+  transition: 0.8s;
+}
+
+.overlay .closebtn {
+  position: absolute;
+  top: 20px;
+  right: 45px;
+  font-size: 60px;
+}
+
+@media screen and (max-height: 450px) {
+  .overlay a {font-size: 20px}
+  .overlay .closebtn {
+  font-size: 40px;
+  top: 15px;
+  right: 35px;
+  }
+}
+
+
+
+
+
+.mydot {
+  height: 42px;
+  width: 42px;
+  background-color: #ededed;
+  border-radius: 50%;
+  border: 3px solid #bbb;
+  display: inline-block;
+  font-weight:bold;
+  font-size:large;
+  position: relative;  
+  padding-top:2px;
+  color:#bbb;
+}
+
+.activedot{
+  background-color: #e6fbff;
+  border: 3px solid #00d4ff;
+  color:#00d4ff
+}
+
+.myprogress{
+text-align:center;
+margin-top: 60px;
+margin-bottom: 20px;
+
+}
+
+.myline {
+  width: 52px;
+  height: 5px;
+  display:inline-block;
+  border-bottom: 3px solid #bbb;
+  margin-left:-10px;
+  margin-right:-4px;
+
+}
+
+.activeline{
+  border-bottom: 3px solid #00d4ff;
+}
+
+.effectShadow {
+   
+  -webkit-box-shadow:0 0px 4px rgba(0, 0, 0, 0.3), 0 0 40px rgba(0, 0, 0, 0.0) inset;
+  -moz-box-shadow:0 0px 4px rgba(0, 0, 0, 0.3), 0 0 40px rgba(0, 0, 0, 0.0) inset;
+  box-shadow:0 0px 4px rgba(0, 0, 0, 0.3), 0 0 40px rgba(0, 0, 0, 0.0) inset;
+  
+}
+
+.mycomponents{
+  height: 45vh;
+  font-size: x-large;
+  padding: 4%;
+  margin:2%;
+  border-radius:10vh;
+  background-color: white;
+ 
+  -webkit-box-shadow:0 0px 4px rgba(0, 0, 0, 0.3), 0 0 40px rgba(0, 0, 0, 0.0) inset;
+  -moz-box-shadow:0 0px 4px rgba(0, 0, 0, 0.3), 0 0 40px rgba(0, 0, 0, 0.0) inset;
+  box-shadow:0 0px 4px rgba(0, 0, 0, 0.3), 0 0 40px rgba(0, 0, 0, 0.0) inset;
+  
+}
+.mycomponents:hover{
+background-color: #FFFCFC;
+cursor:pointer;
+-webkit-box-shadow:0 0px 4px rgba(255, 0, 0, 0.3), 0 0 40px rgba(0, 0, 0, 0.0) inset;
+-moz-box-shadow:0 0px 4px rgba(255, 0, 0, 0.3), 0 0 40px rgba(0, 0, 0, 0.0) inset;
+box-shadow:0 0px 4px rgba(255, 0, 0, 0.3), 0 0 40px rgba(0, 0, 0, 0.0) inset;
+}
+.mycomponentselected{
+  height: 45vh;
+  font-size: x-large;
+  padding: 4%;
+  margin:2%;
+  border-radius:10vh;
+  background-color: #ffe6e6;
+-webkit-box-shadow:0 0px 4px rgba(255, 0, 0, 0.3), 0 0 40px rgba(0, 0, 0, 0.0) inset;
+-moz-box-shadow:0 0px 4px rgba(255, 0, 0, 0.3), 0 0 40px rgba(0, 0, 0, 0.0) inset;
+box-shadow:0 0px 4px rgba(255, 0, 0, 0.3), 0 0 40px rgba(0, 0, 0, 0.0) inset;
+}
+
+
+.myhr{
+  margin-top: 0%;
+}
+
+
+
+
+.mybtn {
+  background-color: white;
+  border: 1px solid #1eaecb;
+  color: #1eaecb;
+  padding: 16px 32px;
+  text-align: center;
+  font-size: 16px;
+  margin: 4px 2px;
+  transition: 0.8s;
+  width: 150px;
+
+
+}
+
+.mybtn:hover {
+  background-color: #022958;
+  border-color: #022958;
+  color: white;
+  cursor:pointer;
+}
+
+.textright{
+  text-align: right;
+}
+
+.myh2{
+  text-align: center;
+  margin: 30px
+
+}
+
+.myinputtext{
+  margin-bottom: 30px;
+}
+
+.systemwarning{
+  color: gray;
+  font-size: smaller;
+}
+
+
+fieldset.scheduler-border {
+  border: 1px groove #ddd !important;
+  padding: 0 1.4em 1.4em 1.4em !important;
+  margin: 0 0 1.5em 0 !important;
+  -webkit-box-shadow:  0px 0px 0px 0px #000;
+          box-shadow:  0px 0px 0px 0px #000;
+}
+
+legend.scheduler-border {
+      font-size: 1.2em !important;
+      font-weight: 300 !important;
+      text-align: left !important;
+      width:auto;
+      padding:0 10px;
+      border-bottom:none;
+  }
+
+  .psummary{
+    font-weight: 500;
+    margin-bottom: 0;
+  }
+
+  .testprogress{
+    border-radius: 10px;
+    background-color: #F7F7F9;
+    height: 40vh;
+    margin: 15px;
+    font-family: 'Calibri', sans-serif;
+    border: 1px solid #e2e2e9;
+  }
+
+
+
+.fullheight{
+  height: 100vh;
+}
+
+.bottomspace{
+  margin-bottom: 20px;
+  padding-bottom: 20px;
+}
+
+
+  .scrollbar
+{
+    float: left;
+    height: 42vh;
+    width: 65px;
+    overflow-y: scroll;
+}
+
+.force-overflow
+{
+    min-height: 41vh;
+}
+
+
+#style-2::-webkit-scrollbar-track
+{
+    -webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.3);
+    border-radius: 10px;
+    background-color: #F7F7F9;
+}
+
+#style-2::-webkit-scrollbar
+{
+    width: 11px;
+    background-color: #F7F7F9;
+}
+
+#style-2::-webkit-scrollbar-thumb
+{
+    border-radius: 10px;
+    -webkit-box-shadow: inset 0 0 6px rgba(0,0,0,.3);
+    background-color: #e2e2e9;
+}
+
+.notuploaded{
+  color: red;
+}
+
+.imageright{
+  float: right;
+}
+
+.resultline{
+  margin-top: -5px;
+  margin-left: 14px;
+  margin-right: 20px;
+}
+
+.presults{
+  margin: 20px 0 10px 0;
+}
+
+.psuccess{
+  color: green;
+  text-align: center;
+}
+
+.buttoncentered{
+  text-align:center;
+}
+
+.pfailed{
+  color: indianred;
+  text-align: center;
+}
+
+.vDetails{
+  color: #1eaecb;
+  font-weight: 500;
+  font-size: 14px;
+  background-color: whitesmoke;
+  border-left: 4px solid;
+  padding: 2px 5px 2px 5px;
+}
+
+.vDetails:hover{
+  cursor: pointer;
+  background-color: #D9D9D9;
+}
+
+
+.details-content{
+  display: none;
+  margin-left: 14px;
+}
+
+.details-content-visible{
+  display: block;
+}
+
+/* The Modal (background) */
+.modal {
+  display: none; /* Hidden by default */
+  position: fixed; /* Stay in place */
+  z-index: 1; /* Sit on top */
+  left: 0;
+  top: 0;
+  width: 100%; /* Full width */
+  height: 100%; /* Full height */
+  overflow: auto; /* Enable scroll if needed */
+  background-color: rgb(0,0,0); /* Fallback color */
+  background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
+}
+
+/* Modal Content/Box */
+.modal-content {
+  background-color: #fefefe;
+  margin: 15% auto; /* 15% from the top and centered */
+  padding: 20px;
+  border: 1px solid #888;
+  width: 80%; /* Could be more or less, depending on screen size */
+}
+
+/* The Close Button */
+.close {
+  color: #aaa;
+  float: right;
+  font-size: 28px;
+  font-weight: bold;
+}
+
+.close:hover,
+.close:focus {
+  color: black;
+  text-decoration: none;
+  cursor: pointer;
+}
+
+/* Modal Header */
+.modal-header {
+  padding: 2px 16px;
+  background-color: #5cb85c;
+  color: white;
+}
+
+/* Modal Body */
+.modal-body {padding: 2px 16px;}
+
+/* Modal Footer */
+.modal-footer {
+  padding: 2px 16px;
+  background-color: #5cb85c;
+  color: white;
+}
+
+/* Modal Content */
+.modal-content {
+  position: relative;
+  background-color: #fefefe;
+  margin: auto;
+  padding: 0;
+  border: 1px solid #888;
+  width: 80%;
+  box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2),0 6px 20px 0 rgba(0,0,0,0.19);
+  animation-name: animatetop;
+  animation-duration: 0.4s
+}
+
+/* Add Animation */
+@keyframes animatetop {
+  from {top: -300px; opacity: 0}
+  to {top: 0; opacity: 1}
+}
