@@ -6,10 +6,10 @@ class ClientServer extends Component {
     render() {
         return (
             <div className="container">
-                <div className="row">
+                <div className="row bottomspace">
                     <Client></Client>
                 </div>
-                <div className="row clisermargin">
+                <div className="row">
                     <Server></Server>
                 </div>
             </div>

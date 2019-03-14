@@ -6,6 +6,8 @@ import Summary from './summary'
 import Test from './test'
 import Progress from './progress'
 import FileUpload from './fileupload'
+import Footer from './footer'
+import Information from './testinformation'
 
 class Validator extends Component {
     state = {
@@ -17,6 +19,17 @@ class Validator extends Component {
         dir: ''
     }
 
+    componentDidMount() {
+        var mainContainer = document.getElementById('main')
+        mainContainer.style.display = "block"
+        mainContainer.classList.remove("main")
+
+        var row = document.getElementById('openingTestRow')
+        row.style.display = "none"
+
+        var topLogo = document.getElementById('toplogo')
+        topLogo.style.display = "block"
+    }
     renderSelectedComponent() {
         switch (this.state.step) {
             case 1:
@@ -47,6 +60,12 @@ class Validator extends Component {
         }
     }
 
+    renderTestInfo() {
+        if (this.state.step === 2) {
+            return <Information selectedComponent={this.state.selectedComponent} />
+        }
+    }
+
     renderProgressLine() {
         if (this.state.step < 4) {
             return <Progress step={this.state.step}></Progress>
@@ -55,14 +74,19 @@ class Validator extends Component {
 
     render() {
         return (
-            <div className="container fullheight">
-                <h2 className="myh2">Test your Client Server System</h2>
-                <div className="row effectShadow bottomspace">
-                    {this.renderProgressLine()}
-                    {this.renderSelectedComponent()}
-                    {this.renderFileUpload()}
-                    {this.renderNavigation()}
+            <div>
+                <div className="fullheight">
+                    <h2 className="myh2">Test your Client Server System</h2>
+                    <div className="row bottomspace">
+                        {this.renderProgressLine()}
+                        {this.renderTestInfo()}
+                        {this.renderSelectedComponent()}
+                        {this.renderFileUpload()}
+                        {this.renderNavigation()}
+                    </div>
+                    <div className="otherFooter"><Footer /></div>
                 </div>
+
             </div>
         );
     }

@@ -7,7 +7,7 @@ class OpeningText extends Component {
         return (
             <div className="highlighted">
                 <div className="blueborder">
-                    <Logo></Logo>
+                    <p className="mylogo"><span className="logo">&#10070;</span>ClieSer</p>
                     <p className="openingtext">Learn how to create your own <span className="bluespan">Client Server</span> system and then validate it!</p>
                 </div>
             </div>

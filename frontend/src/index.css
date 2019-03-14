@@ -29,12 +29,17 @@ body {
   margin-left: 0px;
   margin-right: 0px;
 }
-.clisermargin{
-  margin-top:20px; 
-}
 
 .myh4{
   margin-top: 30px;
+}
+
+.featuresHeadings{
+  color:#003E57;
+}
+
+.featuresSubHeadings{
+  color: #006E89;
 }
 
 .myk{
@@ -47,20 +52,188 @@ body {
   border-radius: 50%
 
 }
+.p70{
+  padding-top: 70px;
+}
+.featuresRow{
+  background-color: #09d3f6;
+  color:white;
+  margin-top: -28px;
+  transform: skewY(2deg);
+  padding-bottom: 50px;
+  padding-top: 30px;
+}
+
+.featuresRow .row{
+  transform: skewY(-2deg);
+  padding-bottom: 50px;
+}
+
+#getStarted{
+  transform: skewY(-2deg);
+}
+.communicationImg{
+  margin-left: 100px;
+  margin-top: 8px;
+
+}
+
+
+.darkSubHeading{
+  color: white;
+  background-color:#001540;
+  padding: 15px;
+  transform: skewX(-20deg);
+  margin-left: -11px;
+}
+
+.darkRowStep{
+  background:#022958;
+  color:white;
+}
+
+.darkStep{
+  background-color: #5B6EA5;
+  color: white;
+  font-weight: 600;
+  padding: 10px;
+  transform: skewX(-20deg);
+  box-shadow: 5px 8px;
+}
+
+
+
+.darkRow{
+  background:#021730;
+  color:white;
+  border-top-left-radius: 80%;
+  padding: 50px;
+}
+
+.darRowCol{
+  margin-top: 100px;
+  padding-left: 100px;
+  font-size: x-large;
+}
+.redRow{
+  background-color: #e18d87;
+  padding-bottom: 50px;
+  color:white;
+}
+.italicFont{
+  font-style: italic;
+}
+.pCode{
+  margin-left: 50px;
+  margin-top: 30px;
+}
+.StepCentered{
+  justify-content: center;
+}
+.redStep{
+  color: white;
+  font-weight: 600;
+  background-color: #9B4746;
+  padding: 10px;
+  transform: skewX(-20deg);
+  box-shadow: 5px 8px;
+}
+
+.numberStep{
+  color: white;
+  font-weight: 600;
+  padding: 10px;
+  transform: skewX(-20deg);
+  box-shadow: 5px 8px;
+  background-color: #021730;
+}
+
+.numberStep strong{
+  font-size: x-large;
+}
+
+.redStep p, .darkStep p{
+  transform: skewX(20deg);
+  margin-bottom: 0;
+  padding-left: 10px;
+  padding-top: 5px;
+}
+
+.redSubHeading{
+  color: white;
+  background-color: #D57A76;
+  padding: 15px;
+  transform: skewX(-20deg);
+  margin-left: -11px;
+}
+
+.redSubHeading h5, .darkSubHeading h5{
+  transform: skewX(20deg);
+}
+
+.topspace{
+  margin-top: 100px;
+}
+
+.alignRight{
+  justify-content: flex-end;
+}
+
+.dpadding{
+  padding: 20px;
+  margin-top: 20px;
+}
+
+.blurredElement{
+  border-radius: 20px;
+  box-shadow: 0px 0px 18px 4px rgba(9, 211, 246, 0.2), 0 0px 30px 0 rgba(9, 211, 246, 0.19);
+}
+.blurredElement p:first-of-type{
+  font-weight: 500;
+}
+
+.bluep{
+  background-color: #09d3f6;
+  border-bottom-left-radius: 17px;
+  border-bottom-right-radius: 17px;
+  padding: 10px;
+  font-weight: 700;
+  text-align: right;
+    cursor: pointer;
+}
+
+.bluep:hover{
+  background-color: #53DEF6;
+}
+
+.homeFooter{
+  margin-top: -25px;
+}
+
+.otherFooter{
+}
+
+.myFooter{
+  background-color: #021730;   
+    text-align: center;
+    position: relative;    
+    color: #5F9E95;
+    padding-top: 20px;
+    padding-bottom: 1px;
+}
 
 .highlighted{
   
-  
-  background:#021730;  
+  /*background:#021730;-*/
   font-family: 'Archivo Black', sans-serif;
   color:white;
   padding: 20px;
   margin-top:5%;
-  border-radius:20px
+  /*border-radius:20px*/
 }
 
 .blueborder{
-  border: 1px solid #1eaecb;
+  /*border: 1px solid #1eaecb;*/
   padding: 15px;
   
 }
@@ -71,14 +244,38 @@ body {
 .mylogo{
   font-family: monospace;
   font-size: xx-large;
-  color: white;
+}
+
+#toplogo{
+  text-align: center;
+  padding-top: 20px;
+}
+.alignLeft{
+  text-align: left;
+}
+.alignCenter{
+text-align: center;
+}
+
+.elementCentered{
+  margin: auto;
+  width: 50%;
 }
 .logo{
   color: coral;
 }
 
+.featuresImages{
+  border-radius: 50%;
+  border: 11px solid #00BEDA;
+
+}
+.featuresSubHeadings + p{
+  font-size: 23px;
+}
+
 .bluespan{
-  color:#1eaecb;
+  color:#2CDAF7;
 }
 
 .navigation{
@@ -348,6 +545,23 @@ box-shadow:0 0px 4px rgba(255, 0, 0, 0.3), 0 0 40px rgba(0, 0, 0, 0.0) inset;
 }
 
 
+.btngetstarted{
+  background-color: #022958;
+  border: 1px solid #022958;
+  color: white;
+  cursor:pointer;
+  padding: 16px 32px;
+  text-align: center;
+  font-size: 16px;
+  margin: 4px 2px;
+  transition: 0.8s;
+  width: 150px;
+}
+.btngetstarted:hover {
+  background-color: white;  
+  color: #1eaecb;
+  border-color:  #1eaecb;
+}
 
 
 .mybtn {
@@ -425,12 +639,17 @@ legend.scheduler-border {
 
 
 .fullheight{
-  height: 100vh;
+ /* height: 100vh;*/
+  margin-top: 100px;
 }
 
 .bottomspace{
   margin-bottom: 20px;
   padding-bottom: 20px;
+}
+
+ul{
+  margin-bottom: 0;
 }
 
 
@@ -489,6 +708,9 @@ legend.scheduler-border {
 .psuccess{
   color: green;
   text-align: center;
+}
+.textCentered{
+  text-align:center;
 }
 
 .buttoncentered{

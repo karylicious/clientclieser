@@ -8,7 +8,7 @@ class Navbar extends Component {
             <div>
                 <div className="topnav" id="myTopnav">
                     <NavLink exact to="/">Home</NavLink>
-                    <NavLink to="/tutorial">Tutorial</NavLink>
+                    <NavLink to="/tutorials">Tutorials</NavLink>
                     <NavLink to="/client-server-system">Client Server System</NavLink>
                     <NavLink to="/validator">Validator</NavLink>
                     <NavLink to="/about">About</NavLink>
@@ -24,7 +24,7 @@ class Navbar extends Component {
                 <div id="myNav" className="overlay">
                     <div className="overlay-content">
                         <NavLink exact to="/"><span onClick={this.closeNav}>Home</span></NavLink>
-                        <NavLink to="/tutorial"><span onClick={this.closeNav}>Tutorial</span></NavLink>
+                        <NavLink to="/tutorials"><span onClick={this.closeNav}>Tutorials</span></NavLink>
                         <NavLink to="/client-server-system"><span onClick={this.closeNav}>Client Server System</span></NavLink>
                         <NavLink to="/validator"><span onClick={this.closeNav}>Validator</span></NavLink>
                         <NavLink to="/about"><span onClick={this.closeNav}>About</span></NavLink>
