@@ -104,7 +104,7 @@ class FileUpload extends Component {
             <div className="container">
                 <div className="row">
                     <div className="col-sm-7">
-                        <p>Upload your {this.props.chosencomponent} project as .zip file</p>
+                        <p id="fileUploadHeadings">{this.props.fileUploadHeadings}</p>
                         <div className="input-group">
                             <div className="custom-file">
                                 <input type="file" className="custom-file-input" id="inputGroupFile" onChange={this.selectFile} />

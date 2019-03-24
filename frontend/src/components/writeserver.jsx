@@ -1,20 +1,8 @@
 import React, { Component } from 'react'
 import Footer from './footer'
+import TopContainer from './topcontainer'
 
 class WriteServer extends Component {
-
-    componentDidMount() {
-        var mainContainer = document.getElementById('main')
-        mainContainer.style.display = "block"
-        mainContainer.classList.remove("main")
-
-        var row = document.getElementById('openingTestRow')
-        row.style.display = "none"
-
-        var topLogo = document.getElementById('toplogo')
-        topLogo.style.display = "block"
-    }
-
     renderBlurredElement(text, classes) {
         return (
             <div className={classes}>
@@ -53,6 +41,7 @@ class WriteServer extends Component {
     render() {
         return (
             <div>
+                <div><TopContainer standardOpening={false} /></div>
                 <div className="fullheight">
                     <h2 className="myh2">Write a Server</h2>
                     <div className="topspace">
@@ -209,8 +198,8 @@ class WriteServer extends Component {
                         {this.renderBlurredElement("The Web service endpoint is used to publish a web service under a specific URL, so that clients can access it. In this example clients will connect to the calculator Web Service's endpoint at the URL http://localhost:8910/calculatorservice/calculator, which is where the calculator service is running. The calculator web service runs over HTTP on port 8910 of your computer.", "row topspace")}
                         {this.renderBlurredElement("When you run this program, the Web Service is not deployed anywhere. The JVM creates a JAX-WS runtime environment, publishes the Web Service and open the socket (on a provided IP address and port) for clients to consume it.", "row alignRight bottomspace")}
                     </div>
-                    <div className="otherFooter"><Footer /></div>
                 </div>
+                <div className="otherFooter"><Footer /></div>
             </div>
         );
     }

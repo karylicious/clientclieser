@@ -11,6 +11,7 @@ class Navbar extends Component {
                     <NavLink to="/tutorials">Tutorials</NavLink>
                     <NavLink to="/client-server-system">Client Server System</NavLink>
                     <NavLink to="/validator">Validator</NavLink>
+                    <NavLink to="/exercises">Exercises</NavLink>
                     <NavLink to="/about">About</NavLink>
 
                     <a href="javascript:void(0)" className="icon" onClick={this.openNav}>
@@ -23,11 +24,12 @@ class Navbar extends Component {
                 </div>
                 <div id="myNav" className="overlay">
                     <div className="overlay-content">
-                        <NavLink exact to="/"><span onClick={this.closeNav}>Home</span></NavLink>
-                        <NavLink to="/tutorials"><span onClick={this.closeNav}>Tutorials</span></NavLink>
-                        <NavLink to="/client-server-system"><span onClick={this.closeNav}>Client Server System</span></NavLink>
-                        <NavLink to="/validator"><span onClick={this.closeNav}>Validator</span></NavLink>
-                        <NavLink to="/about"><span onClick={this.closeNav}>About</span></NavLink>
+                        <NavLink exact to="/" onClick={this.closeNav}><span>Home</span></NavLink>
+                        <NavLink to="/tutorials" onClick={this.closeNav}><span>Tutorials</span></NavLink>
+                        <NavLink to="/client-server-system" onClick={this.closeNav}><span>Client Server System</span></NavLink>
+                        <NavLink to="/validator" onClick={this.closeNav}><span>Validator</span></NavLink>
+                        <NavLink to="/exercises" onClick={this.closeNav}><span>Exercises</span></NavLink>
+                        <NavLink to="/about" onClick={this.closeNav}><span>About</span></NavLink>
                     </div>
                 </div>
             </div>

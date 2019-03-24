@@ -2,14 +2,14 @@ import React, { Component } from 'react'
 import Footer from './footer'
 import TopContainer from './topcontainer'
 
-class About extends Component {
+class Exercises extends Component {
 
     render() {
         return (
             <div>
                 <div><TopContainer standardOpening={false} /></div>
                 <div className="fullheight container bottomspace">
-                    <h2 className="myh2">About Us</h2>
+                    <h2 className="myh2">Test your knowledge</h2>
                     <h4>What is Clieser</h4>
                     <p>Clieser is a system designed to learn client server architecture concepts. It is mainly focused on development and use of soap web service in Java programming language. </p>
                     <hr />
@@ -28,8 +28,9 @@ class About extends Component {
 
                 </div>
                 <div className="homeFooter"><Footer /></div>
+
             </div>
-        )
+        );
     }
 }
-export default About
+export default Exercises

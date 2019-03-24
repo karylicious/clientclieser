@@ -1,24 +1,12 @@
 import React, { Component } from 'react'
 import Footer from './footer'
+import TopContainer from './topcontainer'
 
 class Tutorials extends Component {
-
-    componentDidMount() {
-        var mainContainer = document.getElementById('main')
-        mainContainer.style.display = "block"
-        mainContainer.classList.remove("main")
-
-        var row = document.getElementById('openingTestRow')
-        row.style.display = "none"
-
-        var topLogo = document.getElementById('toplogo')
-        topLogo.style.display = "block"
-    }
-
     render() {
         return (
             <div>
-
+                <div><TopContainer standardOpening={false} /></div>
                 <div className="fullheight container bottomspace">
                     <h2 className="myh2">About Us</h2>
                     <h4>What is Clieser</h4>

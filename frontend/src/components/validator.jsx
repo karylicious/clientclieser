@@ -1,13 +1,12 @@
 import React, { Component } from 'react'
 import Client from './client'
-import Server from './server'
-import ClientServer from './clientserver'
 import Summary from './summary'
 import Test from './test'
 import Progress from './progress'
 import FileUpload from './fileupload'
 import Footer from './footer'
 import Information from './testinformation'
+import TopContainer from './topcontainer'
 
 class Validator extends Component {
     state = {
@@ -19,31 +18,13 @@ class Validator extends Component {
         dir: ''
     }
 
-    componentDidMount() {
-        var mainContainer = document.getElementById('main')
-        mainContainer.style.display = "block"
-        mainContainer.classList.remove("main")
 
-        var row = document.getElementById('openingTestRow')
-        row.style.display = "none"
-
-        var topLogo = document.getElementById('toplogo')
-        topLogo.style.display = "block"
-    }
     renderSelectedComponent() {
         switch (this.state.step) {
             case 1:
                 return this.renderStepOne()
             case 2:
-                if (this.state.selectedComponent === "client")
-                    return <Client />
-
-                else if (this.state.selectedComponent === "server")
-                    return <Server />
-
-                else if (this.state.selectedComponent === "both")
-                    return <ClientServer />
-                break
+                return <Client />
             case 3:
                 return <Summary selectedComponent={this.state.selectedComponent}
                     clientEntryPoint={this.state.clientEntryPoint}
@@ -75,6 +56,7 @@ class Validator extends Component {
     render() {
         return (
             <div>
+                <div><TopContainer standardOpening={false} /></div>
                 <div className="fullheight">
                     <h2 className="myh2">Test your Client Server System</h2>
                     <div className="row bottomspace">
@@ -84,11 +66,10 @@ class Validator extends Component {
                         {this.renderFileUpload()}
                         {this.renderNavigation()}
                     </div>
-                    <div className="otherFooter"><Footer /></div>
                 </div>
-
+                <div className="otherFooter"><Footer /></div>
             </div>
-        );
+        )
     }
 
     chooseClient = () => {
@@ -168,15 +149,15 @@ class Validator extends Component {
             switch (this.state.selectedComponent) {
                 case 'client':
                     return (
-                        <FileUpload chosencomponent='Client' validFileSize={1}></FileUpload>
+                        <FileUpload fileUploadHeadings='Upload your Client project as .zip file'></FileUpload>
                     )
                 case 'server':
                     return (
-                        <FileUpload chosencomponent='Server' validFileSize={1}></FileUpload>
+                        <FileUpload fileUploadHeadings='Upload your Sever project as .zip file'></FileUpload>
                     )
                 case 'both':
                     return (
-                        <FileUpload chosencomponent='Client Server' validFileSize={2}></FileUpload>
+                        <FileUpload fileUploadHeadings='Upload your Client Server project as .zip file'></FileUpload>
                     )
                 default:
                     return null
@@ -203,9 +184,8 @@ class Validator extends Component {
                     <div className="col-lg-6"><h4>Choose the component to be tested</h4><hr className="myhr" /></div>
                 </div>
                 <div className="row">
-                    <div className={(this.state.selectedComponent === 'client') ? "col-sm-3 mycomponentselected" : "col-sm-3 mycomponents"} onClick={this.chooseClient}>Client</div>
-                    <div className={(this.state.selectedComponent === 'server') ? "col-sm-3 mycomponentselected" : "col-sm-3 mycomponents"} onClick={this.chooseServer}>Server</div>
-                    <div className={(this.state.selectedComponent === 'both') ? "col-sm-3   mycomponentselected" : "col-sm-3 mycomponents"} onClick={this.chooseBoth}>Both <br />Client and Server</div>
+                    <div className={(this.state.selectedComponent === 'client') ? "col mycomponentselected" : "col mycomponents"} onClick={this.chooseClient}>Client</div>
+                    <div className={(this.state.selectedComponent === 'both') ? "col mycomponentselected" : "col mycomponents"} onClick={this.chooseBoth}>Both <br />Client and Server</div>
                 </div>
             </div>
         );

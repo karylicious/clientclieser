@@ -1,19 +1,8 @@
 import React, { Component } from 'react'
 import Footer from './footer'
+import TopContainer from './topcontainer'
 
 class ClientServerSystem extends Component {
-
-    componentDidMount() {
-        var mainContainer = document.getElementById('main')
-        mainContainer.style.display = "block"
-        mainContainer.classList.remove("main")
-
-        var row = document.getElementById('openingTestRow')
-        row.style.display = "none"
-
-        var topLogo = document.getElementById('toplogo')
-        topLogo.style.display = "block"
-    }
 
     renderWriteClient = () => {
         this.props.history.push("/client-server-system/write-client");
@@ -26,6 +15,7 @@ class ClientServerSystem extends Component {
     render() {
         return (
             <div>
+                <div><TopContainer standardOpening={false} /></div>
                 <div className="fullheight">
                     <h2 className="myh2">Learn how to build a client server system</h2>
                     <div className="row bottomspace topspace">
@@ -44,8 +34,8 @@ class ClientServerSystem extends Component {
                             </div>
                         </div>
                     </div>
-                    <div className="otherFooter"><Footer /></div>
                 </div>
+                <div className="otherFooter"><Footer /></div>
             </div>
         );
     }

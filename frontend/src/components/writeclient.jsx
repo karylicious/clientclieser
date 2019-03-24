@@ -1,20 +1,8 @@
 import React, { Component } from 'react'
 import Footer from './footer'
+import TopContainer from './topcontainer'
 
 class WriteClient extends Component {
-
-    componentDidMount() {
-        var mainContainer = document.getElementById('main')
-        mainContainer.style.display = "block"
-        mainContainer.classList.remove("main")
-
-        var row = document.getElementById('openingTestRow')
-        row.style.display = "none"
-
-        var topLogo = document.getElementById('toplogo')
-        topLogo.style.display = "block"
-    }
-
     renderBlurredElement(text, classes) {
         return (
             <div className={classes}>
@@ -54,6 +42,7 @@ class WriteClient extends Component {
     render() {
         return (
             <div>
+                <div><TopContainer standardOpening={false} /></div>
                 <div className="fullheight">
                     <h2 className="myh2">Write a Client</h2>
                     <div className="topspace">
@@ -158,8 +147,9 @@ class WriteClient extends Component {
                             </div>
                         </div>
                     </div>
-                    <div className="otherFooter"><Footer /></div>
+
                 </div>
+                <div className="otherFooter"><Footer /></div>
             </div>
         );
     }

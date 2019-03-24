@@ -2,6 +2,10 @@ import React, { Component } from 'react'
 
 class Information extends Component {
 
+
+    state = {
+        port: 8910
+    }
     renderTestInfo() {
 
         if (this.props.selectedComponent === "client")
@@ -29,6 +33,9 @@ class Information extends Component {
         return (
             <div className="col">
                 <p>In order to successufully test a Server component:</p>
+                <ul>
+                    <li>Server has to listen on port {this.state.port}. Make sure your Server is listening on port {this.state.port}.</li>
+                </ul>
                 {this.renderCommonInfo("Server")}
             </div>
         )
@@ -40,6 +47,7 @@ class Information extends Component {
                 <p>In order to successufully test both Client and Server components:</p>
                 <ul>
                     <li>We assume that both Client and Server components will try to communicate to each other.</li>
+                    <li>Server has to listen on port {this.state.port}. Make sure your Server is listening on port {this.state.port}.</li>
                     <li>Both Client and Server have to be written in Java.</li>
                     <li>Both Client and Server have to be in separate project.</li>
                     <li>Each project has to have the NetBeans project structure.</li>
