@@ -196,6 +196,18 @@ body {
   font-weight: 500;
 }
 
+.marginLeft-15{
+  margin-left: -15px;
+}
+
+textarea {
+  resize: none;
+}
+
+.paddingLeft15{
+  padding-left: 15px;
+}
+
 .bluep{
   background-color: #09d3f6;
   border-bottom-left-radius: 17px;
@@ -589,7 +601,7 @@ box-shadow:0 0px 4px rgba(255, 0, 0, 0.3), 0 0 40px rgba(0, 0, 0, 0.0) inset;
   font-size: 16px;
   margin: 4px 2px;
   transition: 0.8s;
-  width: 150px;
+  width: 172px;
 
 
 }
@@ -703,7 +715,8 @@ ul{
     background-color: #e2e2e9;
 }
 
-.notuploaded{
+
+.redWarning{
   color: red;
 }
 

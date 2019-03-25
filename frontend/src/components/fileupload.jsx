@@ -11,7 +11,6 @@ class FileUpload extends Component {
 
     selectFile = event => {
         var file = event.target.files[0]
-        var label = document.getElementsByClassName("custom-file-label")
 
         if (typeof file !== "undefined") {
 
@@ -20,7 +19,7 @@ class FileUpload extends Component {
                 this.deletePrevDir()
             }
 
-            label[0].innerHTML = file.name;
+            document.getElementById("fileChooserLabel").innerHTML = file.name;
             this.setState({ selectedFile: file })
             this.validateFile(file)
         }
@@ -32,7 +31,7 @@ class FileUpload extends Component {
             this.setState({ selectedFile: null })
             this.setState({ dir: null })
 
-            label[0].innerHTML = 'Choose file'
+            document.getElementById("fileChooserLabel").innerHTML = 'Choose file'
             document.getElementById("uploadvalidation").innerHTML = ''
             document.getElementById("uploadFeedback").innerHTML = ''
 
@@ -59,19 +58,21 @@ class FileUpload extends Component {
                         this.setState({ isFileUploaded: true })
                         this.setState({ dir: response.data['d'] })
 
-                        document.getElementById("inputGroupFile").classList.remove("is-invalid")
+                        document.getElementById("fileChooserTextField").classList.remove("is-invalid")
                         document.getElementById("uploadvalidation").innerHTML = ''
 
                         var path = process.env.PUBLIC_URL + '/imgs/check.png'
                         document.getElementById("uploadFeedback").innerHTML = "<img src=" + path + " />"
                         document.getElementById("uploadFeedback").innerHTML += "<input type='hidden' id='hid' value='" + response.data['d'] + "'>"
 
+                        if (this.props.uploadedFile !== null)
+                            this.props.uploadedFile(response.data['d'] + "/" + this.state.selectedFile.name)
                     }
                 })
         }
         else {
             this.setState({ isFileUploaded: false })
-            document.getElementById("inputGroupFile").className += " is-invalid"
+            document.getElementById("fileChooserTextField").className += " is-invalid"
             document.getElementById("uploadFeedback").innerHTML = ''
         }
     }
@@ -95,7 +96,7 @@ class FileUpload extends Component {
 
     validationFeedback(valid, reason) {
         if (valid)
-            document.getElementById("inputGroupFile").classList.remove("is-invalid")
+            document.getElementById("fileChooserTextField").classList.remove("is-invalid")
         document.getElementById("uploadvalidation").innerHTML = reason
     }
 
@@ -107,15 +108,15 @@ class FileUpload extends Component {
                         <p id="fileUploadHeadings">{this.props.fileUploadHeadings}</p>
                         <div className="input-group">
                             <div className="custom-file">
-                                <input type="file" className="custom-file-input" id="inputGroupFile" onChange={this.selectFile} />
-                                <label className="custom-file-label" >Choose file</label>
+                                <input type="file" className="custom-file-input" id="fileChooserTextField" onChange={this.selectFile} />
+                                <label className="custom-file-label" id="fileChooserLabel" >Choose file</label>
                             </div>
                             <div className="input-group-append">
                                 <button className="btn btn-outline-secondary" type="button" onClick={this.uploadFile}>Upload</button>
                             </div>
                             <div id="uploadFeedback"></div>
                         </div>
-                        <p id="uploadvalidation" className="notuploaded"></p>
+                        <p id="uploadvalidation" className="redWarning"></p>
                     </div>
                 </div>
             </div>

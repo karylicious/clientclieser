@@ -207,13 +207,13 @@ class Validator extends Component {
             }
         }
 
-        var feedbackDiv = document.getElementById("uploadFeedback")
+        var feedbackDiv = document.getElementById("fileChooserTextField")
         if (feedbackDiv.innerHTML === '') {
-            document.getElementById("inputGroupFile").className += " is-invalid"
+            document.getElementById("fileChooserTextField").className += " is-invalid"
             valid = false
         }
         else {
-            document.getElementById("inputGroupFile").classList.remove("is-invalid")
+            document.getElementById("fileChooserTextField").classList.remove("is-invalid")
             var value = document.getElementById("uploadvalidation").innerHTML
             if (value !== '') {
                 valid = false
@@ -221,8 +221,7 @@ class Validator extends Component {
         }
 
         if (valid) {
-            var label = document.getElementsByClassName("custom-file-label")
-            var fileName = label[0].innerHTML
+            var fileName = document.getElementById("fileChooserLabel").innerHTML
 
             this.setState({ uploadedFile: fileName })
             this.setState({ dir: document.getElementById("hid").value })
