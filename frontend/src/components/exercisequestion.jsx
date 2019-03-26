@@ -21,6 +21,11 @@ class Question extends Component {
         return listOfQuestions
     }
 
+    componentDidMount() {
+        document.getElementById("title-" + this.props.id).value = this.props.title
+        document.getElementById("descr-" + this.props.id).value = this.props.description
+    }
+
     componentDidUpdate() {
         document.getElementById("title-" + this.props.id).value = this.props.title
         document.getElementById("descr-" + this.props.id).value = this.props.description

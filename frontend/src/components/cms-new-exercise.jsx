@@ -6,19 +6,20 @@ import Question from './exercisequestion'
 import axios from 'axios'
 
 var rowsWithQuestions = []
-class ExercisesManagement extends Component {
+class NewExercise extends Component {
     state = {
         hasAddedNewQuestion: false,
         validForm: false,
         uploadedFile: '',
-        dir: ''
+        dir: '',
+        typeOfExercise: ''
     }
 
     addExercise = () => {
         if (this.isValidForm()) {
             var listOfQuestions = this.getListOfQuestions()
             var path = this.state.dir
-            var data = { uploadedfile: path, questions: listOfQuestions }
+            var data = { uploadedfile: path, type: this.state.typeOfExercise, questions: listOfQuestions }
             var jsonData = JSON.stringify(data);
             console.log(jsonData)
             axios.post('http://localhost:5000/exercise', jsonData, { headers: { 'Content-Type': 'application/json' } })
@@ -89,26 +90,26 @@ class ExercisesManagement extends Component {
 
     clientRadioButtonListener = () => {
         document.getElementById("radioHeadings").classList.remove("redWarning")
-        this.setState({ selectedComponent: 'client' })
+        this.setState({ selectedComponent: 'client', typeOfExercise: 'client' })
     }
 
     clientserverRadioButtonListener = () => {
         document.getElementById("radioHeadings").classList.remove("redWarning")
-        this.setState({ selectedComponent: 'both' })
+        this.setState({ selectedComponent: 'both', typeOfExercise: 'clientserver' })
     }
 
     renderFileUpload() {
         if (this.state.selectedComponent === "client") {
             return (
                 <div className="row bottomspace marginLeft-15">
-                    <FileUpload uploadedFile={this.setPath} fileUploadHeadings='Upload a complete Web Service as .zip file' regularUser={false}></FileUpload>
+                    <FileUpload uploadedFile={this.setPath} colClass={"col-sm-7"} fileUploadHeadings='Upload a complete Web Service as .zip file' regularUser={false}></FileUpload>
                 </div>
             )
         }
         else if (this.state.selectedComponent === "both") {
             return (
                 <div className="row bottomspace marginLeft-15">
-                    <FileUpload uploadedFile={this.setPath} fileUploadHeadings='Upload a dummy Client and a dummy Server as .zip file' regularUser={false}></FileUpload>
+                    <FileUpload uploadedFile={this.setPath} colClass={"col-sm-7"} fileUploadHeadings='Upload a dummy Client and a dummy Server as .zip file' regularUser={false}></FileUpload>
                 </div>
             )
         }
@@ -184,4 +185,4 @@ class ExercisesManagement extends Component {
         )
     }
 }
-export default ExercisesManagement
+export default NewExercise

@@ -144,20 +144,24 @@ class Validator extends Component {
         }
     }
 
+    setPath = (path) => {
+        this.setState({ dir: path })
+    }
+
     renderFileUpload() {
         if (this.state.step === 2) {
             switch (this.state.selectedComponent) {
                 case 'client':
                     return (
-                        <FileUpload fileUploadHeadings='Upload your Client project as .zip file'></FileUpload>
+                        <FileUpload uploadedFile={this.setPath} colClass={"col-sm-7"} fileUploadHeadings='Upload your Client project as .zip file'></FileUpload>
                     )
                 case 'server':
                     return (
-                        <FileUpload fileUploadHeadings='Upload your Sever project as .zip file'></FileUpload>
+                        <FileUpload uploadedFile={this.setPath} colClass={"col-sm-7"} fileUploadHeadings='Upload your Server project as .zip file'></FileUpload>
                     )
                 case 'both':
                     return (
-                        <FileUpload fileUploadHeadings='Upload your Client Server project as .zip file'></FileUpload>
+                        <FileUpload uploadedFile={this.setPath} colClass={"col-sm-7"} fileUploadHeadings='Upload your Client Server project as .zip file'></FileUpload>
                     )
                 default:
                     return null

@@ -315,6 +315,68 @@ text-align: center;
   color: #cacbd1ef !important;
 }
 
+.marginLeft0{
+  margin-left:0px
+}
+.collapseColumn{
+  margin-left: -1px;
+    padding-left: 0px;
+}
+.cardbody{
+  padding:0px
+}
+
+.noExercises{
+  font-style:italic;
+   font-size: large; 
+   padding: 20px;
+}
+
+.collapseExercise{
+  text-align: center;
+    font-size: large;
+    padding: 20px;
+}
+
+.collapseExercise:hover:not(.collapseExerciseActive) {
+  background-color: #E8E8E8;
+  cursor: pointer;
+}
+
+.collapseExerciseActive{
+  background-color: #4CAF50;
+  color: white
+}
+
+.collapseContainer{
+  margin-left: 0px;
+  padding-left: 0px;
+}
+
+.collapseHeader{
+  color: white;
+  background-color: #021730;
+  text-align: center;
+  padding: 20px;
+  font-size: x-large;
+  border-radius: 3px;
+}
+
+.pCard{
+  margin-bottom: 0px;
+  padding: 20px;
+}
+
+.cardheader{
+  background-color:#022958; 
+  color: white;
+  padding: 0px;
+}
+
+.cardheader:hover{
+  background-color: #253F71;
+  cursor: pointer;
+}
 
 /* Add a black background color to the top navigation */
 .topnav {

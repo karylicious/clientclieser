@@ -10,7 +10,8 @@ import Tutorials from './tutorials'
 import Notfound from './notfound'
 import Exercises from './exercises'
 import CMS from './cms'
-import ExercisesManagement from './exercisesmanagement'
+import NewExercise from './cms-new-exercise'
+import ListExercises from './cms-all-exercises'
 
 class App extends Component {
     render() {
@@ -27,7 +28,8 @@ class App extends Component {
                         <Route path="/client-server-system/write-server" exact component={WriteServer} />
                         <Route path="/tutorials" exact component={Tutorials} />
                         <Route path="/cms" exact component={CMS} />
-                        <Route path="/cms/exercises" exact component={ExercisesManagement} />
+                        <Route path="/cms/new-exercise" exact component={NewExercise} />
+                        <Route path="/cms/all-exercises" exact component={ListExercises} />
                         <Route component={Notfound} />
                     </Switch>
                 </div>

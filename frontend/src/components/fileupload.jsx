@@ -63,7 +63,7 @@ class FileUpload extends Component {
 
                         var path = process.env.PUBLIC_URL + '/imgs/check.png'
                         document.getElementById("uploadFeedback").innerHTML = "<img src=" + path + " />"
-                        document.getElementById("uploadFeedback").innerHTML += "<input type='hidden' id='hid' value='" + response.data['d'] + "'>"
+                        //document.getElementById("uploadFeedback").innerHTML += "<input type='hidden' id='hid' value='" + response.data['d'] + "'>"
 
                         if (this.props.uploadedFile !== null)
                             this.props.uploadedFile(response.data['d'] + "/" + this.state.selectedFile.name)
@@ -74,6 +74,7 @@ class FileUpload extends Component {
             this.setState({ isFileUploaded: false })
             document.getElementById("fileChooserTextField").className += " is-invalid"
             document.getElementById("uploadFeedback").innerHTML = ''
+            this.props.uploadedFile("")
         }
     }
 
@@ -104,7 +105,7 @@ class FileUpload extends Component {
         return (
             <div className="container">
                 <div className="row">
-                    <div className="col-sm-7">
+                    <div className={this.props.colClass}>
                         <p id="fileUploadHeadings">{this.props.fileUploadHeadings}</p>
                         <div className="input-group">
                             <div className="custom-file">
