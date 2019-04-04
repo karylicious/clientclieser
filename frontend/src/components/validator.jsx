@@ -211,7 +211,7 @@ class Validator extends Component {
             }
         }
 
-        var feedbackDiv = document.getElementById("fileChooserTextField")
+        var feedbackDiv = document.getElementById("uploadFeedback")
         if (feedbackDiv.innerHTML === '') {
             document.getElementById("fileChooserTextField").className += " is-invalid"
             valid = false
@@ -226,9 +226,7 @@ class Validator extends Component {
 
         if (valid) {
             var fileName = document.getElementById("fileChooserLabel").innerHTML
-
             this.setState({ uploadedFile: fileName })
-            this.setState({ dir: document.getElementById("hid").value })
         }
 
         return valid

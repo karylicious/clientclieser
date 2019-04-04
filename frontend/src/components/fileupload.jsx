@@ -66,7 +66,7 @@ class FileUpload extends Component {
                         //document.getElementById("uploadFeedback").innerHTML += "<input type='hidden' id='hid' value='" + response.data['d'] + "'>"
 
                         if (this.props.uploadedFile !== null)
-                            this.props.uploadedFile(response.data['d'] + "/" + this.state.selectedFile.name)
+                            this.props.uploadedFile(response.data['d'] + "\\" + this.state.selectedFile.name)
                     }
                 })
         }

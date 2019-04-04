@@ -9,26 +9,37 @@ class Question extends Component {
     }
 
     getCurrentSiblingsContent(questionToBeRemovedID) {
-        var listTitle = document.getElementsByClassName("questiontitle");
-        var listDescr = document.getElementsByClassName("questiondescription");
+        var listTitle = document.getElementsByClassName("questiontitle")
+        var listDescr = document.getElementsByClassName("questiondescription")
+        var listExpectedOuput = document.getElementsByClassName("questionexpectedoutput")
+        var listPoints = document.getElementsByClassName("questionpoints")
         var listOfQuestions = []
 
         for (var i = 0; i < listTitle.length; i++) {
             if (listTitle[i].id !== "title-" + questionToBeRemovedID) {
-                listOfQuestions.push({ title: listTitle[i].value, description: listDescr[i].value })
+                listOfQuestions.push({
+                    title: listTitle[i].value, description: listDescr[i].value,
+                    expectedOutput: listExpectedOuput[i].value, points: listPoints[i].value
+                })
             }
         }
         return listOfQuestions
     }
 
-    componentDidMount() {
+
+    getFieldsValue() {
         document.getElementById("title-" + this.props.id).value = this.props.title
         document.getElementById("descr-" + this.props.id).value = this.props.description
+        document.getElementById("expectedoutput-" + this.props.id).value = this.props.expectedOutput
+        document.getElementById("points-" + this.props.id).value = this.props.points
+    }
+
+    componentDidMount() {
+        this.getFieldsValue()
     }
 
     componentDidUpdate() {
-        document.getElementById("title-" + this.props.id).value = this.props.title
-        document.getElementById("descr-" + this.props.id).value = this.props.description
+        this.getFieldsValue()
     }
 
     render() {
@@ -45,6 +56,19 @@ class Question extends Component {
                     <div className="col">
                         <label>Description</label>
                         <textarea className="form-control questiondescription" id={"descr-" + this.props.id} rows="3" ></textarea>
+                    </div>
+                </div>
+
+                <div className="row">
+                    <div className="col">
+                        <label>Expected Output</label>
+                        <input className="form-control myinputtext questionexpectedoutput" id={"expectedoutput-" + this.props.id} type="text" />
+                    </div>
+                </div>
+                <div className="row bottomspace">
+                    <div className="col-sm-2">
+                        <label>Points</label>
+                        <input className="form-control myinputtext questionpoints" id={"points-" + this.props.id} type="number" />
                     </div>
                 </div>
                 <div className="row alignRight">

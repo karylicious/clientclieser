@@ -47,10 +47,9 @@ class Information extends Component {
                 <p>In order to successufully test both Client and Server components:</p>
                 <ul>
                     <li>We assume that both Client and Server components will try to communicate to each other.</li>
-                    <li>Server has to listen on port {this.state.port}. Make sure your Server is listening on port {this.state.port}.</li>
                     <li>Both Client and Server have to be written in Java.</li>
                     <li>Both Client and Server have to be in separate project.</li>
-                    <li>Each project has to have the NetBeans project structure.</li>
+                    <li>Each project has to be a NetBeans project.</li>
                     <li>If testing a single project with both Client and Server components, the zip file being uploaded must contain the project directories of each components.</li>
                     <li>If testing multiple projects with both Client and Server components, the zip file being uploaded must contain a zip file of each projects containing the project directories of each components.</li>
                     <li>If testing multiple projects, we assume that the class with the main method and its package names are the same for each project.</li>
@@ -63,7 +62,7 @@ class Information extends Component {
         return (
             <ul>
                 <li>The {selectedComponent} has to be written in Java.</li>
-                <li>The project has to have the NetBeans project structure.</li>
+                <li>The project has to be a NetBeans project.</li>
                 <li>If testing a single project, the zip file being uploaded must contain the project directory.</li>
                 <li>If testing multiple projects, the zip file being uploaded must contain a zip file of each projects.</li>
                 <li>If testing multiple projects, we assume that the class with the main method and its package names are the same for each project.</li>

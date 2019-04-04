@@ -12,14 +12,16 @@ class NewExercise extends Component {
         validForm: false,
         uploadedFile: '',
         dir: '',
-        typeOfExercise: ''
+        typeOfExercise: '',
+        expectedClientEntryPoint: ''
     }
 
     addExercise = () => {
         if (this.isValidForm()) {
-            var listOfQuestions = this.getListOfQuestions()
+            var listOfQuestionsObjects = this.getListOfQuestionObjects()
             var path = this.state.dir
-            var data = { uploadedfile: path, type: this.state.typeOfExercise, questions: listOfQuestions }
+            var selectedFile = this.state.uploadedFile.split(".zip")
+            var data = { uploadedfile: path, type: this.state.typeOfExercise, selectedFileName: selectedFile[0], expectedClientEntryPoint: this.state.expectedClientEntryPoint, questions: listOfQuestionsObjects }
             var jsonData = JSON.stringify(data);
             console.log(jsonData)
             axios.post('http://localhost:5000/exercise', jsonData, { headers: { 'Content-Type': 'application/json' } })
@@ -52,7 +54,7 @@ class NewExercise extends Component {
 
         var allElements = document.getElementsByClassName("form-control")
 
-        if (allElements.length == 0) {
+        if (allElements.length == 1) {
             document.getElementById("pQuestionValidatorFeedback").innerHTML = "Please add a question"
             valid = false
         }
@@ -69,23 +71,38 @@ class NewExercise extends Component {
             }
         }
 
+        var entryPoint = document.getElementById("expectedClientEntryPoint").value
+
+        if (entryPoint.trim() === '') {
+            document.getElementById("expectedClientEntryPoint").className += " is-invalid"
+            valid = false
+        }
+        else {
+            document.getElementById("expectedClientEntryPoint").classList.remove("is-invalid")
+        }
+
         if (valid) {
             var fileName = document.getElementById("fileChooserLabel").innerHTML
-            this.setState({ uploadedFile: fileName })
-            this.setState({ dir: document.getElementById("hid").value })
+            this.setState({ uploadedFile: fileName, expectedClientEntryPoint: entryPoint })
         }
 
         return valid
     }
 
-    getListOfQuestions() {
-        var listTitle = document.getElementsByClassName("questiontitle");
-        var listDescr = document.getElementsByClassName("questiondescription");
-        var listOfQuestions = []
+    getListOfQuestionObjects() {
+        var listTitle = document.getElementsByClassName("questiontitle")
+        var listDescr = document.getElementsByClassName("questiondescription")
+        var listExpectedOuput = document.getElementsByClassName("questionexpectedoutput")
+        var listPoints = document.getElementsByClassName("questionpoints")
+        var listOfQuestionObjects = []
 
-        for (var i = 0; i < listTitle.length; i++)
-            listOfQuestions.push({ title: listTitle[i].value, description: listDescr[i].value })
-        return listOfQuestions
+        for (var i = 0; i < listTitle.length; i++) {
+            listOfQuestionObjects.push({
+                title: listTitle[i].value, description: listDescr[i].value,
+                expectedOutput: listExpectedOuput[i].value, points: listPoints[i].value
+            })
+        }
+        return listOfQuestionObjects
     }
 
     clientRadioButtonListener = () => {
@@ -121,6 +138,8 @@ class NewExercise extends Component {
             id={rowsWithQuestions.length}
             title=""
             description=""
+            expectedOutput=""
+            points=""
             removeQuestion={this.removeQuestion} />)
         this.setState({ hasAddedNewQuestion: true }) // this is just to trigger the render method
     }
@@ -129,14 +148,16 @@ class NewExercise extends Component {
         this.setState({ dir: path })
     }
 
-    removeQuestion = (listOfQuestions) => {
+    removeQuestion = (listOfQuestionsObjects) => {
         var newArray = []
-        for (var i = 0; i < listOfQuestions.length; i++) {
+        for (var i = 0; i < listOfQuestionsObjects.length; i++) {
             newArray.push(<Question key={i}
                 id={i}
                 removeQuestion={this.removeQuestion}
-                title={listOfQuestions[i].title}
-                description={listOfQuestions[i].description} />)
+                title={listOfQuestionsObjects[i].title}
+                description={listOfQuestionsObjects[i].description}
+                expectedOutput={listOfQuestionsObjects[i].expectedOutput}
+                points={listOfQuestionsObjects[i].points} />)
         }
         rowsWithQuestions = newArray
         this.setState({ hasAddedNewQuestion: false }) // this is just to trigger the render method
@@ -169,6 +190,12 @@ class NewExercise extends Component {
                         </div>
                     </div>
                     {this.renderFileUpload()}
+                    <div className="row bottomspace">
+                        <div className="col">
+                            <label>Expected name of the class with the main method and its package of a Client <span className="systemwarning"> (E.g com.example.MyMainClass)</span></label>
+                            <input className="form-control myinputtext" id="expectedClientEntryPoint" type="text" />
+                        </div>
+                    </div>
                     <div className="row paddingLeft15">
                         <button className="btn btn-outline-secondary" type="button" onClick={this.handleAddQuestionButtonListener}>Add Question</button>
                     </div>

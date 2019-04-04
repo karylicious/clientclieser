@@ -88,7 +88,7 @@ class ListExercises extends Component {
                     allElements[i].classList.remove("is-invalid")
             }
         }
-
+        //maybe needs to be revised
         if (valid) {
             var fileName = document.getElementById("fileChooserLabel").innerHTML
             this.setState({ uploadedFile: fileName })
