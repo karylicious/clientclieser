@@ -17,16 +17,25 @@ class ListExercises extends Component {
         selectedExerciseFile: "",
         selectedExerciseName: "",
         selectedExerciseType: "",
+        selectedExerciseExpectedClientEntryPoint: "",
+        selectedExerciseDescription: "",
         dir: '',
-        hasDeletedQuestion: false
+        hasDeletedQuestion: false,
+        hasSelectedExercise: false
     }
 
     updateExercise = () => {
         if (this.isValidForm()) {
-            var listOfQuestions = this.getListOfQuestions()
+            var listOfQuestionsObjects = this.getListOfQuestionObjects()
             var path = this.state.dir
             var exerciseID = this.state.selectedExerciseID
-            var data = { uploadedfile: path, id: exerciseID, questions: listOfQuestions }
+            var data = {
+                uploadedfile: path,
+                description: this.state.description,
+                expectedClientEntryPoint: this.state.expectedClientEntryPoint,
+                id: exerciseID,
+                questions: listOfQuestionsObjects
+            }
             var jsonData = JSON.stringify(data);
             //console.log(jsonData)
             axios.put('http://localhost:5000/exercise', jsonData, { headers: { 'Content-Type': 'application/json' } })
@@ -41,14 +50,17 @@ class ListExercises extends Component {
                         selectedExerciseFile: "",
                         selectedExerciseName: "",
                         selectedExerciseType: "",
+                        selectedExerciseExpectedClientEntryPoint: "",
+                        selectedExerciseDescription: "",
                         dir: '',
-                        hasDeletedQuestion: false
+                        hasDeletedQuestion: false,
+                        hasSelectedExercise: false
                     })
                 })
         }
     }
 
-    deleteExercise() {
+    deleteExercise = () => {
         axios.delete('http://localhost:5000/exercise?exerciseid=' + this.state.selectedExerciseID)
             .then(response => {
                 //console.log(response.data)
@@ -61,18 +73,21 @@ class ListExercises extends Component {
                     selectedExerciseFile: "",
                     selectedExerciseName: "",
                     selectedExerciseType: "",
+                    selectedExerciseExpectedClientEntryPoint: "",
+                    selectedExerciseDescription: "",
                     dir: '',
-                    hasDeletedQuestion: false
+                    hasDeletedQuestion: false,
+                    hasSelectedExercise: false
                 })
             })
     }
 
     isValidForm() {
         var valid = true
-
         var allElements = document.getElementsByClassName("form-control")
 
-        if (allElements.length == 0) {
+        // (allElements.length == 2) 2 means the two input fields of the exercise details
+        if (allElements.length == 2) {
             document.getElementById("pQuestionValidatorFeedback").innerHTML = "Please add a question"
             valid = false
         }
@@ -88,24 +103,58 @@ class ListExercises extends Component {
                     allElements[i].classList.remove("is-invalid")
             }
         }
-        //maybe needs to be revised
+
+        var descriptionOfExercise = document.getElementById("description").value
+
+        if (descriptionOfExercise.trim() === '') {
+            document.getElementById("description").className += " is-invalid"
+            valid = false
+        }
+        else {
+            document.getElementById("description").classList.remove("is-invalid")
+        }
+
+
+        var entryPoint = document.getElementById("expectedClientEntryPoint").value
+
+        if (entryPoint.trim() === '') {
+            document.getElementById("expectedClientEntryPoint").className += " is-invalid"
+            valid = false
+        }
+        else {
+            document.getElementById("expectedClientEntryPoint").classList.remove("is-invalid")
+        }
+
         if (valid) {
             var fileName = document.getElementById("fileChooserLabel").innerHTML
-            this.setState({ uploadedFile: fileName })
-            //this.setState({ dir: document.getElementById("hid").value })
+            this.setState({
+                uploadedFile: fileName,
+                expectedClientEntryPoint: entryPoint,
+                description: descriptionOfExercise
+            })
         }
 
         return valid
     }
 
-    getListOfQuestions() {
-        var listTitle = document.getElementsByClassName("questiontitle");
-        var listDescr = document.getElementsByClassName("questiondescription");
-        var listOfQuestions = []
+    getListOfQuestionObjects() {
+        var listTitle = document.getElementsByClassName("questiontitle")
+        var listDescr = document.getElementsByClassName("questiondescription")
+        var listExpectedOuput = document.getElementsByClassName("questionexpectedoutput")
+        var listPoints = document.getElementsByClassName("questionpoints")
+        var listExpectedInvokedMethod = document.getElementsByClassName("questionexpectedinvokedmethod")
+        var listOfQuestionObjects = []
 
-        for (var i = 0; i < listTitle.length; i++)
-            listOfQuestions.push({ title: listTitle[i].value, description: listDescr[i].value })
-        return listOfQuestions
+        for (var i = 0; i < listTitle.length; i++) {
+            listOfQuestionObjects.push({
+                title: listTitle[i].value,
+                description: listDescr[i].value,
+                expectedOutput: listExpectedOuput[i].value,
+                points: listPoints[i].value,
+                expectedInvokedMethod: listExpectedInvokedMethod[i].value
+            })
+        }
+        return listOfQuestionObjects
     }
 
     renderFileUpload() {
@@ -131,8 +180,18 @@ class ListExercises extends Component {
             selectedExerciseID: exercise.id,
             selectedExerciseFile: exercise.file,
             selectedExerciseName: exercise.name,
-            selectedExerciseType: exercise.type
+            selectedExerciseType: exercise.type,
+            selectedExerciseExpectedClientEntryPoint: exercise.expectedClientEntryPoint,
+            selectedExerciseDescription: exercise.description,
+            hasSelectedExercise: true
         })
+    }
+
+    componentDidUpdate() {
+        if (this.state.hasSelectedExercise == true) {
+            document.getElementById("description").value = this.state.selectedExerciseDescription
+            document.getElementById("expectedClientEntryPoint").value = this.state.selectedExerciseExpectedClientEntryPoint
+        }
     }
 
     getEditor() {
@@ -146,18 +205,25 @@ class ListExercises extends Component {
             }
 
             var fileName = this.state.selectedExerciseFile.split("/")
-            //var rowsWithQuestions = []
-            if (this.state.hasDeletedQuestion == false) {
-                var listOfQuestions = this.state.questionList
 
-                for (var i = 0; i < listOfQuestions.length; i++) {
-                    var question = listOfQuestions[i]
+            if (this.state.hasSelectedExercise == true) {
+                rowsWithQuestions = []
+            }
+
+            if (this.state.hasDeletedQuestion == false) {
+                var listOfQuestionObjects = this.state.questionList
+
+                for (var i = 0; i < listOfQuestionObjects.length; i++) {
+                    var question = listOfQuestionObjects[i]
 
                     rowsWithQuestions.push(<Question key={i}
                         id={i}
                         removeQuestion={this.removeQuestion}
                         title={question.title}
-                        description={question.description} />)
+                        description={question.description}
+                        expectedOutput={question.expectedOutput}
+                        expectedInvokedMethod={question.expectedInvokedMethod}
+                        points={question.points} />)
                 }
             }
             return (
@@ -174,6 +240,18 @@ class ListExercises extends Component {
                     </div>
 
                     {this.renderFileUpload()}
+                    <div className="row">
+                        <div className="col">
+                            <label>Expected name of the class with the main method and its package of a Client <span className="systemwarning"> (E.g com.example.MyMainClass)</span></label>
+                            <input className="form-control myinputtext" id="expectedClientEntryPoint" type="text" defaultValue={this.state.selectedExerciseExpectedClientEntryPoint} />
+                        </div>
+                    </div>
+                    <div className="row bottomspace">
+                        <div className="col">
+                            <label>Description</label>
+                            <textarea className="form-control" id="description" rows="3" defaultValue={this.state.selectedExerciseDescription}></textarea>
+                        </div>
+                    </div>
                     <div className="row paddingLeft15">
                         <button className="btn btn-outline-secondary" type="button" onClick={this.handleAddQuestionButtonListener}>Add Question</button>
                     </div>
@@ -196,8 +274,11 @@ class ListExercises extends Component {
             id={rowsWithQuestions.length}
             title=""
             description=""
-            removeQuestion={this.removeQuestion} />)
-        // The following line prevents the getEditor() function to relod the array rowsWithQuestions the questions on the "this.state.questionList"
+            expectedOutput=""
+            points=""
+            removeQuestion={this.removeQuestion}
+            expectedInvokedMethod="" />)
+        // The following line prevents the getEditor() function to reload the array rowsWithQuestions with the questions on the "this.state.questionList" variable
         this.setState({ hasDeletedQuestion: true })
     }
 
@@ -205,14 +286,18 @@ class ListExercises extends Component {
         this.setState({ dir: path })
     }
 
-    removeQuestion = (listOfQuestions) => {
+    removeQuestion = (listOfQuestionObjects) => {
         var newArray = []
-        for (var i = 0; i < listOfQuestions.length; i++) {
+        for (var i = 0; i < listOfQuestionObjects.length; i++) {
+            var question = listOfQuestionObjects[i]
             newArray.push(<Question key={i}
                 id={i}
                 removeQuestion={this.removeQuestion}
-                title={listOfQuestions[i].title}
-                description={listOfQuestions[i].description} />)
+                title={question.title}
+                description={question.description}
+                expectedOutput={question.expectedOutput}
+                expectedInvokedMethod={question.expectedInvokedMethod}
+                points={question.points} />)
         }
         rowsWithQuestions = newArray
         this.setState({ hasDeletedQuestion: true }) // this is just to trigger the render method

@@ -12,7 +12,9 @@ class Collapse extends Component {
         selectedExerciseID: "",
         selectedExerciseFile: "",
         selectedExerciseName: "",
-        selectedExerciseType: ""
+        selectedExerciseType: "",
+        selectedExerciseExpectedClientEntryPoint: "",
+        selectedExerciseDescription: "",
     }
     toggleCollapse = (e) => {
         var targetID = e.target.dataset.target
@@ -32,7 +34,7 @@ class Collapse extends Component {
     }
 
 
-    getQuestions = (exerciseID, uploadedfile, exerciseName, exerciseType) => {
+    getQuestions = (exerciseID, uploadedfile, exerciseName, exerciseType, exerciseExpectedClientEntryPoint, exerciseDescription) => {
         //if (this.state.selectedExerciseID != "") {
         axios.get('http://localhost:5000/exercisequestion?exerciseid=' + exerciseID)
             .then(response => {
@@ -41,9 +43,19 @@ class Collapse extends Component {
                     selectedExerciseID: exerciseID,
                     selectedExerciseFile: uploadedfile,
                     selectedExerciseName: exerciseName,
-                    selectedExerciseType: exerciseType
+                    selectedExerciseType: exerciseType,
+                    selectedExerciseExpectedClientEntryPoint: exerciseExpectedClientEntryPoint,
+                    selectedExerciseDescription: exerciseDescription
                 })
-                this.props.setExercise({ id: exerciseID, name: exerciseName, file: uploadedfile, type: exerciseType, questionList: response.data })
+                this.props.setExercise({
+                    id: exerciseID,
+                    name: exerciseName,
+                    file: uploadedfile,
+                    type: exerciseType,
+                    expectedClientEntryPoint: exerciseExpectedClientEntryPoint,
+                    description: exerciseDescription,
+                    questionList: response.data
+                })
             })
         // }
         //this.setState({ selectedExerciseID: id })
@@ -56,26 +68,31 @@ class Collapse extends Component {
 
         for (var i = 0; i < listOfObjs.length; i++) {
             var exercise = listOfObjs[i]
-            if (exercise.exercisetype === "client") {
+            if (exercise.exerciseType === "client") {
                 rowsWithItemsClient.push(<CollapseItem key={rowsWithItemsClient.length}
                     id={exercise.id}
                     name={"Exercise " + (i + 1)}
                     file={exercise.uploadedfile}
-                    type={exercise.exercisetype}
+                    type={exercise.exerciseType}
+                    expectedClientEntryPoint={exercise.expectedClientEntryPoint}
+                    description={exercise.description}
                     getQuestions={this.getQuestions} />)
             }
-            else if (exercise.exercisetype === "clientserver") {
+            else if (exercise.exerciseType === "clientserver") {
                 rowsWithItemsClientServer.push(<CollapseItem key={rowsWithItemsClientServer.length}
                     id={exercise.id}
                     name={"Exercise " + (i + 1)}
                     file={exercise.uploadedfile}
-                    type={exercise.exercisetype}
+                    type={exercise.exerciseType}
+                    expectedClientEntryPoint={exercise.expectedClientEntryPoint}
+                    description={exercise.description}
                     getQuestions={this.getQuestions} />)
             }
         }
 
         if (rowsWithItemsClientServer.length == 0)
             rowsWithItemsClientServer.push(<div key={0} className="noExercises">There is no exercise</div>)
+
         if (rowsWithItemsClient.length == 0)
             rowsWithItemsClient.push(<div key={0} className="noExercises">There is no exercise</div>)
 

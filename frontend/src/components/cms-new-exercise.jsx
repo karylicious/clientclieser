@@ -13,6 +13,7 @@ class NewExercise extends Component {
         uploadedFile: '',
         dir: '',
         typeOfExercise: '',
+        description: '',
         expectedClientEntryPoint: ''
     }
 
@@ -21,7 +22,14 @@ class NewExercise extends Component {
             var listOfQuestionsObjects = this.getListOfQuestionObjects()
             var path = this.state.dir
             var selectedFile = this.state.uploadedFile.split(".zip")
-            var data = { uploadedfile: path, type: this.state.typeOfExercise, selectedFileName: selectedFile[0], expectedClientEntryPoint: this.state.expectedClientEntryPoint, questions: listOfQuestionsObjects }
+            var data = {
+                uploadedfile: path,
+                description: this.state.description,
+                type: this.state.typeOfExercise,
+                selectedFileName: selectedFile[0],
+                expectedClientEntryPoint: this.state.expectedClientEntryPoint,
+                questions: listOfQuestionsObjects
+            }
             var jsonData = JSON.stringify(data);
             console.log(jsonData)
             axios.post('http://localhost:5000/exercise', jsonData, { headers: { 'Content-Type': 'application/json' } })
@@ -54,7 +62,8 @@ class NewExercise extends Component {
 
         var allElements = document.getElementsByClassName("form-control")
 
-        if (allElements.length == 1) {
+        // (allElements.length == 2) 2 means the two input fields of the exercise details
+        if (allElements.length == 2) {
             document.getElementById("pQuestionValidatorFeedback").innerHTML = "Please add a question"
             valid = false
         }
@@ -71,6 +80,18 @@ class NewExercise extends Component {
             }
         }
 
+
+        var descriptionOfExercise = document.getElementById("description").value
+
+        if (descriptionOfExercise.trim() === '') {
+            document.getElementById("description").className += " is-invalid"
+            valid = false
+        }
+        else {
+            document.getElementById("description").classList.remove("is-invalid")
+        }
+
+
         var entryPoint = document.getElementById("expectedClientEntryPoint").value
 
         if (entryPoint.trim() === '') {
@@ -83,7 +104,11 @@ class NewExercise extends Component {
 
         if (valid) {
             var fileName = document.getElementById("fileChooserLabel").innerHTML
-            this.setState({ uploadedFile: fileName, expectedClientEntryPoint: entryPoint })
+            this.setState({
+                uploadedFile: fileName,
+                expectedClientEntryPoint: entryPoint,
+                description: descriptionOfExercise
+            })
         }
 
         return valid
@@ -94,12 +119,16 @@ class NewExercise extends Component {
         var listDescr = document.getElementsByClassName("questiondescription")
         var listExpectedOuput = document.getElementsByClassName("questionexpectedoutput")
         var listPoints = document.getElementsByClassName("questionpoints")
+        var listExpectedInvokedMethod = document.getElementsByClassName("questionexpectedinvokedmethod")
         var listOfQuestionObjects = []
 
         for (var i = 0; i < listTitle.length; i++) {
             listOfQuestionObjects.push({
-                title: listTitle[i].value, description: listDescr[i].value,
-                expectedOutput: listExpectedOuput[i].value, points: listPoints[i].value
+                title: listTitle[i].value,
+                description: listDescr[i].value,
+                expectedOutput: listExpectedOuput[i].value,
+                points: listPoints[i].value,
+                expectedInvokedMethod: listExpectedInvokedMethod[i].value
             })
         }
         return listOfQuestionObjects
@@ -140,7 +169,8 @@ class NewExercise extends Component {
             description=""
             expectedOutput=""
             points=""
-            removeQuestion={this.removeQuestion} />)
+            removeQuestion={this.removeQuestion}
+            expectedInvokedMethod="" />)
         this.setState({ hasAddedNewQuestion: true }) // this is just to trigger the render method
     }
 
@@ -151,13 +181,16 @@ class NewExercise extends Component {
     removeQuestion = (listOfQuestionsObjects) => {
         var newArray = []
         for (var i = 0; i < listOfQuestionsObjects.length; i++) {
+            var question = listOfQuestionsObjects[i]
+
             newArray.push(<Question key={i}
                 id={i}
                 removeQuestion={this.removeQuestion}
-                title={listOfQuestionsObjects[i].title}
-                description={listOfQuestionsObjects[i].description}
-                expectedOutput={listOfQuestionsObjects[i].expectedOutput}
-                points={listOfQuestionsObjects[i].points} />)
+                title={question.title}
+                description={question.description}
+                expectedOutput={question.expectedOutput}
+                expectedInvokedMethod={question.expectedInvokedMethod}
+                points={question.points} />)
         }
         rowsWithQuestions = newArray
         this.setState({ hasAddedNewQuestion: false }) // this is just to trigger the render method
@@ -190,10 +223,16 @@ class NewExercise extends Component {
                         </div>
                     </div>
                     {this.renderFileUpload()}
-                    <div className="row bottomspace">
+                    <div className="row">
                         <div className="col">
                             <label>Expected name of the class with the main method and its package of a Client <span className="systemwarning"> (E.g com.example.MyMainClass)</span></label>
                             <input className="form-control myinputtext" id="expectedClientEntryPoint" type="text" />
+                        </div>
+                    </div>
+                    <div className="row bottomspace">
+                        <div className="col">
+                            <label>Description</label>
+                            <textarea className="form-control" id="description" rows="3" ></textarea>
                         </div>
                     </div>
                     <div className="row paddingLeft15">

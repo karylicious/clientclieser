@@ -11,12 +11,25 @@ class CollapseItem extends Component {
         }
 
         e.target.className += " collapseExerciseActive"
-        this.props.getQuestions(e.target.dataset.id, e.target.dataset.file, e.target.dataset.name, e.target.dataset.type)
+        this.props.getQuestions(e.target.dataset.id,
+            e.target.dataset.file,
+            e.target.dataset.name,
+            e.target.dataset.type,
+            e.target.dataset.expectedcliententrypoint,
+            e.target.dataset.description)
     }
 
     render() {
         return (
-            <div className="collapseExercise" data-id={this.props.id} data-file={this.props.file} data-name={this.props.name} data-type={this.props.type} onClick={this.getDetails}>
+            <div className="collapseExercise"
+                data-id={this.props.id}
+                data-file={this.props.file}
+                data-name={this.props.name}
+                data-type={this.props.type}
+                data-description={this.props.description}
+                data-expectedcliententrypoint={this.props.expectedClientEntryPoint}
+                onClick={this.getDetails}>
+
                 {this.props.name}
             </div>
         )
