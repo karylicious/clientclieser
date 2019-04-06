@@ -5,9 +5,8 @@ import axios from 'axios'
 
 class Collapse extends Component {
 
-    state = {
+    /*state = {
         hasRetrievedData: false,
-        exerciseList: "",
         questionList: "",
         selectedExerciseID: "",
         selectedExerciseFile: "",
@@ -15,7 +14,7 @@ class Collapse extends Component {
         selectedExerciseType: "",
         selectedExerciseExpectedClientEntryPoint: "",
         selectedExerciseDescription: "",
-    }
+    }*/
     toggleCollapse = (e) => {
         var targetID = e.target.dataset.target
         document.getElementById(targetID).classList.toggle("show");
@@ -26,17 +25,17 @@ class Collapse extends Component {
             document.getElementById("collapseOne").classList.remove("show")
     }
 
-    componentDidMount() {
-        axios.get('http://localhost:5000/exercise')
-            .then(response => {
-                this.setState({ exerciseList: response.data })
-            })
-    }
 
 
-    getQuestions = (exerciseID, uploadedfile, exerciseName, exerciseType, exerciseExpectedClientEntryPoint, exerciseDescription) => {
+
+
+
+
+    getExerciseByID = (id) => {//, uploadedfile, exerciseName, exerciseType, exerciseExpectedClientEntryPoint, exerciseDescription) => {
+        this.props.getExerciseByID(id)
+
         //if (this.state.selectedExerciseID != "") {
-        axios.get('http://localhost:5000/exercisequestion?exerciseid=' + exerciseID)
+        /*axios.get('http://localhost:5000/exercisequestion?exerciseid=' + exerciseID)
             .then(response => {
                 this.setState({
                     questionList: response.data,
@@ -47,7 +46,7 @@ class Collapse extends Component {
                     selectedExerciseExpectedClientEntryPoint: exerciseExpectedClientEntryPoint,
                     selectedExerciseDescription: exerciseDescription
                 })
-                this.props.setExercise({
+                this.props.getExerciseByID({
                     id: exerciseID,
                     name: exerciseName,
                     file: uploadedfile,
@@ -56,7 +55,7 @@ class Collapse extends Component {
                     description: exerciseDescription,
                     questionList: response.data
                 })
-            })
+            })*/
         // }
         //this.setState({ selectedExerciseID: id })
     }
@@ -64,7 +63,7 @@ class Collapse extends Component {
     render() {
         var rowsWithItemsClient = []
         var rowsWithItemsClientServer = []
-        var listOfObjs = this.state.exerciseList
+        var listOfObjs = this.props.exerciseList
 
         for (var i = 0; i < listOfObjs.length; i++) {
             var exercise = listOfObjs[i]
@@ -72,21 +71,21 @@ class Collapse extends Component {
                 rowsWithItemsClient.push(<CollapseItem key={rowsWithItemsClient.length}
                     id={exercise.id}
                     name={"Exercise " + (i + 1)}
-                    file={exercise.uploadedfile}
-                    type={exercise.exerciseType}
-                    expectedClientEntryPoint={exercise.expectedClientEntryPoint}
-                    description={exercise.description}
-                    getQuestions={this.getQuestions} />)
+                    //file={exercise.uploadedfile}
+                    //type={exercise.exerciseType}
+                    //expectedClientEntryPoint={exercise.expectedClientEntryPoint}
+                    //description={exercise.description}
+                    getExerciseByID={this.getExerciseByID} />)
             }
             else if (exercise.exerciseType === "clientserver") {
                 rowsWithItemsClientServer.push(<CollapseItem key={rowsWithItemsClientServer.length}
                     id={exercise.id}
                     name={"Exercise " + (i + 1)}
-                    file={exercise.uploadedfile}
-                    type={exercise.exerciseType}
-                    expectedClientEntryPoint={exercise.expectedClientEntryPoint}
-                    description={exercise.description}
-                    getQuestions={this.getQuestions} />)
+                    //file={exercise.uploadedfile}
+                    //type={exercise.exerciseType}
+                    //expectedClientEntryPoint={exercise.expectedClientEntryPoint}
+                    //description={exercise.description}
+                    getExerciseByID={this.getExerciseByID} />)
             }
         }
 

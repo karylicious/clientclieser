@@ -19,9 +19,11 @@ class NewExercise extends Component {
 
     addExercise = () => {
         if (this.isValidForm()) {
+
             var listOfQuestionsObjects = this.getListOfQuestionObjects()
             var path = this.state.dir
             var selectedFile = this.state.uploadedFile.split(".zip")
+
             var data = {
                 uploadedfile: path,
                 description: this.state.description,
@@ -30,8 +32,9 @@ class NewExercise extends Component {
                 expectedClientEntryPoint: this.state.expectedClientEntryPoint,
                 questions: listOfQuestionsObjects
             }
+
             var jsonData = JSON.stringify(data);
-            console.log(jsonData)
+
             axios.post('http://localhost:5000/exercise', jsonData, { headers: { 'Content-Type': 'application/json' } })
                 .then(response => {
                     console.log(response.data)

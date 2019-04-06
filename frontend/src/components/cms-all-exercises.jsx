@@ -21,40 +21,47 @@ class ListExercises extends Component {
         selectedExerciseDescription: "",
         dir: '',
         hasDeletedQuestion: false,
-        hasSelectedExercise: false
+        hasSelectedExercise: false,
+        exerciseList: ''
     }
 
     updateExercise = () => {
         if (this.isValidForm()) {
+
             var listOfQuestionsObjects = this.getListOfQuestionObjects()
             var path = this.state.dir
             var exerciseID = this.state.selectedExerciseID
+            var selectedFile = this.state.uploadedFile.split(".zip")
+
             var data = {
                 uploadedfile: path,
                 description: this.state.description,
+                selectedFileName: selectedFile[0],
                 expectedClientEntryPoint: this.state.expectedClientEntryPoint,
                 id: exerciseID,
                 questions: listOfQuestionsObjects
             }
+
             var jsonData = JSON.stringify(data);
-            //console.log(jsonData)
+
             axios.put('http://localhost:5000/exercise', jsonData, { headers: { 'Content-Type': 'application/json' } })
                 .then(response => {
                     //console.log(response.data)
                     this.setState({
-                        hasAddedNewQuestion: false,
+                        hasSelectedExercise: true
+                        /*hasAddedNewQuestion: false,
                         validForm: false,
                         uploadedFile: '',
                         questionList: "",
-                        selectedExerciseID: "",
+                        //selectedExerciseID: "",
                         selectedExerciseFile: "",
                         selectedExerciseName: "",
                         selectedExerciseType: "",
                         selectedExerciseExpectedClientEntryPoint: "",
                         selectedExerciseDescription: "",
                         dir: '',
-                        hasDeletedQuestion: false,
-                        hasSelectedExercise: false
+                        hasDeletedQuestion: false,*/
+                        //hasSelectedExercise: false
                     })
                 })
         }
@@ -79,6 +86,11 @@ class ListExercises extends Component {
                     hasDeletedQuestion: false,
                     hasSelectedExercise: false
                 })
+
+                axios.get('http://localhost:5000/exercise')
+                    .then(response => {
+                        this.setState({ exerciseList: response.data });
+                    })
             })
     }
 
@@ -174,17 +186,27 @@ class ListExercises extends Component {
         }
     }
 
-    setExercise = (exercise) => {
-        this.setState({
-            questionList: exercise.questionList,
-            selectedExerciseID: exercise.id,
-            selectedExerciseFile: exercise.file,
-            selectedExerciseName: exercise.name,
-            selectedExerciseType: exercise.type,
-            selectedExerciseExpectedClientEntryPoint: exercise.expectedClientEntryPoint,
-            selectedExerciseDescription: exercise.description,
-            hasSelectedExercise: true
-        })
+    getExerciseByID = (id) => {
+        axios.get('http://localhost:5000/exercise?exerciseid=' + id)
+            .then(response => {
+                this.setState({
+                    selectedExerciseID: id,
+                    selectedExerciseFile: response.data['uploadedfile'],
+                    selectedExerciseName: response.data['name'],
+                    selectedExerciseType: response.data['exerciseType'],
+                    selectedExerciseExpectedClientEntryPoint: response.data['expectedClientEntryPoint'],
+                    selectedExerciseDescription: response.data['description'],
+                    hasSelectedExercise: true,
+                    hasDeletedExercise: false
+                })
+
+                axios.get('http://localhost:5000/exercisequestion?exerciseid=' + id)
+                    .then(response => {
+                        this.setState({
+                            questionList: response.data
+                        })
+                    })
+            })
     }
 
     componentDidUpdate() {
@@ -303,7 +325,16 @@ class ListExercises extends Component {
         this.setState({ hasDeletedQuestion: true }) // this is just to trigger the render method
     }
 
+    componentDidMount() {
+        axios.get('http://localhost:5000/exercise')
+            .then(response => {
+                this.setState({ exerciseList: response.data });
+            })
+    }
+
+
     render() {
+        console.log(this.state.exerciseList)
         return (
             <div>
                 <div className="row">
@@ -315,7 +346,7 @@ class ListExercises extends Component {
                     <h2 className="myh2">Exercises</h2>
                     <div className="row marginLeft0">
                         <div className="col-sm-5 collapseColumn">
-                            <Collapse setExercise={this.setExercise} />
+                            <Collapse getExerciseByID={this.getExerciseByID} exerciseList={this.state.exerciseList} />
                         </div>
                         {this.getEditor()}
                     </div>
