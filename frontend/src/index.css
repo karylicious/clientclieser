@@ -315,6 +315,10 @@ text-align: center;
   color: #cacbd1ef !important;
 }
 
+.paddingZero{
+  padding: 0px;
+}
+
 .marginLeft0{
   margin-left:0px
 }
@@ -520,6 +524,10 @@ text-align: center;
   color: white;
   display: block;
   transition: 0.3s;
+}
+
+#loadSpinner{
+  font-size:xx-large;
 }
 
 .overlay a:hover:not(.active) {
@@ -827,6 +835,17 @@ ul{
   background-color: #D9D9D9;
 }
 
+.custom-file-input{
+  z-index: 1;
+}
+
+.input-group-append .btn{
+  z-index: 1;
+}
+
+.custom-file-label{
+  z-index: 0;
+}
 
 .details-content{
   display: none;
@@ -851,47 +870,6 @@ ul{
   background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
 }
 
-/* Modal Content/Box */
-.modal-content {
-  background-color: #fefefe;
-  margin: 15% auto; /* 15% from the top and centered */
-  padding: 20px;
-  border: 1px solid #888;
-  width: 80%; /* Could be more or less, depending on screen size */
-}
-
-/* The Close Button */
-.close {
-  color: #aaa;
-  float: right;
-  font-size: 28px;
-  font-weight: bold;
-}
-
-.close:hover,
-.close:focus {
-  color: black;
-  text-decoration: none;
-  cursor: pointer;
-}
-
-/* Modal Header */
-.modal-header {
-  padding: 2px 16px;
-  background-color: #5cb85c;
-  color: white;
-}
-
-/* Modal Body */
-.modal-body {padding: 2px 16px;}
-
-/* Modal Footer */
-.modal-footer {
-  padding: 2px 16px;
-  background-color: #5cb85c;
-  color: white;
-}
-
 /* Modal Content */
 .modal-content {
   position: relative;
@@ -899,14 +877,55 @@ ul{
   margin: auto;
   padding: 0;
   border: 1px solid #888;
-  width: 80%;
+  top:25%;
+  width: 50%;
   box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2),0 6px 20px 0 rgba(0,0,0,0.19);
   animation-name: animatetop;
-  animation-duration: 0.4s
+  animation-duration: 0.6s
 }
 
 /* Add Animation */
 @keyframes animatetop {
-  from {top: -300px; opacity: 0}
-  to {top: 0; opacity: 1}
+  from {top: 0; opacity: 0}
+  to {top: 25%; opacity: 1}
 }
+
+
+
+
+/* The Close Button text-decoration: none; */
+.closeModal {
+  color: #fff;
+  float: right;
+  border-radius: 4px;
+  padding: 0 4px 4px 4px;
+  font-weight: bold;
+  font-size: 1.8em;
+  line-height: 1;
+}
+
+.closeModal:hover,
+.closeModal:focus {
+  color: #fff;
+  cursor: pointer;
+  background-color: #007995;
+}
+
+/* Modal Header */
+.modal-header {
+  background-color: #1eaecb;
+  color: white;
+  border-radius: 4px;
+  font-weight: 600;
+  padding: 7px;
+}
+
+/* Modal Body */
+.modal-body {padding: 2px 16px;}
+
+/* Modal Footer */
+.modal-footer {
+  padding: 20px;
+  justify-content: flex-end;
+}
+

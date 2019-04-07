@@ -4,40 +4,70 @@ import FileUpload from './fileupload'
 import Footer from './footer'
 import Question from './exercisequestion'
 import axios from 'axios'
+import Modal from './modal'
+import ModalContent from './modalcontent'
 
 var rowsWithQuestions = []
 class NewExercise extends Component {
     state = {
         hasAddedNewQuestion: false,
         validForm: false,
-        uploadedFile: '',
+        uploadedFileName: '',
+        questionListRows: "",
         dir: '',
         typeOfExercise: '',
         description: '',
-        expectedClientEntryPoint: ''
+        expectedClientEntryPoint: '',
+        displayModal: false,
+        modalTitle: '',
+        modalMessage: '',
+        isConfirmationModalType: false,
+        displayWaitImage: false,
+        hasNewExerciseBeenCreated: false
     }
 
     addExercise = () => {
+
         if (this.isValidForm()) {
 
             var listOfQuestionsObjects = this.getListOfQuestionObjects()
-            var path = this.state.dir
-            var selectedFile = this.state.uploadedFile.split(".zip")
+            //var path = this.state.dir
+            //var selectedFile = this.state.uploadedFile.split(".zip")
 
             var data = {
-                uploadedfile: path,
-                description: this.state.description,
+                uploadedfile: this.state.dir,
+                description: document.getElementById("description").value,
                 type: this.state.typeOfExercise,
-                selectedFileName: selectedFile[0],
-                expectedClientEntryPoint: this.state.expectedClientEntryPoint,
+                selectedFileName: this.state.uploadedFileName,
+                expectedClientEntryPoint: document.getElementById("expectedClientEntryPoint").value,
                 questions: listOfQuestionsObjects
             }
 
-            var jsonData = JSON.stringify(data);
+            var jsonData = JSON.stringify(data)
+
+            this.setState({ displayWaitImage: true })
 
             axios.post('http://localhost:5000/exercise', jsonData, { headers: { 'Content-Type': 'application/json' } })
                 .then(response => {
-                    console.log(response.data)
+                    var message, hasSucceed
+                    if (response.data["succeed"] === true) {
+                        message = "Exercise has been created successfully."
+                        hasSucceed = true
+                    }
+                    else if (response.data["succeed"] === false) {
+                        message = response.data["info"]
+                        hasSucceed = false
+                    }
+
+                    this.setState({
+                        displayModal: true,
+                        modalTitle: 'Notification',
+                        modalMessage: message,
+                        isConfirmationModalType: false,
+                        displayWaitImage: false,
+                        hasNewExerciseBeenCreated: hasSucceed
+                    })
+                    console.log(this.state)
                 })
         }
     }
@@ -57,6 +87,7 @@ class NewExercise extends Component {
                 valid = false
             }
             else {
+                document.getElementById("fileChooserTextField").classList.remove("is-invalid")
                 var value = document.getElementById("uploadvalidation").innerHTML
                 if (value !== '')
                     valid = false
@@ -66,7 +97,7 @@ class NewExercise extends Component {
         var allElements = document.getElementsByClassName("form-control")
 
         // (allElements.length == 2) 2 means the two input fields of the exercise details
-        if (allElements.length == 2) {
+        if (allElements.length === 2) {
             document.getElementById("pQuestionValidatorFeedback").innerHTML = "Please add a question"
             valid = false
         }
@@ -106,9 +137,10 @@ class NewExercise extends Component {
         }
 
         if (valid) {
-            var fileName = document.getElementById("fileChooserLabel").innerHTML
+            //This needs to be revised. compare it with the all exercises
+            //var fileName = document.getElementById("fileChooserLabel").innerHTML
             this.setState({
-                uploadedFile: fileName,
+                //uploadedFile: fileName,
                 expectedClientEntryPoint: entryPoint,
                 description: descriptionOfExercise
             })
@@ -124,6 +156,7 @@ class NewExercise extends Component {
         var listPoints = document.getElementsByClassName("questionpoints")
         var listExpectedInvokedMethod = document.getElementsByClassName("questionexpectedinvokedmethod")
         var listOfQuestionObjects = []
+        var rows = []
 
         for (var i = 0; i < listTitle.length; i++) {
             listOfQuestionObjects.push({
@@ -133,7 +166,18 @@ class NewExercise extends Component {
                 points: listPoints[i].value,
                 expectedInvokedMethod: listExpectedInvokedMethod[i].value
             })
+
+            rows.push(<Question key={i}
+                id={i}
+                title={listTitle[i].value}
+                description={listDescr[i].value}
+                expectedOutput={listExpectedOuput[i].value}
+                points={listPoints[i].value}
+                removeQuestion={this.removeQuestion}
+                expectedInvokedMethod={listExpectedInvokedMethod[i].value} />)
         }
+
+        this.setState({ questionListRows: rows })
         return listOfQuestionObjects
     }
 
@@ -151,17 +195,28 @@ class NewExercise extends Component {
         if (this.state.selectedComponent === "client") {
             return (
                 <div className="row bottomspace marginLeft-15">
-                    <FileUpload uploadedFile={this.setPath} colClass={"col-sm-7"} fileUploadHeadings='Upload a complete Web Service as .zip file' regularUser={false}></FileUpload>
+                    <FileUpload uploadedFile={this.setPath} colClass={"col-sm-7"} fileUploadHeadings='Upload a complete Web Service as .zip file'></FileUpload>
                 </div>
             )
         }
         else if (this.state.selectedComponent === "both") {
             return (
                 <div className="row bottomspace marginLeft-15">
-                    <FileUpload uploadedFile={this.setPath} colClass={"col-sm-7"} fileUploadHeadings='Upload a dummy Client and a dummy Server as .zip file' regularUser={false}></FileUpload>
+                    <FileUpload uploadedFile={this.setPath} colClass={"col-sm-7"} fileUploadHeadings='Upload a dummy Client and a dummy Server as .zip file'></FileUpload>
                 </div>
             )
         }
+    }
+
+    handleCloseModal = () => {
+        document.getElementById('modal-root').style.display = "none"
+        if (this.state.hasNewExerciseBeenCreated === true) {
+            this.returnToListView()
+        }
+    }
+
+    returnToListView = () => {
+        this.props.history.push("/cms/all-exercises");
     }
 
     handleAddQuestionButtonListener = () => {
@@ -174,11 +229,20 @@ class NewExercise extends Component {
             points=""
             removeQuestion={this.removeQuestion}
             expectedInvokedMethod="" />)
-        this.setState({ hasAddedNewQuestion: true }) // this is just to trigger the render method
+        this.setState({ hasAddedNewQuestion: true, questionListRows: '' }) // this is just to trigger the render method
     }
 
-    setPath = (path) => {
-        this.setState({ dir: path })
+    setPath = (path, fileName) => {
+        this.setState({ dir: path, uploadedFileName: fileName })
+    }
+
+    displayConfirmationDialog = () => {
+        this.setState({
+            displayModal: true,
+            modalTitle: 'Cancellation',
+            modalMessage: 'Are you sure you want to leave this page?',
+            isConfirmationModalType: true
+        })
     }
 
     removeQuestion = (listOfQuestionsObjects) => {
@@ -196,22 +260,51 @@ class NewExercise extends Component {
                 points={question.points} />)
         }
         rowsWithQuestions = newArray
-        this.setState({ hasAddedNewQuestion: false }) // this is just to trigger the render method
+        this.setState({ hasAddedNewQuestion: false, displayModal: false, questionListRows: '' }) // this is just to trigger the render method
     }
 
-    render() {
-        return (
-            <div>
+    componentDidMount() {
+        if (this.state.displayModal === false) {
+            document.getElementById('modal-root').classList.add("modal")
+            document.getElementById('modal-root').style.display = "none"
+        }
+    }
+
+    componentDidUpdate() {
+        if (this.state.displayModal === true) {
+            document.getElementById('modal-root').style.display = "block"
+            this.setState({ displayModal: false })
+
+            if (this.state.hasNewExerciseBeenCreated === false) {
+                if (this.state.typeOfExercise === 'client') {
+                    document.getElementById("radioClient").checked = true
+                    document.getElementById("radioClientServer").checked = false
+                }
+                else if (this.state.typeOfExercise === 'clientserver') {
+                    document.getElementById("radioClient").checked = false
+                    document.getElementById("radioClientServer").checked = true
+                }
+            }
+
+        }
+
+    }
+
+
+    renderMiddleComponents = () => {
+        if (this.state.displayWaitImage === true) {
+            return (
                 <div className="row">
-                    <div className="col-sm-4">
-                        <Logo></Logo>
-                    </div>
+                    <i id="loadSpinner" className="fa fa-spinner fa-spin" />
+                    <p>Please wait...</p>
                 </div>
-                <div className="container">
-                    <h2 className="myh2">Exercises</h2>
-                    <div className="row">
-                        <div className="col"><h4>New exercise</h4><hr className="myhr" /></div>
-                    </div>
+            )
+        }
+        else if (this.state.hasNewExerciseBeenCreated === false) {
+            if (this.state.questionListRows !== '')
+                rowsWithQuestions = this.state.questionListRows
+            return (
+                <div>
                     <div className="row bottomspace">
                         <div className="col">
                             <p id="radioHeadings">Select the type of components exercise</p>
@@ -229,13 +322,13 @@ class NewExercise extends Component {
                     <div className="row">
                         <div className="col">
                             <label>Expected name of the class with the main method and its package of a Client <span className="systemwarning"> (E.g com.example.MyMainClass)</span></label>
-                            <input className="form-control myinputtext" id="expectedClientEntryPoint" type="text" />
+                            <input className="form-control myinputtext" id="expectedClientEntryPoint" type="text" defaultValue={this.state.expectedClientEntryPoint} />
                         </div>
                     </div>
                     <div className="row bottomspace">
                         <div className="col">
                             <label>Description</label>
-                            <textarea className="form-control" id="description" rows="3" ></textarea>
+                            <textarea className="form-control" id="description" rows="3" defaultValue={this.state.description} ></textarea>
                         </div>
                     </div>
                     <div className="row paddingLeft15">
@@ -246,10 +339,36 @@ class NewExercise extends Component {
                         {rowsWithQuestions}
                     </div>
                     <div className="textright bottomspace">
-                        <button className="mybtn" onClick={this.addExercise}>Create Exercise</button>
+                        <button className="mybtn" onClick={this.displayConfirmationDialog}>Cancel</button> <button className="mybtn" onClick={this.addExercise}>Create Exercise</button>
                     </div>
                 </div>
+            )
+        }
+    }
+
+    render() {
+        return (
+            <div>
+                <div className="row">
+                    <div className="col-sm-4">
+                        <Logo></Logo>
+                    </div>
+                </div>
+                <div className="container">
+                    <h2 className="myh2">Exercises</h2>
+                    <div className="row">
+                        <div className="col"><h4>New exercise</h4><hr className="myhr" /></div>
+                    </div>
+                    {this.renderMiddleComponents()}
+                </div>
                 <div className="otherFooter"><Footer /></div>
+                <Modal children={<ModalContent
+                    title={this.state.modalTitle}
+                    message={this.state.modalMessage}
+                    isConfirmationModalType={this.state.isConfirmationModalType}
+                    handleCloseModal={this.handleCloseModal}
+                    handleConfirmation={this.returnToListView} />}>
+                </Modal>
             </div>
         )
     }

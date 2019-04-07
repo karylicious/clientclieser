@@ -5,13 +5,13 @@ class FileUpload extends Component {
     state = {
         selectedFile: null,
         validFile: false,
-        isFileUploaded: false,
+        //isFileUploaded: false,
         dir: null
     }
 
     selectFile = event => {
         var file = event.target.files[0]
-
+        console.log(file)
         if (typeof file !== "undefined") {
 
             if (this.state.dir !== null) {
@@ -19,30 +19,51 @@ class FileUpload extends Component {
                 this.deletePrevDir()
             }
 
+
             document.getElementById("fileChooserLabel").innerHTML = file.name;
             this.setState({ selectedFile: file })
             this.validateFile(file)
         }
         else {
+            console.log("del")
             //this means that the user after having chosen a file tried to choose a file again but
             // pressed cancel button
-            this.deletePrevDir()
-            this.setState({ isFileUploaded: false })
-            this.setState({ selectedFile: null })
-            this.setState({ dir: null })
+            if (this.state.dir !== null)
+                this.deletePrevDir()
+            /*this.setState({
+                isFileUploaded: false,
+                selectedFile: null,
+                dir: null,
+                validFile: false
+            })*/
+            this.resetComponent()
 
-            document.getElementById("fileChooserLabel").innerHTML = 'Choose file'
-            document.getElementById("uploadvalidation").innerHTML = ''
-            document.getElementById("uploadFeedback").innerHTML = ''
+
+
 
         }
     }
 
+    resetComponent = () => {
+        document.getElementById("fileChooserTextField").value = null
+        document.getElementById("fileChooserLabel").innerHTML = 'Choose file'
+        document.getElementById("uploadvalidation").innerHTML = ''
+        document.getElementById("uploadFeedback").innerHTML = ''
+        document.getElementById("fileChooserTextField").classList.remove("is-invalid")
+
+        this.setState({
+            //isFileUploaded: false,
+            selectedFile: null,
+            dir: null,
+            validFile: false
+        })
+    }
+
     deletePrevDir() {
         axios.delete('http://localhost:5000/deletedir?dir=' + this.state.dir)
-            .then(response => {
-                //console.log(response)
-            })
+        //.then(response => {
+        //console.log(response)
+        // })
     }
 
     uploadFile = () => {
@@ -54,9 +75,9 @@ class FileUpload extends Component {
             axios.post('http://localhost:5000/uploadfile', formData)
                 .then(response => {
 
-                    if (response.data['succeed'] === 'true') {
-                        this.setState({ isFileUploaded: true })
+                    if (response.data['succeed'] === true) {
                         this.setState({ dir: response.data['d'] })
+
 
                         document.getElementById("fileChooserTextField").classList.remove("is-invalid")
                         document.getElementById("uploadvalidation").innerHTML = ''
@@ -66,15 +87,15 @@ class FileUpload extends Component {
                         //document.getElementById("uploadFeedback").innerHTML += "<input type='hidden' id='hid' value='" + response.data['d'] + "'>"
 
                         if (this.props.uploadedFile !== null)
-                            this.props.uploadedFile(response.data['d'] + "/" + this.state.selectedFile.name)
+                            this.props.uploadedFile(response.data['d'] + "/" + this.state.selectedFile.name, this.state.selectedFile.name)
                     }
                 })
         }
         else {
-            this.setState({ isFileUploaded: false })
-            document.getElementById("fileChooserTextField").className += " is-invalid"
+            //this.setState({ isFileUploaded: false })
+            //document.getElementById("fileChooserTextField").className += " is-invalid"
             document.getElementById("uploadFeedback").innerHTML = ''
-            this.props.uploadedFile("")
+            //this.props.uploadedFile("")
         }
     }
 
@@ -92,13 +113,25 @@ class FileUpload extends Component {
             reason = 'Invalid file'
             this.setState({ validFile: false })
         }
-        this.validationFeedback(valid, reason)
-    }
-
-    validationFeedback(valid, reason) {
         if (valid)
             document.getElementById("fileChooserTextField").classList.remove("is-invalid")
         document.getElementById("uploadvalidation").innerHTML = reason
+    }
+
+    //validationFeedback(valid, reason) {
+    //   if (valid)
+    //       document.getElementById("fileChooserTextField").classList.remove("is-invalid")
+    // document.getElementById("uploadvalidation").innerHTML = reason
+    // }
+
+    componentDidUpdate() {
+        console.log(this.props)
+        //if (this.props.reset === false)
+        //    return
+        if (this.props.reset === true) {
+            this.resetComponent()
+            this.props.setResetToFalse(false)
+        }
     }
 
     render() {
