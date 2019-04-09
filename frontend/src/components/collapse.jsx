@@ -1,9 +1,7 @@
 import React, { Component } from 'react'
 import CollapseItem from './collapseitem'
-import axios from 'axios'
 
-
-class Collapse extends Component {
+export default class Collapse extends Component {
 
     /*state = {
         hasRetrievedData: false,
@@ -65,12 +63,14 @@ class Collapse extends Component {
         var rowsWithItemsClientServer = []
         var listOfObjs = this.props.exerciseList
 
+        var clientExerciseTypeCounter = 0
+        var serverExerciseTypeCounter = 0
         for (var i = 0; i < listOfObjs.length; i++) {
             var exercise = listOfObjs[i]
             if (exercise.exerciseType === "client") {
                 rowsWithItemsClient.push(<CollapseItem key={rowsWithItemsClient.length}
                     id={exercise.id}
-                    name={"Exercise " + (i + 1)}
+                    name={"Exercise " + (++clientExerciseTypeCounter)}
                     //file={exercise.uploadedfile}
                     //type={exercise.exerciseType}
                     //expectedClientEntryPoint={exercise.expectedClientEntryPoint}
@@ -80,7 +80,7 @@ class Collapse extends Component {
             else if (exercise.exerciseType === "clientserver") {
                 rowsWithItemsClientServer.push(<CollapseItem key={rowsWithItemsClientServer.length}
                     id={exercise.id}
-                    name={"Exercise " + (i + 1)}
+                    name={"Exercise " + (++serverExerciseTypeCounter)}
                     //file={exercise.uploadedfile}
                     //type={exercise.exerciseType}
                     //expectedClientEntryPoint={exercise.expectedClientEntryPoint}
@@ -89,10 +89,10 @@ class Collapse extends Component {
             }
         }
 
-        if (rowsWithItemsClientServer.length == 0)
+        if (rowsWithItemsClientServer.length === 0)
             rowsWithItemsClientServer.push(<div key={0} className="noExercises">There is no exercise</div>)
 
-        if (rowsWithItemsClient.length == 0)
+        if (rowsWithItemsClient.length === 0)
             rowsWithItemsClient.push(<div key={0} className="noExercises">There is no exercise</div>)
 
 
@@ -134,4 +134,3 @@ class Collapse extends Component {
         )
     }
 }
-export default Collapse

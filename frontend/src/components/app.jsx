@@ -12,6 +12,7 @@ import Exercises from './exercises'
 import CMS from './cms'
 import NewExercise from './cms-new-exercise'
 import ListExercises from './cms-all-exercises'
+import Management from './cms-management'
 
 class App extends Component {
     render() {
@@ -28,13 +29,14 @@ class App extends Component {
                         <Route path="/client-server-system/write-server" exact component={WriteServer} />
                         <Route path="/tutorials" exact component={Tutorials} />
                         <Route path="/cms" exact component={CMS} />
-                        <Route path="/cms/new-exercise" exact component={NewExercise} />
-                        <Route path="/cms/all-exercises" exact component={ListExercises} />
+                        <Route path="/cms/new-exercise/:username" exact component={NewExercise} />
+                        <Route path="/cms/all-exercises/:username" exact component={ListExercises} />
+                        <Route path="/cms/management/:username" exact component={Management} />
                         <Route component={Notfound} />
                     </Switch>
                 </div>
             </div>
-        );
+        )
     }
 }
 

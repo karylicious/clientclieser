@@ -1,14 +1,14 @@
 import React, { Component } from 'react'
 import Logo from './logo'
-import FileUpload from './fileupload'
 import Footer from './footer'
 import Question from './exercisequestion'
 import axios from 'axios'
 import Modal from './modal'
 import ModalContent from './modalcontent'
+import NewExerciseForm from './new-exercise-form'
 
 var rowsWithQuestions = []
-class NewExercise extends Component {
+export default class NewExercise extends Component {
     state = {
         hasAddedNewQuestion: false,
         validForm: false,
@@ -23,10 +23,11 @@ class NewExercise extends Component {
         modalMessage: '',
         isConfirmationModalType: false,
         displayWaitImage: false,
-        hasNewExerciseBeenCreated: false
+        hasNewExerciseBeenCreated: false,
+        isLoggedIn: false
     }
 
-    addExercise = () => {
+    handleAddExercise = () => {
 
         if (this.isValidForm()) {
 
@@ -67,7 +68,6 @@ class NewExercise extends Component {
                         displayWaitImage: false,
                         hasNewExerciseBeenCreated: hasSucceed
                     })
-                    console.log(this.state)
                 })
         }
     }
@@ -191,23 +191,6 @@ class NewExercise extends Component {
         this.setState({ selectedComponent: 'both', typeOfExercise: 'clientserver' })
     }
 
-    renderFileUpload() {
-        if (this.state.selectedComponent === "client") {
-            return (
-                <div className="row bottomspace marginLeft-15">
-                    <FileUpload uploadedFile={this.setPath} colClass={"col-sm-7"} fileUploadHeadings='Upload a complete Web Service as .zip file'></FileUpload>
-                </div>
-            )
-        }
-        else if (this.state.selectedComponent === "both") {
-            return (
-                <div className="row bottomspace marginLeft-15">
-                    <FileUpload uploadedFile={this.setPath} colClass={"col-sm-7"} fileUploadHeadings='Upload a dummy Client and a dummy Server as .zip file'></FileUpload>
-                </div>
-            )
-        }
-    }
-
     handleCloseModal = () => {
         document.getElementById('modal-root').style.display = "none"
         if (this.state.hasNewExerciseBeenCreated === true) {
@@ -216,7 +199,8 @@ class NewExercise extends Component {
     }
 
     returnToListView = () => {
-        this.props.history.push("/cms/all-exercises");
+        const { username } = this.props.match.params
+        this.props.history.push("/cms/all-exercises/" + username)
     }
 
     handleAddQuestionButtonListener = () => {
@@ -268,6 +252,14 @@ class NewExercise extends Component {
             document.getElementById('modal-root').classList.add("modal")
             document.getElementById('modal-root').style.display = "none"
         }
+        const { username } = this.props.match.params
+
+        axios.get('http://localhost:5000/session?username=' + username)
+            .then(response => {
+                if (response.data['loggedin']) {
+                    this.setState({ isLoggedIn: true })
+                }
+            })
     }
 
     componentDidUpdate() {
@@ -291,7 +283,7 @@ class NewExercise extends Component {
     }
 
 
-    renderMiddleComponents = () => {
+    renderForm = () => {
         if (this.state.displayWaitImage === true) {
             return (
                 <div className="row">
@@ -303,50 +295,32 @@ class NewExercise extends Component {
         else if (this.state.hasNewExerciseBeenCreated === false) {
             if (this.state.questionListRows !== '')
                 rowsWithQuestions = this.state.questionListRows
-            return (
-                <div>
-                    <div className="row bottomspace">
-                        <div className="col">
-                            <p id="radioHeadings">Select the type of components exercise</p>
-                            <div className="divRadio">
-                                <label className="labelRadio">
-                                    <input type="radio" className="form-check-input" name="optradio" id="radioClient" onClick={this.clientRadioButtonListener} />Client component
-                                </label>
-                                <label>
-                                    <input type="radio" className="form-check-input" name="optradio" id="radioClientServer" onClick={this.clientserverRadioButtonListener} />Both Client and Server components
-                                </label>
-                            </div>
-                        </div>
-                    </div>
-                    {this.renderFileUpload()}
-                    <div className="row">
-                        <div className="col">
-                            <label>Expected name of the class with the main method and its package of a Client <span className="systemwarning"> (E.g com.example.MyMainClass)</span></label>
-                            <input className="form-control myinputtext" id="expectedClientEntryPoint" type="text" defaultValue={this.state.expectedClientEntryPoint} />
-                        </div>
-                    </div>
-                    <div className="row bottomspace">
-                        <div className="col">
-                            <label>Description</label>
-                            <textarea className="form-control" id="description" rows="3" defaultValue={this.state.description} ></textarea>
-                        </div>
-                    </div>
-                    <div className="row paddingLeft15">
-                        <button className="btn btn-outline-secondary" type="button" onClick={this.handleAddQuestionButtonListener}>Add Question</button>
-                    </div>
-                    <p id="pQuestionValidatorFeedback" className="paddingLeft15 bottomspace redWarning"></p>
-                    <div className="container">
-                        {rowsWithQuestions}
-                    </div>
-                    <div className="textright bottomspace">
-                        <button className="mybtn" onClick={this.displayConfirmationDialog}>Cancel</button> <button className="mybtn" onClick={this.addExercise}>Create Exercise</button>
-                    </div>
-                </div>
-            )
+
+            return <NewExerciseForm rowsWithQuestions={rowsWithQuestions}
+                selectedComponent={this.state.selectedComponent}
+                setPath={this.setPath}
+                clientRadioButtonListener={this.clientRadioButtonListener}
+                clientserverRadioButtonListener={this.clientserverRadioButtonListener}
+                expectedClientEntryPoint={this.state.expectedClientEntryPoint}
+                description={this.state.description}
+                handleAddQuestionButtonListener={this.handleAddQuestionButtonListener}
+                displayConfirmationDialog={this.displayConfirmationDialog}
+                handleAddExercise={this.handleAddExercise} />
         }
     }
 
     render() {
+        if (!this.state.isLoggedIn) {
+            const { username } = this.props.match.params
+
+            axios.get('http://localhost:5000/session?username=' + username)
+                .then(response => {
+                    if (!response.data['loggedin']) {
+                        this.props.history.push("/cms")
+                    }
+                })
+        }
+
         return (
             <div>
                 <div className="row">
@@ -359,7 +333,7 @@ class NewExercise extends Component {
                     <div className="row">
                         <div className="col"><h4>New exercise</h4><hr className="myhr" /></div>
                     </div>
-                    {this.renderMiddleComponents()}
+                    {this.renderForm()}
                 </div>
                 <div className="otherFooter"><Footer /></div>
                 <Modal children={<ModalContent
@@ -372,5 +346,4 @@ class NewExercise extends Component {
             </div>
         )
     }
-}
-export default NewExercise
+} 

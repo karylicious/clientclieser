@@ -4,8 +4,8 @@ class CollapseItem extends Component {
 
     getDetails = (e) => {
         var elements = document.getElementsByClassName("collapseExerciseActive")
-        if (elements.length == 1) {
-            if (elements[0].dataset.id == e.target.dataset.id)
+        if (elements.length === 1) {
+            if (elements[0].dataset.id === e.target.dataset.id)
                 return
             elements[0].classList.remove("collapseExerciseActive")
         }

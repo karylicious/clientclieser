@@ -130,6 +130,11 @@ body {
 .StepCentered{
   justify-content: center;
 }
+
+.alignRowCenter{
+  justify-content: center;
+}
+
 .redStep{
   color: white;
   font-weight: 600;
@@ -188,6 +193,10 @@ body {
   padding: 20px;
 }
 
+#answer-rules li{
+  margin-bottom: 20px;
+}
+
 .blurredElement{
   border-radius: 20px;
   box-shadow: 0px 0px 18px 4px rgba(9, 211, 246, 0.2), 0 0px 30px 0 rgba(9, 211, 246, 0.19);
@@ -208,6 +217,15 @@ textarea {
   padding-left: 15px;
 }
 
+
+.panelOptions:hover  p{
+  background-color: #53DEF6;
+}
+
+.panelOptions:hover{
+  cursor: pointer;
+}
+
 .bluep{
   background-color: #09d3f6;
   border-bottom-left-radius: 17px;
@@ -215,12 +233,15 @@ textarea {
   padding: 10px;
   font-weight: 700;
   text-align: right;
-    cursor: pointer;
 }
 
-.bluep:hover{
-  background-color: #53DEF6;
+.bottomRight{
+  bottom: 0;
+  position: absolute;
+  right: 0;
 }
+
+
 
 .homeFooter{
   margin-top: -25px;
@@ -682,6 +703,9 @@ box-shadow:0 0px 4px rgba(255, 0, 0, 0.3), 0 0 40px rgba(0, 0, 0, 0.0) inset;
   color: white;
   cursor:pointer;
 }
+.marginRight10{
+  margin-right: 10px;
+}
 
 .textright{
   text-align: right;
@@ -929,3 +953,10 @@ ul{
   justify-content: flex-end;
 }
 
+
+.imageCentered{
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+  padding-top: 50px;
+}

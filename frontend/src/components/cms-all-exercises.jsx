@@ -1,15 +1,15 @@
 import React, { Component } from 'react'
 import Logo from './logo'
-import FileUpload from './fileupload'
 import Footer from './footer'
 import Question from './exercisequestion'
 import Collapse from './collapse'
 import axios from 'axios'
 import Modal from './modal'
 import ModalContent from './modalcontent'
+import EditExerciseForm from './edit-exercise-form'
 
 var rowsWithQuestions = []
-class ListExercises extends Component {
+export default class ListExercises extends Component {
     state = {
         hasAddedNewQuestion: false,
         validForm: false,
@@ -17,29 +17,33 @@ class ListExercises extends Component {
         questionList: "",
         selectedExerciseID: "",
         selectedExerciseFile: "",
-        selectedExerciseName: "",
+        //selectedExerciseName: "",
         selectedExerciseType: "",
         selectedExerciseExpectedClientEntryPoint: "",
         selectedExerciseDescription: "",
         dir: "",
         hasDeletedQuestion: false,
         hasSelectedExercise: false,
-        exerciseList: '',
+        exerciseList: [],
         resetUploadFileComponent: false,
         //modalChild: '',
         displayModal: false,
         modalTitle: '',
         modalMessage: '',
         isConfirmationModalType: false,
-        displayWaitImage: false
+        displayWaitImage: false,
+        displayPasswordManagementPanel: false,
+        displayWarningPasswordEmpty: false,
+        isLoggedIn: false
     }
 
-    updateExercise = () => {
+    handleUpdateExercise = () => {
         if (this.isValidForm()) {
 
             var listOfQuestionsObjects = this.getListOfQuestionObjects()
 
             var data = {
+                type: this.state.selectedExerciseType,
                 uploadedfile: this.state.dir,
                 description: document.getElementById("description").value,
                 selectedFileName: this.state.uploadedFileName,
@@ -55,11 +59,9 @@ class ListExercises extends Component {
             axios.put('http://localhost:5000/exercise', jsonData, { headers: { 'Content-Type': 'application/json' } })
                 .then(response => {
                     window.scrollTo(0, 0)
-                    if (this.state.uploadedFileName !== "") {
-                        if (response.data["succeed"] === true)
-                            document.getElementById("attachmentLink").innerHTML = this.state.uploadedFileName
-                        this.setState({ resetUploadFileComponent: true, uploadedFileName: "", dir: "" })
-                    }
+
+                    if (this.state.uploadedFileName !== "")
+                        this.setState({ resetUploadFileComponent: true, selectedExerciseFile: this.state.dir, dir: "", uploadedFileName: "" })
 
                     var message
                     if (response.data["succeed"] === true) {
@@ -90,8 +92,8 @@ class ListExercises extends Component {
         }
     }
 
-    setResetUploadFileComponent = (state) => {
-        this.setState({ resetUploadFileComponent: state, displayModal: false })
+    setResetUploadFileComponent = () => {
+        this.setState({ resetUploadFileComponent: false, displayModal: false })
     }
 
     displayConfirmationDialog = () => {
@@ -104,7 +106,37 @@ class ListExercises extends Component {
         })
     }
 
-    deleteExercise = () => {
+    handleDownloadFile = () => {
+        axios.get('http://localhost:5000/zipfile?file=' + this.state.selectedExerciseFile)
+            .then(response => {
+                //alert(response.data)
+                if (response.data["succeed"] === false) {
+                    this.setState({
+                        displayModal: true,
+                        modalTitle: 'Notification',
+                        modalMessage: 'File not found.',
+                        isConfirmationModalType: false,
+                        displayWaitImage: false
+                    })
+                }
+                else {
+                    var MIME_TYPE = "application/x-zip-compressed";
+
+                    var blob = new Blob([response.data], { type: MIME_TYPE })
+
+                    var link = document.createElement('a');
+                    // convert bite array into blob
+                    link.href = window.URL.createObjectURL(blob);
+                    // set a human file name
+                    var fileName = this.state.selectedExerciseFile.split("/")
+                    link.download = fileName[1];
+                    // triggers automatic download
+                    link.click()
+                }
+            })
+    }
+
+    handleDeleteExercise = () => {
         this.handleCloseModal()
         this.setState({ displayWaitImage: true })
         axios.delete('http://localhost:5000/exercise?exerciseid=' + this.state.selectedExerciseID)
@@ -114,10 +146,10 @@ class ListExercises extends Component {
                     hasAddedNewQuestion: false,
                     validForm: false,
                     uploadedFileName: '',
-                    questionList: "",
+                    questionList: [],
                     selectedExerciseID: "",
                     selectedExerciseFile: "",
-                    selectedExerciseName: "",
+                    //selectedExerciseName: "",
                     selectedExerciseType: "",
                     selectedExerciseExpectedClientEntryPoint: "",
                     selectedExerciseDescription: "",
@@ -133,7 +165,7 @@ class ListExercises extends Component {
                 })
 
                 var elements = document.getElementsByClassName("collapseExerciseActive")
-                if (elements.length == 1)
+                if (elements.length === 1)
                     elements[0].classList.remove("collapseExerciseActive")
 
                 axios.get('http://localhost:5000/exercise')
@@ -147,8 +179,8 @@ class ListExercises extends Component {
         var valid = true
         var allElements = document.getElementsByClassName("form-control")
 
-        // (allElements.length == 2) 2 means the two input fields of the exercise details
-        if (allElements.length == 2) {
+        // (allElements.length == 2) 2 means the two input fields of the exercise details and the two inputs of the change of password form
+        if (allElements.length === 4) {
             document.getElementById("pQuestionValidatorFeedback").innerHTML = "Please add a question"
             valid = false
         }
@@ -228,37 +260,28 @@ class ListExercises extends Component {
         return listOfQuestionObjects
     }
 
-    renderFileUpload() {
-
-        if (this.state.selectedExerciseType === "client") {
-            return (
-                <div className="row bottomspace marginLeft-15">
-                    <FileUpload uploadedFile={this.setPath} setResetToFalse={this.setResetUploadFileComponent} reset={this.state.resetUploadFileComponent} colClass={"col"} fileUploadHeadings='Upload new Web Service as .zip file' regularUser={false}></FileUpload>
-                </div>
-            )
-        }
-        else if (this.state.selectedExerciseType === "clientserver") {
-            return (
-                <div className="row bottomspace marginLeft-15">
-                    <FileUpload uploadedFile={this.setPath} setResetToFalse={this.setResetUploadFileComponent} reset={this.state.resetUploadFileComponent} colClass={"col"} fileUploadHeadings='Upload new dummy Client and a dummy Server as .zip file' regularUser={false}></FileUpload>
-                </div>
-            )
-        }
+    renderPanelManagement = () => {
+        const { username } = this.props.match.params
+        this.props.history.push("/cms/management/" + username)
     }
 
     getExerciseByID = (id) => {
+        if (this.state.dir !== "")
+            this.setState({ resetUploadFileComponent: true, dir: "", uploadedFileName: "" })
+
         axios.get('http://localhost:5000/exercise?exerciseid=' + id)
             .then(response => {
 
                 this.setState({
                     selectedExerciseID: id,
                     selectedExerciseFile: response.data['uploadedfile'],
-                    selectedExerciseName: response.data['name'],
+                    //selectedExerciseName: response.data['name'],
                     selectedExerciseType: response.data['exerciseType'],
                     selectedExerciseExpectedClientEntryPoint: response.data['expectedClientEntryPoint'],
                     selectedExerciseDescription: response.data['description'],
                     hasSelectedExercise: true,
                     hasDeletedExercise: false,
+                    hasDeletedQuestion: false,
                     resetUploadFileComponent: false,
                     displayModal: false
                 })
@@ -273,21 +296,34 @@ class ListExercises extends Component {
     }
 
     componentDidUpdate() {
-        if (this.state.hasSelectedExercise == true) {
+
+        if (this.state.hasSelectedExercise === true) {
+
             document.getElementById("expectedClientEntryPoint").value = this.state.selectedExerciseExpectedClientEntryPoint
             document.getElementById("description").value = this.state.selectedExerciseDescription
-            //    var fileName = this.state.selectedExerciseFile.split("/")
-            //   document.getElementById("attachmentLink").innerHTML = fileName[1]
-            this.setState({
-                hasSelectedExercise: false
-            })
+
+            var fileName = this.state.selectedExerciseFile.split("/")
+            document.getElementById("attachedFileName").innerHTML = fileName[1]
+
+            this.setState({ hasSelectedExercise: false })
         }
+
+        if (this.state.displayWarningPasswordEmpty)
+            document.getElementById('pWarning').innerHTML = "No password is set! This system is at risk. Set a password."
+        else
+            document.getElementById('pWarning').innerHTML = ""
+
+
+        /*if (this.state.resetUploadFileComponent === true) {
+            console.log(this.state.uploadedFileName)
+            document.getElementById("attachedFileName").innerHTML = this.state.uploadedFileName
+            this.setState({ dir: "", uploadedFileName: "" })
+            console.log("uplooo")
+        }*/
+
     }
 
-
-
-
-    getEditor() {
+    renderForm() {
         if (this.state.displayWaitImage === true) {
             return (
                 <div className="col">
@@ -296,19 +332,22 @@ class ListExercises extends Component {
                 </div>
             )
         }
-        else if (this.state.selectedExerciseID == "") {
+        else if (this.state.selectedExerciseID === "") {
             return (
                 <div className="col">
                     <p>Here you can edit your exercises!</p>
+                    <div className="bottomRight">
+                        <button className="mybtn" onClick={this.renderPanelManagement}>Return</button>
+                    </div>
                 </div>
             )
         }
         else if (this.state.selectedExerciseID !== "") {
             var type
-            if (this.state.selectedExerciseType == "client") {
+            if (this.state.selectedExerciseType === "client") {
                 type = "Client Component"
             }
-            else if (this.state.selectedExerciseType == "clientserver") {
+            else if (this.state.selectedExerciseType === "clientserver") {
                 type = "Both Client and Server Components"
             }
 
@@ -321,7 +360,7 @@ class ListExercises extends Component {
             var fileName = this.state.selectedExerciseFile.split("/")
 
 
-            if (this.state.hasDeletedQuestion == false) {
+            if (this.state.hasDeletedQuestion === false) {
                 //if (this.state.hasSelectedExercise == true) {
                 rowsWithQuestions = []
                 //}
@@ -342,45 +381,22 @@ class ListExercises extends Component {
                 }
 
             }
-            return (
-                <div className="col">
-                    <div className="row">
-                        <div className="col"><h4>Edit exercise</h4><hr className="myhr" /></div>
-                    </div>
-                    <div className="row bottomspace">
-                        <div className="col">Type of components exercise: <strong>{type}</strong></div>
-                    </div>
 
-                    <div className="row bottomspace">
-                        <div className="col">Attached file: <a id="attachmentLink">{fileName[1]}</a> </div>
-                    </div>
-
-                    {this.renderFileUpload()}
-                    <div className="row">
-                        <div className="col">
-                            <label>Expected name of the class with the main method and its package of a Client <span className="systemwarning"> (E.g com.example.MyMainClass)</span></label>
-                            <input className="form-control myinputtext" id="expectedClientEntryPoint" type="text" defaultValue={this.state.selectedExerciseExpectedClientEntryPoint} />
-                        </div>
-                    </div>
-                    <div className="row bottomspace">
-                        <div className="col">
-                            <label>Description</label>
-                            <textarea className="form-control" id="description" rows="3" defaultValue={this.state.selectedExerciseDescription}></textarea>
-                        </div>
-                    </div>
-                    <div className="row paddingLeft15">
-                        <button className="btn btn-outline-secondary" type="button" onClick={this.handleAddQuestionButtonListener}>Add Question</button>
-                    </div>
-                    <p id="pQuestionValidatorFeedback" className="paddingLeft15 bottomspace redWarning"></p>
-                    <div className="container">
-                        {rowsWithQuestions}
-                    </div>
-                    <div className="textright bottomspace">
-                        <button className="mybtn" onClick={this.displayConfirmationDialog}>Delete Exercise</button> <button className="mybtn" onClick={this.updateExercise}>Save Exercise</button>
-                    </div>
-                </div>
-
-            )
+            return <EditExerciseForm
+                rowsWithQuestions={rowsWithQuestions}
+                selectedExerciseType={this.state.selectedExerciseType}
+                setPath={this.setPath}
+                resetUploadFileComponent={this.state.resetUploadFileComponent}
+                setResetUploadFileComponent={this.setResetUploadFileComponent}
+                type={type}
+                fileName={fileName[1]}
+                selectedExerciseExpectedClientEntryPoint={this.state.selectedExerciseExpectedClientEntryPoint}
+                selectedExerciseDescription={this.state.selectedExerciseDescription}
+                handleAddQuestionButtonListener={this.handleAddQuestionButtonListener}
+                displayConfirmationDialog={this.displayConfirmationDialog}
+                handleUpdateExercise={this.handleUpdateExercise}
+                handleDownloadFile={this.handleDownloadFile}
+                renderPanelManagement={this.renderPanelManagement} />
         }
     }
 
@@ -389,7 +405,10 @@ class ListExercises extends Component {
     }
 
     handleNewExercise = () => {
-        this.props.history.push("/cms/new-exercise");
+        if (this.state.displayWaitImage === false) {
+            const { username } = this.props.match.params
+            this.props.history.push("/cms/new-exercise/" + username)
+        }
     }
 
     handleAddQuestionButtonListener = () => {
@@ -402,12 +421,114 @@ class ListExercises extends Component {
             points=""
             removeQuestion={this.removeQuestion}
             expectedInvokedMethod="" />)
-        // The following line prevents the getEditor() function to reload the array rowsWithQuestions with the questions on the "this.state.questionList" variable
+        // The following line prevents the renderForm() function to reload the array rowsWithQuestions with the questions on the "this.state.questionList" variable
         this.setState({ hasDeletedQuestion: true, displayModal: false })
     }
 
     setPath = (path, fileName) => {
         this.setState({ dir: path, uploadedFileName: fileName })
+    }
+
+    handleLogout = () => {
+        this.props.history.push("/cms")
+    }
+
+
+    handlePasswordUpdate = () => {
+        if (this.isValidPasswordChangeForm()) {
+            const { username } = this.props.match.params
+            var password = document.getElementById("password").value
+
+            axios.put('http://localhost:5000/user?username=' + username + "&password=" + password)
+                .then(response => {
+                    if (!response.data['succeed']) {
+                        this.setState({
+                            displayModal: true,
+                            modalTitle: 'Notification',
+                            modalMessage: response.data['info'],
+                            isConfirmationModalType: false
+                        })
+                    }
+                    else if (response.data['succeed']) {
+                        this.setState({
+                            displayModal: true,
+                            modalTitle: 'Notification',
+                            modalMessage: "Password has been changed successfuly",
+                            isConfirmationModalType: false,
+                            displayPasswordManagementPanel: false,
+                            displayWarningPasswordEmpty: false
+                        })
+                    }
+
+                })
+        }
+    }
+
+    isValidPasswordChangeForm() {
+        var valid = true
+        var password = document.getElementById("password").value
+
+        if (password.trim() === '') {
+            document.getElementById("password").className += " is-invalid"
+            valid = false
+        }
+        else
+            document.getElementById("password").classList.remove("is-invalid")
+
+        var passwordAgain = document.getElementById("passwordAgain").value
+
+        if (passwordAgain.trim() === '') {
+            document.getElementById("passwordAgain").className += " is-invalid"
+            valid = false
+        }
+        else
+            document.getElementById("passwordAgain").classList.remove("is-invalid")
+
+        if (valid) {
+            if (password !== passwordAgain) {
+                document.getElementById("pFeedback").innerHTML = "Passwords don't match!"
+                valid = false
+            }
+            else
+                document.getElementById("pFeedback").innerHTML = ""
+        }
+        return valid
+    }
+
+    handlePasswordManagemet = () => {
+        if (this.state.displayPasswordManagementPanel)
+            this.setState({ displayPasswordManagementPanel: false })
+        else if (!this.state.displayPasswordManagementPanel)
+            this.setState({ displayPasswordManagementPanel: true })
+    }
+    renderPasswordManagementPanel() {
+        if (this.state.displayModal === true) {
+            document.getElementById('modal-root').style.display = "block"
+        }
+        if (this.state.displayPasswordManagementPanel) {
+            return (
+                <div className="effectShadow bottomspace padding20">
+                    <div className="container">
+                        <div className="row">
+                            <div className="col">
+                                <label>New Password</label>
+                                <input className="form-control myinputtext" id="password" type="password" />
+                            </div>
+                        </div>
+                        <div className="row">
+                            <div className="col">
+                                <label>Re-enter New Password</label>
+                                <input className="form-control myinputtext" id="passwordAgain" type="password" />
+                            </div>
+                        </div>
+                        <p className="redWarning" id="pFeedback"></p>
+                        <div className="textright">
+                            <button className="btn btn-outline-secondary" onClick={this.handlePasswordUpdate}>Confirm</button>
+                        </div>
+                    </div>
+                </div>
+            )
+        }
     }
 
     removeQuestion = (listOfQuestionObjects) => {
@@ -432,19 +553,50 @@ class ListExercises extends Component {
             document.getElementById('modal-root').classList.add("modal")
             document.getElementById('modal-root').style.display = "none"
         }
+
+
+        const { username } = this.props.match.params
+
         axios.get('http://localhost:5000/exercise')
             .then(response => {
                 this.setState({ exerciseList: response.data })
+
+                axios.get('http://localhost:5000/user?username=' + username + "&password=")
+                    .then(response => {
+                        if (response.data['succeed'])
+                            this.setState({ displayWarningPasswordEmpty: true, isLoggedIn: true })
+                    })
+
             })
     }
 
 
     render() {
+        if (!this.state.isLoggedIn) {
+            const { username } = this.props.match.params
+
+            axios.get('http://localhost:5000/session?username=' + username)
+                .then(response => {
+                    if (!response.data['loggedin'])
+                        this.props.history.push("/cms")
+                })
+        }
         return (
             <div>
                 <div className="row">
                     <div className="col-sm-4">
                         <Logo></Logo>
+                    </div>
+                    <div className="col">
+                        <div className="row alignRight">
+                            <button className="btn btn-outline-secondary marginRight10" type="button" onClick={this.handlePasswordManagemet}>Change Password</button> <button className="btn btn-outline-secondary" type="button" onClick={this.handleLogout}>Logout</button>
+                        </div>
+                        <div className="row alignRight">
+                            {this.renderPasswordManagementPanel()}
+                        </div>
+                        <div className="row alignRight">
+                            <p className="redWarning" id="pWarning"></p>
+                        </div>
                     </div>
                 </div>
                 <div className="container collapseContainer">
@@ -456,7 +608,7 @@ class ListExercises extends Component {
                         <div className="col-sm-5 collapseColumn">
                             <Collapse getExerciseByID={this.getExerciseByID} exerciseList={this.state.exerciseList} />
                         </div>
-                        {this.getEditor()}
+                        {this.renderForm()}
                     </div>
                 </div>
                 <div className="otherFooter"><Footer /></div>
@@ -465,10 +617,9 @@ class ListExercises extends Component {
                     message={this.state.modalMessage}
                     isConfirmationModalType={this.state.isConfirmationModalType}
                     handleCloseModal={this.handleCloseModal}
-                    handleConfirmation={this.deleteExercise} />}>
+                    handleConfirmation={this.handleDeleteExercise} />}>
                 </Modal>
             </div>
         )
     }
-}
-export default ListExercises
+} 

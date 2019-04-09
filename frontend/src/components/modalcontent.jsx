@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 
-class ModalContent extends Component {
+export default class ModalContent extends Component {
     renderButtons = () => {
         if (this.props.isConfirmationModalType === true) {
             return (
@@ -34,7 +34,6 @@ class ModalContent extends Component {
                     </div>
                 </div>
             </div>
-        );
+        )
     }
 }
-export default ModalContent
