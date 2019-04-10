@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 
-class Question extends Component {
+export default class Question extends Component {
     handleRemoveQuestion = (e) => {
         var questionID = e.target.id
         questionID = questionID.split("-")
@@ -78,5 +78,4 @@ class Question extends Component {
             </div>
         )
     }
-}
-export default Question
+} 

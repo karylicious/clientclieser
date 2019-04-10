@@ -3,7 +3,6 @@ import FileUpload from './fileupload'
 
 export default class EditExerciseForm extends Component {
 
-
     setResetUploadFileComponent = () => {
         this.props.setResetUploadFileComponent()
     }
@@ -21,21 +20,6 @@ export default class EditExerciseForm extends Component {
                     <FileUpload uploadedFile={this.props.setPath} setResetToFalse={this.setResetUploadFileComponent} reset={this.props.resetUploadFileComponent} colClass={"col"} fileUploadHeadings={headings}></FileUpload>
                 </div>
             )
-
-        /*if (this.props.selectedExerciseType === "client") {
-            return (
-                <div className="row bottomspace marginLeft-15">
-                    <FileUpload uploadedFile={this.props.setPath} setResetToFalse={this.setResetUploadFileComponent} reset={this.props.resetUploadFileComponent} colClass={"col"} fileUploadHeadings='Upload new Web Service as .zip file'></FileUpload>
-                </div>
-            )
-        }
-        else if (this.props.selectedExerciseType === "clientserver") {
-            return (
-                <div className="row bottomspace marginLeft-15">
-                    <FileUpload uploadedFile={this.props.setPath} setResetToFalse={this.props.setResetUploadFileComponent} reset={this.props.resetUploadFileComponent} colClass={"col"} fileUploadHeadings='Upload new dummy Client and a dummy Server as .zip file'></FileUpload>
-                </div>
-            )
-        }*/
     }
 
     render() {
@@ -53,7 +37,6 @@ export default class EditExerciseForm extends Component {
                         Attached file: <strong><span id="attachedFileName">{this.props.fileName}</span></strong>   <button className="btn btn-outline-secondary" type="button" onClick={this.props.handleDownloadFile}>Download</button>
                     </div>
                 </div>
-
                 {this.renderFileUpload()}
                 <div className="row">
                     <div className="col">

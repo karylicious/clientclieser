@@ -217,6 +217,42 @@ textarea {
   padding-left: 15px;
 }
 
+.paddingLeft0{
+  padding-left: 0px;
+}
+
+.lessonTag{
+  background-color: #001540;
+  clip-path: polygon(0 0, 100% 0%, calc(100% - 13px) 100%, 0% 100%);
+  font-weight: bold;
+  color: #fff;
+  font-size: 22px;
+}
+
+.lessonBody{
+  min-height: 163px;
+  text-align: center;
+  line-height: 9;
+  font-size: large;
+}
+
+.lessonFooter{
+  background-color: #4CAF50;
+  padding: 7px;
+}
+
+.lessonsDiv{
+  margin: 0;
+  padding: 0;
+}
+
+.lessonsDiv:hover{
+  cursor: pointer;
+}
+
+.tutorialPanel .effectShadow{
+  width: 33%;
+}
 
 .panelOptions:hover  p{
   background-color: #53DEF6;
@@ -351,24 +387,46 @@ text-align: center;
   padding:0px
 }
 
-.noExercises{
+.noItem{
   font-style:italic;
-   font-size: large; 
-   padding: 20px;
+  font-size: large; 
+  padding: 20px;
 }
 
-.collapseExercise{
+.tutorialH4{
+  margin-bottom: 50px;
+}
+
+.tutorialPanel{
+  display: flex;
+  flex-wrap:wrap;
+}
+
+.tutorialPanel .panelOptions{
+ width: 27%;
+  margin-right: 50px;
+  margin-bottom: 50px;
+  min-width: fit-content;
+}
+
+
+
+.tutorialPanel .panelOptions:hover{
+  background-color:#F0FFFF;
+}
+
+.myCollapse{
   text-align: center;
     font-size: large;
     padding: 20px;
 }
 
-.collapseExercise:hover:not(.collapseExerciseActive) {
+.myCollapse:hover:not(.myCollapseActive) {
   background-color: #E8E8E8;
   cursor: pointer;
 }
 
-.collapseExerciseActive{
+.myCollapseActive{
   background-color: #4CAF50;
   color: white
 }
@@ -959,4 +1017,18 @@ ul{
   margin-left: auto;
   margin-right: auto;
   padding-top: 50px;
+}
+
+/* Create two equal columns that floats next to each other */
+.column {
+  float: left;
+  width: 33.33%;
+  padding: 10px;
+}
+
+/* Clear floats after the columns */
+.mrow:after {
+  content: "";
+  display: table;
+  clear: both;
 }

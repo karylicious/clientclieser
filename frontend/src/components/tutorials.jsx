@@ -1,35 +1,51 @@
 import React, { Component } from 'react'
 import Footer from './footer'
 import TopContainer from './topcontainer'
+import axios from 'axios'
 
-class Tutorials extends Component {
+export default class Tutorials extends Component {
+    state = {
+        tutorialList: []
+    }
+    renderTutorials = () => {
+        var listOfTutorialObjects = this.state.tutorialList
+        var rowsWithTutorials = []
+        for (var i = 0; i < listOfTutorialObjects.length; i++) {
+            var tutorial = listOfTutorialObjects[i]
+            rowsWithTutorials.push(
+                <div key={i} data-id={tutorial.id} className="blurredElement panelOptions" onClick={this.renderSelectedTutorial}>
+                    <img data-id={tutorial.id} src={process.env.PUBLIC_URL + '/imgs/tutorials.png'} alt="tutorials" className="img-fluid imageCentered" />
+                    <h4 data-id={tutorial.id} className="alignCenter tutorialH4"> {tutorial.title}</h4>
+                </div>
+            )
+        }
+        return rowsWithTutorials
+    }
+
+    renderSelectedTutorial = (e) => {
+        this.props.history.push("/tutorials/" + e.target.dataset.id)
+    }
+
+
+    componentDidMount() {
+        axios.get('http://localhost:5000/tutorial')
+            .then(response => {
+                this.setState({ tutorialList: response.data })
+            })
+    }
+
     render() {
         return (
             <div>
                 <div><TopContainer standardOpening={false} /></div>
                 <div className="fullheight container bottomspace">
-                    <h2 className="myh2">About Us</h2>
-                    <h4>What is Clieser</h4>
-                    <p>Clieser is a system designed to learn client server architecture concepts. It is mainly focused on development and use of soap web service in Java programming language. </p>
-                    <hr />
-                    <h4>Copyright</h4>
-                    <p>All pages and content from Clieser may not be reproduced in any way without prior consent of the owner.</p>
-                    <hr />
-                    <h4>Privacy</h4>
-                    <p>No user registration is required in order to use Clieser.<br />
-
-                        By using the system validator you agree that Clieser use any of your submitted data to produce results and display it solely to you.<br />
-
-                        After the use of the system validator no data submitted is kept.</p>
-                    <hr />
-                    <h4>Cookies</h4>
-                    <p>Clieser uses cookies to enhace your experience. Your continued use, without changing your settings, means that you agree to this use. By deactivating the use of cookies some pages will not work as you would expect.</p>
-
+                    <h2 className="myh2">Learn what happens behind the scene</h2>
+                    <div className="bottomspace topspace tutorialPanel">
+                        {this.renderTutorials()}
+                    </div>
                 </div>
                 <div className="homeFooter"><Footer /></div>
-
             </div>
-        );
+        )
     }
-}
-export default Tutorials
+} 

@@ -8,7 +8,7 @@ import Footer from './footer'
 import Information from './testinformation'
 import TopContainer from './topcontainer'
 
-class Validator extends Component {
+export default class Validator extends Component {
     state = {
         step: 1,
         selectedComponent: '',
@@ -53,24 +53,7 @@ class Validator extends Component {
         }
     }
 
-    render() {
-        return (
-            <div>
-                <div><TopContainer standardOpening={false} /></div>
-                <div className="fullheight">
-                    <h2 className="myh2">Test your Client Server System</h2>
-                    <div className="row bottomspace">
-                        {this.renderProgressLine()}
-                        {this.renderTestInfo()}
-                        {this.renderSelectedComponent()}
-                        {this.renderFileUpload()}
-                        {this.renderNavigation()}
-                    </div>
-                </div>
-                <div className="otherFooter"><Footer /></div>
-            </div>
-        )
-    }
+    
 
     chooseClient = () => {
         this.setState({ selectedComponent: 'client' })
@@ -192,7 +175,7 @@ class Validator extends Component {
                     <div className={(this.state.selectedComponent === 'both') ? "col mycomponentselected" : "col mycomponents"} onClick={this.chooseBoth}>Both <br />Client and Server</div>
                 </div>
             </div>
-        );
+        )
     }
 
     validateControlsAndGetUserInput() {
@@ -239,5 +222,23 @@ class Validator extends Component {
         else if (domElementName === 'serverEntryPoint')
             this.setState({ serverEntryPoint: domElementVaule })
     }
+
+    render() {
+        return (
+            <div>
+                <div><TopContainer standardOpening={false} /></div>
+                <div className="fullheight">
+                    <h2 className="myh2">Test your Client Server System</h2>
+                    <div className="row bottomspace">
+                        {this.renderProgressLine()}
+                        {this.renderTestInfo()}
+                        {this.renderSelectedComponent()}
+                        {this.renderFileUpload()}
+                        {this.renderNavigation()}
+                    </div>
+                </div>
+                <div className="otherFooter"><Footer /></div>
+            </div>
+        )
+    }
 }
-export default Validator

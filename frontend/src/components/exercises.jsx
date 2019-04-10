@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import Footer from './footer'
 import TopContainer from './topcontainer'
-import Collapse from './collapse'
+import Collapse from './collapse-exercises'
 import axios from 'axios'
 import Modal from './modal'
 import ModalContent from './modalcontent'

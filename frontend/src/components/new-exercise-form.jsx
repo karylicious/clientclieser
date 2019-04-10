@@ -15,21 +15,6 @@ export default class NewExerciseForm extends Component {
                     <FileUpload uploadedFile={this.props.setPath} colClass={"col-sm-7"} fileUploadHeadings={headings}></FileUpload>
                 </div>
             )
-
-        /*if (this.props.selectedComponent === "client") {
-            return (
-                <div className="row bottomspace marginLeft-15">
-                    <FileUpload uploadedFile={this.props.setPath} colClass={"col-sm-7"} fileUploadHeadings='Upload a complete Web Service as .zip file'></FileUpload>
-                </div>
-            )
-        }
-        else if (this.props.selectedComponent === "both") {
-            return (
-                <div className="row bottomspace marginLeft-15">
-                    <FileUpload uploadedFile={this.props.setPath} colClass={"col-sm-7"} fileUploadHeadings='Upload a dummy Client and a dummy Server as .zip file'></FileUpload>
-                </div>
-            )
-        }*/
     }
     render() {
         return (

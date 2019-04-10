@@ -1,32 +1,25 @@
 import React, { Component } from 'react'
 import Logo from './logo'
 import Footer from './footer'
-import Question from './exercisequestion'
-import Collapse from './collapse-exercises'
+import Lesson from './lesson'
+import Collapse from './collapse-tutorials'
 import axios from 'axios'
 import Modal from './modal'
 import ModalContent from './modalcontent'
-import EditExerciseForm from './edit-exercise-form'
+import EditTutorialForm from './edit-tutorial-form'
 
-var rowsWithQuestions = []
-export default class ListExercises extends Component {
+var rowsWithLessons = []
+export default class ListTutorials extends Component {
     state = {
-        hasAddedNewQuestion: false,
+        hasAddedNewLesson: false,
         validForm: false,
         uploadedFileName: "",
-        questionList: "",
-        selectedExerciseID: "",
-        selectedExerciseFile: "",
-        //selectedExerciseName: "",
-        selectedExerciseType: "",
-        selectedExerciseExpectedClientEntryPoint: "",
-        selectedExerciseDescription: "",
-        dir: "",
-        hasDeletedQuestion: false,
-        hasSelectedExercise: false,
-        exerciseList: [],
-        resetUploadFileComponent: false,
-        //modalChild: '',
+        lessonList: "",
+        selectedTutorialID: "",
+        selectedTutorialTitle: "",
+        hasDeletedLesson: false,
+        hasSelectedTutorial: false,
+        tutorialList: [],
         displayModal: false,
         modalTitle: '',
         modalMessage: '',
@@ -37,35 +30,29 @@ export default class ListExercises extends Component {
         isLoggedIn: false
     }
 
-    handleUpdateExercise = () => {
+    handleUpdateTutorial = () => {
         if (this.isValidForm()) {
 
-            var listOfQuestionsObjects = this.getListOfQuestionObjects()
+            var listOfLessonsObjects = this.getListOfLessonObjects()
 
             var data = {
-                type: this.state.selectedExerciseType,
-                uploadedfile: this.state.dir,
-                description: document.getElementById("description").value,
-                selectedFileName: this.state.uploadedFileName,
-                expectedClientEntryPoint: document.getElementById("expectedClientEntryPoint").value,
-                id: this.state.selectedExerciseID,
-                questions: listOfQuestionsObjects
+                title: document.getElementById("title").value,
+                id: this.state.selectedTutorialID,
+                lessons: listOfLessonsObjects
             }
 
             var jsonData = JSON.stringify(data);
 
             this.setState({ displayWaitImage: true })
 
-            axios.put('http://localhost:5000/exercise', jsonData, { headers: { 'Content-Type': 'application/json' } })
+            axios.put('http://localhost:5000/tutorial', jsonData, { headers: { 'Content-Type': 'application/json' } })
                 .then(response => {
                     window.scrollTo(0, 0)
 
-                    if (this.state.uploadedFileName !== "")
-                        this.setState({ resetUploadFileComponent: true, selectedExerciseFile: this.state.dir, dir: "", uploadedFileName: "" })
 
                     var message
                     if (response.data["succeed"] === true) {
-                        message = "Exercise has been updated successfully."
+                        message = "Tutorial has been updated successfully."
                     }
                     else if (response.data["succeed"] === false) {
                         message = response.data["info"]
@@ -77,14 +64,14 @@ export default class ListExercises extends Component {
                         modalMessage: message,
                         isConfirmationModalType: false,
                         displayWaitImage: false,
-                        hasDeletedQuestion: false
+                        hasDeletedLesson: false
                     })
 
-                    axios.get('http://localhost:5000/exercisequestion?exerciseid=' + this.state.selectedExerciseID)
+                    axios.get('http://localhost:5000/lesson?tutorialid=' + this.state.selectedTutorialID)
                         .then(response => {
 
                             this.setState({
-                                questionList: response.data
+                                lessonList: response.data
                             })
                         })
                 })
@@ -99,67 +86,30 @@ export default class ListExercises extends Component {
     displayConfirmationDialog = () => {
         this.setState({
             displayModal: true,
-            modalTitle: 'Delete Exercise',
-            modalMessage: 'Are you sure you want to delete this exercise?',
+            modalTitle: 'Delete Tutorial',
+            modalMessage: 'Are you sure you want to delete this tutorial?',
             isConfirmationModalType: true,
             displayWaitImage: false
         })
     }
 
-    handleDownloadFile = () => {
-        axios.get('http://localhost:5000/zipfile?file=' + this.state.selectedExerciseFile)
-            .then(response => {
-                //alert(response.data)
-                if (response.data["succeed"] === false) {
-                    this.setState({
-                        displayModal: true,
-                        modalTitle: 'Notification',
-                        modalMessage: 'File not found.',
-                        isConfirmationModalType: false,
-                        displayWaitImage: false
-                    })
-                }
-                else {
-                    var MIME_TYPE = "application/x-zip-compressed";
-
-                    var blob = new Blob([response.data], { type: MIME_TYPE })
-
-                    var link = document.createElement('a');
-                    // convert bite array into blob
-                    link.href = window.URL.createObjectURL(blob);
-                    // set a human file name
-                    var fileName = this.state.selectedExerciseFile.split("/")
-                    link.download = fileName[1];
-                    // triggers automatic download
-                    link.click()
-                }
-            })
-    }
-
-    handleDeleteExercise = () => {
+    handleDeleteTutorial = () => {
         this.handleCloseModal()
         this.setState({ displayWaitImage: true })
-        axios.delete('http://localhost:5000/exercise?exerciseid=' + this.state.selectedExerciseID)
+        axios.delete('http://localhost:5000/tutorial?tutorialid=' + this.state.selectedTutorialID)
             .then(response => {
                 //console.log(response.data)
                 this.setState({
-                    hasAddedNewQuestion: false,
+                    hasAddedNewLesson: false,
                     validForm: false,
                     uploadedFileName: '',
-                    questionList: [],
-                    selectedExerciseID: "",
-                    selectedExerciseFile: "",
-                    //selectedExerciseName: "",
-                    selectedExerciseType: "",
-                    selectedExerciseExpectedClientEntryPoint: "",
-                    selectedExerciseDescription: "",
-                    dir: '',
-                    hasDeletedQuestion: false,
-                    //hasSelectedExercise: false,
-                    //resetUploadFileComponent: false,
+                    lessonList: [],
+                    selectedTutorialID: "",
+                    selectedTutorialTitle: "",
+                    hasDeletedLesson: false,
                     displayModal: true,
                     modalTitle: 'Notification',
-                    modalMessage: "Exercise has been deleted successfully.",
+                    modalMessage: "Tutorial has been deleted successfully.",
                     isConfirmationModalType: false,
                     displayWaitImage: false
                 })
@@ -168,9 +118,9 @@ export default class ListExercises extends Component {
                 if (elements.length === 1)
                     elements[0].classList.remove("myCollapseActive")
 
-                axios.get('http://localhost:5000/exercise')
+                axios.get('http://localhost:5000/tutorial')
                     .then(response => {
-                        this.setState({ exerciseList: response.data });
+                        this.setState({ tutorialList: response.data });
                     })
             })
     }
@@ -179,13 +129,13 @@ export default class ListExercises extends Component {
         var valid = true
         var allElements = document.getElementsByClassName("form-control")
 
-        // (allElements.length == 2) 2 means the two input fields of the exercise details and the two inputs of the change of password form
-        if (allElements.length === 4) {
-            document.getElementById("pQuestionValidatorFeedback").innerHTML = "Please add a question"
+        // (allElements.length == 3) 1 means the title input field of the tutorial details and the two inputs of the change of password form
+        if (allElements.length === 3) {
+            document.getElementById("pLessonValidatorFeedback").innerHTML = "Please add a lesson"
             valid = false
         }
         else {
-            document.getElementById("pQuestionValidatorFeedback").innerHTML = ""
+            document.getElementById("pLessonValidatorFeedback").innerHTML = ""
             for (var i = 0; i < allElements.length; i++) {
                 var userInput = allElements[i].value.trim()
                 if (userInput === '') {
@@ -197,67 +147,39 @@ export default class ListExercises extends Component {
             }
         }
 
-        var descriptionOfExercise = document.getElementById("description").value
+        var titleOfTutorial = document.getElementById("title").value
 
-        if (descriptionOfExercise.trim() === '') {
-            document.getElementById("description").className += " is-invalid"
+        if (titleOfTutorial.trim() === '') {
+            document.getElementById("title").className += " is-invalid"
             valid = false
         }
         else {
-            document.getElementById("description").classList.remove("is-invalid")
+            document.getElementById("title").classList.remove("is-invalid")
         }
-
-
-        var entryPoint = document.getElementById("expectedClientEntryPoint").value
-
-        if (entryPoint.trim() === '') {
-            document.getElementById("expectedClientEntryPoint").className += " is-invalid"
-            valid = false
-        }
-        else {
-            document.getElementById("expectedClientEntryPoint").classList.remove("is-invalid")
-        }
-
-        if (document.getElementById("fileChooserTextField").classList.contains("is-invalid"))
-            valid = false
 
         if (valid) {
-
-            // var fileName = document.getElementById("fileChooserLabel").innerHTML
-            // var uploadValidation = document.getElementById("uploadvalidation").innerHTML
-
-            // if (fileName === "Choose file" || uploadValidation !== "")
-            // fileName = ""
             this.setState({
-                selectedExerciseDescription: descriptionOfExercise,
-                selectedExerciseExpectedClientEntryPoint: entryPoint
-                //uploadedFile: fileName,
-                //     expectedClientEntryPoint: entryPoint,
-                //     description: descriptionOfExercise
+                selectedTutorialTitle: titleOfTutorial
             })
         }
 
         return valid
     }
 
-    getListOfQuestionObjects() {
-        var listTitle = document.getElementsByClassName("questiontitle")
-        var listDescr = document.getElementsByClassName("questiondescription")
-        var listExpectedOuput = document.getElementsByClassName("questionexpectedoutput")
-        var listPoints = document.getElementsByClassName("questionpoints")
-        var listExpectedInvokedMethod = document.getElementsByClassName("questionexpectedinvokedmethod")
-        var listOfQuestionObjects = []
+    getListOfLessonObjects() {
+        var listTitle = document.getElementsByClassName("lessontitle")
+        var listDescr = document.getElementsByClassName("lessondescription")
+        var listLink = document.getElementsByClassName("lessonlink")
+        var listOfLessonObjects = []
 
         for (var i = 0; i < listTitle.length; i++) {
-            listOfQuestionObjects.push({
+            listOfLessonObjects.push({
                 title: listTitle[i].value,
                 description: listDescr[i].value,
-                expectedOutput: listExpectedOuput[i].value,
-                points: listPoints[i].value,
-                expectedInvokedMethod: listExpectedInvokedMethod[i].value
+                link: listLink[i].value
             })
         }
-        return listOfQuestionObjects
+        return listOfLessonObjects
     }
 
     renderPanelManagement = () => {
@@ -265,62 +187,37 @@ export default class ListExercises extends Component {
         this.props.history.push("/cms/management/" + username)
     }
 
-    getExerciseByID = (id) => {
-        if (this.state.dir !== "")
-            this.setState({ resetUploadFileComponent: true, dir: "", uploadedFileName: "" })
-
-        axios.get('http://localhost:5000/exercise?exerciseid=' + id)
+    getTutorialByID = (id) => {
+        axios.get('http://localhost:5000/tutorial?tutorialid=' + id)
             .then(response => {
 
                 this.setState({
-                    selectedExerciseID: id,
-                    selectedExerciseFile: response.data['uploadedfile'],
-                    //selectedExerciseName: response.data['name'],
-                    selectedExerciseType: response.data['exerciseType'],
-                    selectedExerciseExpectedClientEntryPoint: response.data['expectedClientEntryPoint'],
-                    selectedExerciseDescription: response.data['description'],
-                    hasSelectedExercise: true,
-                    hasDeletedExercise: false,
-                    hasDeletedQuestion: false,
-                    resetUploadFileComponent: false,
+                    selectedTutorialID: id,
+                    selectedTutorialTitle: response.data['title'],
+                    hasSelectedTutorial: true,
+                    hasDeletedTutorial: false,
+                    hasDeletedLesson: false,
                     displayModal: false
                 })
 
-                axios.get('http://localhost:5000/exercisequestion?exerciseid=' + id)
+                axios.get('http://localhost:5000/lesson?tutorialid=' + id)
                     .then(response => {
                         this.setState({
-                            questionList: response.data
+                            lessonList: response.data
                         })
                     })
             })
     }
 
     componentDidUpdate() {
-
-        if (this.state.hasSelectedExercise === true) {
-
-            document.getElementById("expectedClientEntryPoint").value = this.state.selectedExerciseExpectedClientEntryPoint
-            document.getElementById("description").value = this.state.selectedExerciseDescription
-
-            var fileName = this.state.selectedExerciseFile.split("/")
-            document.getElementById("attachedFileName").innerHTML = fileName[1]
-
-            this.setState({ hasSelectedExercise: false })
+        if (this.state.hasSelectedTutorial === true) {
+            document.getElementById("title").value = this.state.selectedTutorialTitle
+            this.setState({ hasSelectedTutorial: false })
         }
-
         if (this.state.displayWarningPasswordEmpty)
             document.getElementById('pWarning').innerHTML = "No password is set! This system is at risk. Set a password."
         else
             document.getElementById('pWarning').innerHTML = ""
-
-
-        /*if (this.state.resetUploadFileComponent === true) {
-            console.log(this.state.uploadedFileName)
-            document.getElementById("attachedFileName").innerHTML = this.state.uploadedFileName
-            this.setState({ dir: "", uploadedFileName: "" })
-            console.log("uplooo")
-        }*/
-
     }
 
     renderForm() {
@@ -332,69 +229,45 @@ export default class ListExercises extends Component {
                 </div>
             )
         }
-        else if (this.state.selectedExerciseID === "") {
+        else if (this.state.selectedTutorialID === "") {
             return (
                 <div className="col">
-                    <p>Here you can edit your exercises!</p>
+                    <p>Here you can edit your tutorials!</p>
                     <div className="bottomRight">
                         <button className="mybtn" onClick={this.renderPanelManagement}>Return</button>
                     </div>
                 </div>
             )
         }
-        else if (this.state.selectedExerciseID !== "") {
-            var type
-            if (this.state.selectedExerciseType === "client") {
-                type = "Client Component"
-            }
-            else if (this.state.selectedExerciseType === "clientserver") {
-                type = "Both Client and Server Components"
-            }
-
+        else if (this.state.selectedTutorialID !== "") {
             if (this.state.displayModal === true) {
                 document.getElementById('modal-root').style.display = "block"
             }
 
+            if (this.state.hasDeletedLesson === false) {
 
+                rowsWithLessons = []
+                var listOfLessonObjects = this.state.lessonList
 
-            var fileName = this.state.selectedExerciseFile.split("/")
+                for (var i = 0; i < listOfLessonObjects.length; i++) {
+                    var lesson = listOfLessonObjects[i]
 
-
-            if (this.state.hasDeletedQuestion === false) {
-                //if (this.state.hasSelectedExercise == true) {
-                rowsWithQuestions = []
-                //}
-
-                var listOfQuestionObjects = this.state.questionList
-
-                for (var i = 0; i < listOfQuestionObjects.length; i++) {
-                    var question = listOfQuestionObjects[i]
-
-                    rowsWithQuestions.push(<Question key={i}
+                    rowsWithLessons.push(<Lesson key={i}
                         id={i}
-                        removeQuestion={this.removeQuestion}
-                        title={question.title}
-                        description={question.description}
-                        expectedOutput={question.expectedOutput}
-                        expectedInvokedMethod={question.expectedInvokedMethod}
-                        points={question.points} />)
+                        removeLesson={this.removeLesson}
+                        title={lesson.title}
+                        description={lesson.description}
+                        link={lesson.link} />)
                 }
 
             }
 
-            return <EditExerciseForm
-                rowsWithQuestions={rowsWithQuestions}
-                selectedExerciseType={this.state.selectedExerciseType}
-                setPath={this.setPath}
-                resetUploadFileComponent={this.state.resetUploadFileComponent}
-                setResetUploadFileComponent={this.setResetUploadFileComponent}
-                type={type}
-                fileName={fileName[1]}
-                selectedExerciseExpectedClientEntryPoint={this.state.selectedExerciseExpectedClientEntryPoint}
-                selectedExerciseDescription={this.state.selectedExerciseDescription}
-                handleAddQuestionButtonListener={this.handleAddQuestionButtonListener}
+            return <EditTutorialForm
+                rowsWithLessons={rowsWithLessons}
+                selectedTutorialTitle={this.state.selectedTutorialTitle}
+                handleAddLessonButtonListener={this.handleAddLessonButtonListener}
                 displayConfirmationDialog={this.displayConfirmationDialog}
-                handleUpdateExercise={this.handleUpdateExercise}
+                handleUpdateTutorial={this.handleUpdateTutorial}
                 handleDownloadFile={this.handleDownloadFile}
                 renderPanelManagement={this.renderPanelManagement} />
         }
@@ -404,25 +277,23 @@ export default class ListExercises extends Component {
         document.getElementById('modal-root').style.display = "none"
     }
 
-    handleNewExercise = () => {
+    handleNewTutorial = () => {
         if (this.state.displayWaitImage === false) {
             const { username } = this.props.match.params
-            this.props.history.push("/cms/new-exercise/" + username)
+            this.props.history.push("/cms/new-tutorial/" + username)
         }
     }
 
-    handleAddQuestionButtonListener = () => {
-        document.getElementById("pQuestionValidatorFeedback").innerHTML = ""
-        rowsWithQuestions.push(<Question key={rowsWithQuestions.length}
-            id={rowsWithQuestions.length}
+    handleAddLessonButtonListener = () => {
+        document.getElementById("pLessonValidatorFeedback").innerHTML = ""
+        rowsWithLessons.push(<Lesson key={rowsWithLessons.length}
+            id={rowsWithLessons.length}
             title=""
             description=""
-            expectedOutput=""
-            points=""
-            removeQuestion={this.removeQuestion}
-            expectedInvokedMethod="" />)
-        // The following line prevents the renderForm() function to reload the array rowsWithQuestions with the questions on the "this.state.questionList" variable
-        this.setState({ hasDeletedQuestion: true, displayModal: false })
+            link=""
+            removeLesson={this.removeLesson} />)
+        // The following line prevents the renderForm() function to reload the array rowsWithLessons with the lessons on the "this.state.lessonList" variable
+        this.setState({ hasDeletedLesson: true, displayModal: false })
     }
 
     setPath = (path, fileName) => {
@@ -531,21 +402,19 @@ export default class ListExercises extends Component {
         }
     }
 
-    removeQuestion = (listOfQuestionObjects) => {
+    removeLesson = (listOfLessonObjects) => {
         var newArray = []
-        for (var i = 0; i < listOfQuestionObjects.length; i++) {
-            var question = listOfQuestionObjects[i]
-            newArray.push(<Question key={i}
+        for (var i = 0; i < listOfLessonObjects.length; i++) {
+            var lesson = listOfLessonObjects[i]
+            newArray.push(<Lesson key={i}
                 id={i}
-                removeQuestion={this.removeQuestion}
-                title={question.title}
-                description={question.description}
-                expectedOutput={question.expectedOutput}
-                expectedInvokedMethod={question.expectedInvokedMethod}
-                points={question.points} />)
+                removeLesson={this.removeLesson}
+                title={lesson.title}
+                description={lesson.description}
+                link={lesson.link} />)
         }
-        rowsWithQuestions = newArray
-        this.setState({ hasDeletedQuestion: true }) // this is just to trigger the render method
+        rowsWithLessons = newArray
+        this.setState({ hasDeletedLesson: true }) // this is just to trigger the render method
     }
 
     componentDidMount() {
@@ -557,9 +426,9 @@ export default class ListExercises extends Component {
 
         const { username } = this.props.match.params
 
-        axios.get('http://localhost:5000/exercise')
+        axios.get('http://localhost:5000/tutorial')
             .then(response => {
-                this.setState({ exerciseList: response.data })
+                this.setState({ tutorialList: response.data })
 
                 axios.get('http://localhost:5000/user?username=' + username + "&password=")
                     .then(response => {
@@ -600,13 +469,13 @@ export default class ListExercises extends Component {
                     </div>
                 </div>
                 <div className="container collapseContainer">
-                    <h2 className="myh2">Exercises</h2>
+                    <h2 className="myh2">Tutorials</h2>
                     <div className="row alignRight">
-                        <button className="btn btn-outline-secondary" type="button" onClick={this.handleNewExercise}>New Exercise</button>
+                        <button className="btn btn-outline-secondary" type="button" onClick={this.handleNewTutorial}>New Tutorial</button>
                     </div>
                     <div className="row marginLeft0">
                         <div className="col-sm-5 collapseColumn">
-                            <Collapse getExerciseByID={this.getExerciseByID} exerciseList={this.state.exerciseList} />
+                            <Collapse getTutorialByID={this.getTutorialByID} tutorialList={this.state.tutorialList} />
                         </div>
                         {this.renderForm()}
                     </div>
@@ -617,7 +486,7 @@ export default class ListExercises extends Component {
                     message={this.state.modalMessage}
                     isConfirmationModalType={this.state.isConfirmationModalType}
                     handleCloseModal={this.handleCloseModal}
-                    handleConfirmation={this.handleDeleteExercise} />}>
+                    handleConfirmation={this.handleDeleteTutorial} />}>
                 </Modal>
             </div>
         )
