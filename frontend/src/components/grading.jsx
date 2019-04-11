@@ -1,20 +1,20 @@
 import React, { Component } from 'react'
-import TestResult from './testresult'
+import GradingResult from './gradingresult'
 import axios from 'axios'
 
-export default class Test extends Component {
+export default class Grading extends Component {
     state = {
-        testResultList: null
+        gradingResultList: null
     }
 
-    setURLparameters() {
+    setURLparameters = () => {
         try {
             var selectedFile = this.props.uploadedFile.split(".zip")
             if (this.props.selectedComponent === "client")
-                return '/testclient?clientEntryPoint=' + this.props.clientEntryPoint + '&dir=' + this.props.dir + '&selectedFileName=' + selectedFile[0]
+                return '/gradeclient?clientEntryPoint=' + this.props.clientEntryPoint + '&dir=' + this.props.dir + '&selectedFileName=' + selectedFile[0]
 
-            else if (this.props.selectedComponent === "both")
-                return '/testclientserver?clientEntryPoint=' + this.props.clientEntryPoint + '&dir=' + this.props.dir + '&selectedFileName=' + selectedFile[0]
+            else if (this.props.selectedComponent === "clientserver")
+                return '/gradeclientserver?clientEntryPoint=' + this.props.clientEntryPoint + '&dir=' + this.props.dir + '&selectedFileName=' + selectedFile[0]
         }
         catch (err) {
             console.log("An error has occured")
@@ -29,53 +29,41 @@ export default class Test extends Component {
                 for (var i = 0; i < response.data['responseList'].length; i++) {
                     document.getElementById("progressDiv").innerHTML += response.data['responseList'][i] + "<br />"
                 }
-                var newTestButton = document.getElementById("newTest")
-                newTestButton.style.display = "block"
+                var newAnswerButton = document.getElementById("newAnswer")
+                newAnswerButton.style.display = "block"
                 this.deleteDirectory()
-                this.setState({ testResultList: response.data['testResultList'] })
+                this.setState({ gradingResultList: response.data['gradingResultList'] })
             })
     }
 
-    deleteDirectory() {
+    deleteDirectory = () => {
         var directory = this.props.dir.split("/")
         axios.delete('http://localhost:5000/zipfile?dir=' + directory[0])
     }
 
     componentDidMount() {
-        var newTestButton = document.getElementById("newTest")
-        newTestButton.style.display = "none"
+        var newAnswerButton = document.getElementById("newAnswer")
+        newAnswerButton.style.display = "none"
         this.getResults()
     }
 
-    getSelectedComponent() {
-        if (this.props.selectedComponent === "client")
-            return "Client component"
-
-        else if (this.props.selectedComponent === "server")
-            return "Server component"
-        else if (this.props.selectedComponent === "both")
-            return "Client and Server components"
-    }
-
-
-
     render() {
-        const rowsWithTestResults = [], rowWithHeading = []
-        if (this.state.testResultList !== null) {
+        const rowsWithGradingResults = [], rowWithHeading = []
+        if (this.state.gradingResultList !== null) {
 
 
-
+            /*
             var passedTest = true
             var prevOwner = ""
             for (var i = 0; i < this.state.testResultList.length; i++) {
                 if (prevOwner === "") {
                     prevOwner = this.state.testResultList[i]['projectOwner']
-                    rowsWithTestResults.push(<TestResult key={i} resultID={i} projectOwner={this.state.testResultList[i]['projectOwner']} resultsList={this.state.testResultList} />);
+                    rowsWithGradingResults.push(<GradingResult key={i} resultID={i} projectOwner={this.state.testResultList[i]['projectOwner']} resultsList={this.state.testResultList} />);
                 }
                 else if (prevOwner !== this.state.testResultList[i]['projectOwner']) {
                     prevOwner = ""
                 }
-            }
+            }*/
 
             rowWithHeading.push(
                 <div key={50} className="row">
@@ -93,20 +81,23 @@ export default class Test extends Component {
         return (
             <div className="container">
                 <div className="row">
-                    <div className="col-lg-6"><h4 className="myh4">Validating the {this.getSelectedComponent()}</h4><hr className="myhr" /></div>
+                    <div className="col"><h4 className="myh4">Grading your answer</h4><hr className="myhr" /></div>
                 </div>
                 <div className="row">
                     <div className="col testprogress scrollbar myscrollbar" id="style-2">
-                        <div className="force-overflow" id="progressDiv">Test is in progress, please wait...<br /><br /> </div>
+                        <div className="force-overflow" id="progressDiv">Grading is in progress, please wait...<br /><br /> </div>
                     </div>
                 </div>
                 {rowWithHeading}
                 <div className="row">
                     <div className="container">
-                        {rowsWithTestResults}
+                        {rowsWithGradingResults}
                     </div>
+                </div>
+                <div className="row">
+                    <p className="buttoncentered" id="newAnswer"><button className="mybtn" onClick={this.props.handleNewAnswer}>New Answer</button> </p>
                 </div>
             </div>
         )
     }
-} 
+}

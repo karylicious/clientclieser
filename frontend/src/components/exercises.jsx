@@ -6,6 +6,7 @@ import axios from 'axios'
 import Modal from './modal'
 import ModalContent from './modalcontent'
 import FileUpload from './fileupload'
+import Grading from './grading';
 
 //var rowsWithQuestions = []
 export default class Exercises extends Component {
@@ -31,6 +32,8 @@ export default class Exercises extends Component {
         modalTitle: '',
         modalMessage: '',
         isConfirmationModalType: false,
+        isNewAnswer: true
+        //uploadedFile: '', look this
         //displayWaitImage: false
     }
 
@@ -63,6 +66,10 @@ export default class Exercises extends Component {
             })
     }
 
+    handleNewAnswer = (state) => {
+        this.setState({ isNewAnswer: true })
+    }
+
     handleCloseModal() {
         document.getElementById('modal-root').style.display = "none"
     }
@@ -81,62 +88,74 @@ export default class Exercises extends Component {
 
     handleVerifyAnswerButton = () => {
         if (this.isValidForm()) {
-
+            this.setState({ isNewAnswer: false })
         }
     }
 
 
     diplayAnswerPanel() {
         if (this.state.displayAnswerPanel) {
+            if (this.state.isNewAnswer) {
+                var component, details
+                if (this.state.selectedExerciseType === "client") {
+                    component = "Client"
+                    details =
+                        <ul id="answer-rules">
+                            <li>Your Client must be written in Java</li>
+                            <li>Your Client must be a NetBeans project</li>
+                            <li>This test will expect that the Class with the main method and its package of the Client project is <strong>{this.state.selectedExerciseExpectedClientEntryPoint}</strong></li>
+                            <li>You can upload multiple projects in one single .zip file, however each project inside the .zip file is expected to be also a .zip file</li>
+                            <li>When uploading multiple projects, this test will assume all projects have the <strong>{this.state.selectedExerciseExpectedClientEntryPoint}</strong> entry point</li>
+                        </ul>
+                }
 
-            var component, details
-            if (this.state.selectedExerciseType === "client") {
-                component = "Client"
-                details =
-                    <ul id="answer-rules">
-                        <li>Your Client must be written in Java</li>
-                        <li>Your Client must be a NetBeans project</li>
-                        <li>This test will expect that the Class with the main method and its package of the Client project is <strong>{this.state.selectedExerciseExpectedClientEntryPoint}</strong></li>
-                        <li>You can upload multiple projects in one single .zip file, however each project inside the .zip file is expected to be also a .zip file</li>
-                        <li>When uploading multiple projects, this test will assume all projects have the <strong>{this.state.selectedExerciseExpectedClientEntryPoint}</strong> entry point</li>
-                    </ul>
-            }
+                else if (this.state.selectedExerciseType === "clientserver") {
+                    component = "Client Server"
+                    details =
+                        <ul id="answer-rules">
+                            <li>This test will assume that both Client and Web Service components will try to communicate to each other</li>
+                            <li>Your Client and Web Service components must be written in Java</li>
+                            <li>The zip file being uploaded must contain the .zip file of the Client project and the .zip file of the Web service project </li>
+                            <li>Your Client and Web Service components must be separate NetBeans projects</li>
+                            <li>This test will expect that the Class with the main method and its package of the Client project is <strong>{this.state.selectedExerciseExpectedClientEntryPoint}</strong></li>
+                            <li>You can upload multiple projects in one single .zip file, however each project inside the .zip file is expected to be also a .zip file containing the zip file of the Client project and the zip file of the Web service project</li>
+                            <li>When uploading multiple projects, this test will assume all Client projects have the <strong>{this.state.selectedExerciseExpectedClientEntryPoint}</strong> entry point</li>
+                        </ul>
+                }
 
-            else if (this.state.selectedExerciseType === "clientserver") {
-                component = "Client Server"
-                details =
-                    <ul id="answer-rules">
-                        <li>This test will assume that both Client and Web Service components will try to communicate to each other</li>
-                        <li>Your Client and Web Service components must be written in Java</li>
-                        <li>The zip file being uploaded must contain the .zip file of the Client project and the .zip file of the Web service project </li>
-                        <li>Your Client and Web Service components must be separate NetBeans projects</li>
-                        <li>This test will expect that the Class with the main method and its package of the Client project is <strong>{this.state.selectedExerciseExpectedClientEntryPoint}</strong></li>
-                        <li>You can upload multiple projects in one single .zip file, however each project inside the .zip file is expected to be also a .zip file containing the zip file of the Client project and the zip file of the Web service project</li>
-                        <li>When uploading multiple projects, this test will assume all Client projects have the <strong>{this.state.selectedExerciseExpectedClientEntryPoint}</strong> entry point</li>
-                    </ul>
-            }
-
-            return (
-                <div className="effectShadow bottomspace padding20">
-                    <div className="container">
-                        <div className="row">
-                            <div className="col"><h4>Upload your {component} Project</h4><hr className="myhr" /></div>
-                        </div>
-                        <div className="row">
-                            <div className="col">
-                                <p>In order to successufully verify you answer: </p>
-                                {details}
+                return (
+                    <div className="effectShadow bottomspace padding20">
+                        <div className="container">
+                            <div className="row">
+                                <div className="col"><h4>Upload your {component} Project</h4><hr className="myhr" /></div>
+                            </div>
+                            <div className="row">
+                                <div className="col">
+                                    <p>In order to successufully verify you answer: </p>
+                                    {details}
+                                </div>
+                            </div>
+                            <div className="row bottomspace">
+                                <FileUpload uploadedFile={this.setPath} setResetToFalse={this.setResetUploadFileComponent} reset={this.state.resetUploadFileComponent} colClass={"col"} fileUploadHeadings="Upload your project as .zip file"></FileUpload>
+                            </div>
+                            <div className="textright">
+                                <button className="mybtn" onClick={this.handleVerifyAnswerButton}>Verify Answer</button>
                             </div>
                         </div>
-                        <div className="row bottomspace">
-                            <FileUpload uploadedFile={this.setPath} setResetToFalse={this.setResetUploadFileComponent} reset={this.state.resetUploadFileComponent} colClass={"col"} fileUploadHeadings="Upload your project as .zip file"></FileUpload>
-                        </div>
-                        <div className="textright">
-                            <button className="mybtn" onClick={this.handleVerifyAnswerButton}>Verify Answer</button>
-                        </div>
                     </div>
-                </div>
-            )
+                )
+            }
+            else {
+                return (
+                    <div className="effectShadow bottomspace padding20">
+                        <Grading selectedComponent={this.state.selectedExerciseType}
+                            clientEntryPoint={this.state.selectedExerciseExpectedClientEntryPoint}
+                            uploadedFile={this.state.uploadedFileName}
+                            dir={this.state.dir}
+                            handleNewAnswer={this.handleNewAnswer} />
+                    </div>
+                )
+            }
         }
     }
 
@@ -169,7 +188,7 @@ export default class Exercises extends Component {
             }
 
             var fileName = this.state.selectedExerciseFile.split("/")
-            var elements = document.getElementsByClassName("collapseExerciseActive")
+            var elements = document.getElementsByClassName("myCollapseActive")
             var selectedExerciseName = elements[0].innerHTML
 
             var rowsWithQuestions = []

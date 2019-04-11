@@ -11,6 +11,8 @@ export default class Tutorials extends Component {
 
 
     handleLessonListener = (e) => {
+        if (e.target.classList.contains("tooltiptext"))
+            return
         var path = process.env.PUBLIC_URL + '/imgs/checkmark.png'
         document.getElementById("lesson-img-" + e.target.dataset.id).src = path
         window.open(e.target.dataset.link)
@@ -26,7 +28,7 @@ export default class Tutorials extends Component {
         for (var i = 0; i < listOfLessonObjects.length; i++) {
             var lesson = listOfLessonObjects[i]
             rowsWithLessons.push(
-                <div key={i} data-id={i} data-link={lesson.link} className="effectShadow" onClick={this.handleLessonListener}>
+                <div key={i} data-id={i} data-link={lesson.link} className="effectShadow mytooltip" onClick={this.handleLessonListener}>
                     <div className="container lessonsDiv" data-id={i} data-link={lesson.link}>
                         <div className="row" data-id={i} data-link={lesson.link}>
                             <div className="col-sm-3 lessonTag" data-id={i} data-link={lesson.link}>{(i + 1)}</div>
@@ -34,6 +36,8 @@ export default class Tutorials extends Component {
 
                         <div className="lessonBody" data-id={i} data-link={lesson.link} >
                             {lesson.title}
+
+                            <div className="tooltiptext">{lesson.description}</div>
                         </div>
                         <div className="lessonFooter textright" data-id={i} data-link={lesson.link}>
                             <img id={"lesson-img-" + i} data-id={i} data-link={lesson.link} src={process.env.PUBLIC_URL + '/imgs/lock.png'} alt="lock" width="20px" height="20px" />

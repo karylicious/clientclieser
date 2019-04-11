@@ -1,26 +1,6 @@
 import React, { Component } from 'react'
 
-class Summary extends Component {
-    render() {
-        return (
-            <div className="container">
-                <div className="row">
-                    <div className="col-lg-6"><h4>Summary</h4><hr className="myhr" /></div>
-                </div>
-                <div className="row">
-                    <div className="col-sm-7">
-                        <p className="psummary">Component to be tested</p>
-                        <p>{this.getSelectedComponent()}</p>
-                        {this.getClientDetails()}
-                        {this.getServerDetails()}
-                        <p className="psummary">Uploaded file</p>
-                        <p>{this.props.uploadedFile}</p>
-                    </div>
-                </div>
-            </div>
-        );
-    }
-
+export default class Summary extends Component {
     getSelectedComponent() {
         switch (this.props.selectedComponent) {
             case 'client':
@@ -56,6 +36,25 @@ class Summary extends Component {
             )
         }
     }
+
+    render() {
+        return (
+            <div className="container">
+                <div className="row">
+                    <div className="col-lg-6"><h4>Summary</h4><hr className="myhr" /></div>
+                </div>
+                <div className="row">
+                    <div className="col-sm-7">
+                        <p className="psummary">Component to be tested</p>
+                        <p>{this.getSelectedComponent()}</p>
+                        {this.getClientDetails()}
+                        {this.getServerDetails()}
+                        <p className="psummary">Uploaded file</p>
+                        <p>{this.props.uploadedFile}</p>
+                    </div>
+                </div>
+            </div>
+        )
+    }
 }
 
-export default Summary

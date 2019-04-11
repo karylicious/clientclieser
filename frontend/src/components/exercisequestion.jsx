@@ -56,7 +56,7 @@ export default class Question extends Component {
                 </div>
                 <div className="row">
                     <div className="col">
-                        <label>Expected Invoked Method</label>
+                        <label>Expected Invoked Method <span className="systemwarning"> (without parentesis)</span></label>
                         <input className="form-control myinputtext questionexpectedinvokedmethod" id={"expectedinvokedmethod-" + this.props.id} type="text" defaultValue={this.props.expectedInvokedMethod} />
                     </div>
                 </div>

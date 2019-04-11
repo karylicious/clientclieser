@@ -278,12 +278,16 @@ textarea {
 }
 
 
+.textMiddleCentered{
+  display: flex;
+}
+
+.textMiddleCentered p{
+  margin: auto 0;
+}
 
 .homeFooter{
   margin-top: -25px;
-}
-
-.otherFooter{
 }
 
 .myFooter{
@@ -836,7 +840,7 @@ ul{
   .scrollbar
 {
     float: left;
-    height: 42vh;
+    height: 60vh;
     width: 65px;
     overflow-y: scroll;
 }
@@ -1032,3 +1036,73 @@ ul{
   display: table;
   clear: both;
 }
+
+
+
+
+.mytooltip {
+  position: relative;
+  
+  
+}
+
+.mytooltip .tooltiptext {
+	visibility: hidden;
+    position: absolute;
+    width: 350px;
+    background: rgba(255, 137, 55, 0.7);
+    color: #fff;
+    text-align: center;
+    padding: 20px;
+    border-radius: 6px;
+    z-index: 1;
+    opacity: 0;
+    transition: opacity 0.7s;
+  	margin-left: -10px;
+  	top: 40px;
+    left: 70%;
+    line-height: 25px;
+    font-size: initial;
+}
+
+.mytooltip .tooltiptext::after {
+	padding:20x;
+    content: "";
+    position: absolute;
+    top: 25%;
+    right: 100%;
+    margin-top: -5px;
+    border-width: 10px;
+    border-style: solid;
+    border-color: transparent rgba(255, 137, 55, 0.7) transparent transparent;
+
+}
+
+.mytooltip:hover .tooltiptext {
+  visibility: visible;
+  opacity: 1;
+  
+}
+
+.tooltiptext:hover{
+cursor: default;
+}
+
+.stepOnLeft {
+  border: 1px solid;
+  padding: 10px;
+  box-shadow: -10px 10px rgb(0, 21, 64);
+  text-align: center; 
+}
+
+.stepOnRight {
+  border: 1px solid;
+  padding: 10px;
+  box-shadow: 10px 10px rgb(0, 21, 64);
+  text-align: center; 
+}
+
+.stepFig{
+max-width: 100%;
+    max-height: 100%;
+    }

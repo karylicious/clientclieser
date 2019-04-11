@@ -7,13 +7,14 @@ import FileUpload from './fileupload'
 import Footer from './footer'
 import Information from './testinformation'
 import TopContainer from './topcontainer'
+import axios from 'axios'
 
 export default class Validator extends Component {
     state = {
         step: 1,
         selectedComponent: '',
         clientEntryPoint: '',
-        serverEntryPoint: '',
+        serverEntryPoint: '', // remove this
         uploadedFile: '',
         dir: ''
     }
@@ -53,7 +54,7 @@ export default class Validator extends Component {
         }
     }
 
-    
+
 
     chooseClient = () => {
         this.setState({ selectedComponent: 'client' })
@@ -93,8 +94,17 @@ export default class Validator extends Component {
     }
 
     prevStep = () => {
-        if (this.state.selectedComponent !== '')
-            this.setState({ step: this.state.step - 1 })
+        if (this.state.selectedComponent !== '') {
+
+            if (this.state.step === 3) {
+                this.setState({ step: this.state.step - 1 })
+                var directory = this.state.dir.split("/")
+                axios.delete('http://localhost:5000/zipfile?dir=' + directory[0])
+
+            }
+            else
+                this.setState({ step: this.state.step - 1 })
+        }
     }
 
     renderButton() {
