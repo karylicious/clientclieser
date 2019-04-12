@@ -136,7 +136,12 @@ export default class Exercises extends Component {
                                 </div>
                             </div>
                             <div className="row bottomspace">
-                                <FileUpload uploadedFile={this.setPath} setResetToFalse={this.setResetUploadFileComponent} reset={this.state.resetUploadFileComponent} colClass={"col"} fileUploadHeadings="Upload your project as .zip file"></FileUpload>
+                                <FileUpload
+                                    uploadedFile={this.setPath}
+                                    setResetToFalse={this.setResetUploadFileComponent}
+                                    reset={this.state.resetUploadFileComponent}
+                                    colClass={"col"} fileUploadHeadings="Upload your project as .zip file"
+                                />
                             </div>
                             <div className="textright">
                                 <button className="mybtn" onClick={this.handleVerifyAnswerButton}>Verify Answer</button>
@@ -147,12 +152,14 @@ export default class Exercises extends Component {
             }
             else {
                 return (
-                    <div className="effectShadow bottomspace padding20">
+                    <div className="effectShadow bottomspace padding20 userGradePanel">
                         <Grading selectedComponent={this.state.selectedExerciseType}
                             clientEntryPoint={this.state.selectedExerciseExpectedClientEntryPoint}
                             uploadedFile={this.state.uploadedFileName}
                             dir={this.state.dir}
-                            handleNewAnswer={this.handleNewAnswer} />
+                            handleNewAnswer={this.handleNewAnswer}
+                            selectedExerciseID={this.state.selectedExerciseID}
+                        />
                     </div>
                 )
             }

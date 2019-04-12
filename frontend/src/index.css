@@ -850,6 +850,13 @@ ul{
     min-height: 41vh;
 }
 
+.userGradePanel{
+  min-width: 100%;
+}
+
+.pCentered{
+  margin: auto;
+}
 
 #style-2::-webkit-scrollbar-track
 {

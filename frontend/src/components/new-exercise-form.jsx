@@ -5,14 +5,18 @@ export default class NewExerciseForm extends Component {
     renderFileUpload = () => {
         var headings
         if (this.props.selectedComponent === "client")
-            headings = 'Upload a Web Service as .zip file'
+            headings = 'Upload a complete working Web Service as .zip file'
         else if (this.props.selectedComponent === "both")
             headings = 'Upload a dummy Client and a dummy Server as .zip file'
 
         if (this.props.selectedComponent === "client" || this.props.selectedComponent === "both")
             return (
                 <div className="row bottomspace marginLeft-15">
-                    <FileUpload uploadedFile={this.props.setPath} colClass={"col-sm-7"} fileUploadHeadings={headings}></FileUpload>
+                    <FileUpload
+                        uploadedFile={this.props.setPath}
+                        colClass={"col-sm-7"}
+                        fileUploadHeadings={headings}
+                    />
                 </div>
             )
     }

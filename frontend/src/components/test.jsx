@@ -70,7 +70,14 @@ export default class Test extends Component {
             for (var i = 0; i < this.state.testResultList.length; i++) {
                 if (prevOwner === "") {
                     prevOwner = this.state.testResultList[i]['projectOwner']
-                    rowsWithTestResults.push(<TestResult key={i} resultID={i} projectOwner={this.state.testResultList[i]['projectOwner']} resultsList={this.state.testResultList} />);
+                    rowsWithTestResults.push(
+                        <TestResult
+                            key={i}
+                            resultID={i}
+                            projectOwner={this.state.testResultList[i]['projectOwner']}
+                            resultsList={this.state.testResultList}
+                        />
+                    )
                 }
                 else if (prevOwner !== this.state.testResultList[i]['projectOwner']) {
                     prevOwner = ""

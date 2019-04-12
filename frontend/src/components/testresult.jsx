@@ -23,10 +23,10 @@ export default class TestResult extends Component {
                 break;
             }
             if (found === true) {
-                if (this.props.resultsList[i]['result'] === "false") {
+                if (this.props.resultsList[i]['hasPassed'] === "false") {
                     passedTest = false
                 }
-                var image = (this.props.resultsList[i]['result'] === 'true') ? 'check' : 'error'
+                var image = (this.props.resultsList[i]['hasPassed'] === 'true') ? 'check' : 'error'
                 rowWithDetails.push(
                     <div key={i} className="row">
                         <div className="col">

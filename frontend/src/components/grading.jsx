@@ -4,17 +4,18 @@ import axios from 'axios'
 
 export default class Grading extends Component {
     state = {
-        gradingResultList: null
+        gradingResultList: null,
+        finalGrade: ""
     }
 
     setURLparameters = () => {
         try {
             var selectedFile = this.props.uploadedFile.split(".zip")
             if (this.props.selectedComponent === "client")
-                return '/gradeclient?clientEntryPoint=' + this.props.clientEntryPoint + '&dir=' + this.props.dir + '&selectedFileName=' + selectedFile[0]
+                return '/gradeclient?clientEntryPoint=' + this.props.clientEntryPoint + '&dir=' + this.props.dir + '&selectedFileName=' + selectedFile[0] + "&exerciseid=" + this.props.selectedExerciseID
 
             else if (this.props.selectedComponent === "clientserver")
-                return '/gradeclientserver?clientEntryPoint=' + this.props.clientEntryPoint + '&dir=' + this.props.dir + '&selectedFileName=' + selectedFile[0]
+                return '/gradeclientserver?clientEntryPoint=' + this.props.clientEntryPoint + '&dir=' + this.props.dir + '&selectedFileName=' + selectedFile[0] + "&exerciseid=" + this.props.selectedExerciseID
         }
         catch (err) {
             console.log("An error has occured")
@@ -26,13 +27,14 @@ export default class Grading extends Component {
         axios.get('http://localhost:5000' + this.setURLparameters())
             .then(response => {
 
+
                 for (var i = 0; i < response.data['responseList'].length; i++) {
                     document.getElementById("progressDiv").innerHTML += response.data['responseList'][i] + "<br />"
                 }
                 var newAnswerButton = document.getElementById("newAnswer")
                 newAnswerButton.style.display = "block"
                 this.deleteDirectory()
-                this.setState({ gradingResultList: response.data['gradingResultList'] })
+                this.setState({ gradingResultList: response.data['gradingResultList'], finalGrade: response.data['finalGrade'] })
             })
     }
 
@@ -52,18 +54,26 @@ export default class Grading extends Component {
         if (this.state.gradingResultList !== null) {
 
 
-            /*
-            var passedTest = true
+
+            //var passedTest = true
             var prevOwner = ""
-            for (var i = 0; i < this.state.testResultList.length; i++) {
+            for (var i = 0; i < this.state.gradingResultList.length; i++) {
                 if (prevOwner === "") {
-                    prevOwner = this.state.testResultList[i]['projectOwner']
-                    rowsWithGradingResults.push(<GradingResult key={i} resultID={i} projectOwner={this.state.testResultList[i]['projectOwner']} resultsList={this.state.testResultList} />);
+                    prevOwner = this.state.gradingResultList[i]['projectOwner']
+                    rowsWithGradingResults.push(
+                        <GradingResult
+                            key={i}
+                            resultID={i}
+                            projectOwner={this.state.gradingResultList[i]['projectOwner']}
+                            resultsList={this.state.gradingResultList}
+                            finalGrade={this.state.finalGrade}
+                        />
+                    )
                 }
-                else if (prevOwner !== this.state.testResultList[i]['projectOwner']) {
+                else if (prevOwner !== this.state.gradingResultList[i]['projectOwner']) {
                     prevOwner = ""
                 }
-            }*/
+            }
 
             rowWithHeading.push(
                 <div key={50} className="row">
@@ -95,7 +105,7 @@ export default class Grading extends Component {
                     </div>
                 </div>
                 <div className="row">
-                    <p className="buttoncentered" id="newAnswer"><button className="mybtn" onClick={this.props.handleNewAnswer}>New Answer</button> </p>
+                    <p className="pCentered" id="newAnswer"><button className="mybtn" onClick={this.props.handleNewAnswer}>New Answer</button> </p>
                 </div>
             </div>
         )

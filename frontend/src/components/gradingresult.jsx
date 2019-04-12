@@ -10,7 +10,7 @@ export default class GradingResult extends Component {
 
     render() {
 
-        const rowWithDetails = [], rowWithFinalResult = []
+        const rowWithDetails = []
 
         var passedTest = true
         var found = false
@@ -23,10 +23,10 @@ export default class GradingResult extends Component {
                 break;
             }
             if (found === true) {
-                if (this.props.resultsList[i]['result'] === "false") {
-                    passedTest = false
-                }
-                var image = (this.props.resultsList[i]['result'] === 'true') ? 'check' : 'error'
+                //if (this.props.resultsList[i]['hasPassed'] === "false") {
+                //    passedTest = false
+                // }
+                var image = (this.props.resultsList[i]['hasPassed'] === 'true') ? 'check' : 'error'
                 rowWithDetails.push(
                     <div key={i} className="row">
                         <div className="col">
@@ -34,6 +34,8 @@ export default class GradingResult extends Component {
                                 <img src={process.env.PUBLIC_URL + '/imgs/' + image + '.png'} alt="res" />
                                 {this.props.resultsList[i]['title']}
                             </p>
+                            <p className="textright">Actual Output: {this.props.resultsList[i]['actualTestOutput']}</p>
+                            <p className="textright">Score: {this.props.resultsList[i]['grade']}</p>
                             <hr className="resultline" />
                         </div>
                     </div>
@@ -42,33 +44,22 @@ export default class GradingResult extends Component {
 
         }
 
-        const result = (passedTest === true) ? 'check' : 'error'
-        rowWithFinalResult.push(
-            <div key={this.props.resultID} className="row">
-                <div className="col">
-                    <p className={(passedTest === true) ? 'psuccess' : 'pfailed'}>The project {this.props.projectOwner} {(passedTest === true) ? 'passed' : 'failed'} the test</p>
-                </div>
-            </div>
-        )
-
-
-
         return (
             <div className="row">
                 <div className="container">
                     <div className="row">
                         <div className="col">
-                            <p>{this.props.projectOwner}
-                                <br />
+                            <p>{this.props.projectOwner}</p>
+                            <p className="textright">Final Grade</p>
+                            <p>
                                 <span className="vDetails" onClick={this.togglePanel} id={'details-' + this.props.resId} >View Details</span>
-                                <img src={process.env.PUBLIC_URL + '/imgs/' + result + '.png'} alt="res" className="imageright" />
+                                <span className="imageright">{this.props.finalGrade}</span>
                             </p>
                         </div>
                     </div>
                     <div className="row">
                         <div className="container details-content" id={'panel-' + this.props.resId}>
                             {rowWithDetails}
-                            {rowWithFinalResult}
                         </div>
                     </div>
                     <hr className="resultline" />
