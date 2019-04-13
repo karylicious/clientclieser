@@ -4,7 +4,7 @@ import axios from 'axios'
 
 export default class Grading extends Component {
     state = {
-        gradingResultList: null,
+        gradingResultList: [],
         finalGrade: ""
     }
 
@@ -26,7 +26,8 @@ export default class Grading extends Component {
     getResults() {
         axios.get('http://localhost:5000' + this.setURLparameters())
             .then(response => {
-
+                if (response.data['responseList'].length == 0)
+                    document.getElementById("progressDiv").innerHTML += "The system is currently unavailable. Please try again later."
 
                 for (var i = 0; i < response.data['responseList'].length; i++) {
                     document.getElementById("progressDiv").innerHTML += response.data['responseList'][i] + "<br />"
@@ -51,9 +52,7 @@ export default class Grading extends Component {
 
     render() {
         const rowsWithGradingResults = [], rowWithHeading = []
-        if (this.state.gradingResultList !== null) {
-
-
+        if (this.state.gradingResultList.length > 0) {
 
             //var passedTest = true
             var prevOwner = ""

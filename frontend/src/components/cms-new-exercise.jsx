@@ -5,7 +5,7 @@ import Question from './exercisequestion'
 import axios from 'axios'
 import Modal from './modal'
 import ModalContent from './modalcontent'
-import NewExerciseForm from './new-exercise-form'
+import NewExerciseForm from './cms-new-exercise-form'
 
 var rowsWithQuestions = []
 export default class NewExercise extends Component {
@@ -40,7 +40,7 @@ export default class NewExercise extends Component {
                 description: document.getElementById("description").value,
                 type: this.state.typeOfExercise,
                 selectedFileName: this.state.uploadedFileName,
-                expectedClientEntryPoint: document.getElementById("expectedClientEntryPoint").value,
+                expectedClientEntryPoint: document.getElementById("expectedClientEntryPoint").value.trim(),
                 questions: listOfQuestionsObjects
             }
 
@@ -162,19 +162,19 @@ export default class NewExercise extends Component {
             listOfQuestionObjects.push({
                 title: listTitle[i].value,
                 description: listDescr[i].value,
-                expectedOutput: listExpectedOuput[i].value,
-                points: listPoints[i].value,
-                expectedInvokedMethod: listExpectedInvokedMethod[i].value
+                expectedOutput: listExpectedOuput[i].value.trim(),
+                points: listPoints[i].value.trim(),
+                expectedInvokedMethod: listExpectedInvokedMethod[i].value.trim()
             })
 
             rows.push(<Question key={i}
                 id={i}
                 title={listTitle[i].value}
                 description={listDescr[i].value}
-                expectedOutput={listExpectedOuput[i].value}
-                points={listPoints[i].value}
+                expectedOutput={listExpectedOuput[i].value.trim()}
+                points={listPoints[i].value.trim()}
                 removeQuestion={this.removeQuestion}
-                expectedInvokedMethod={listExpectedInvokedMethod[i].value} />)
+                expectedInvokedMethod={listExpectedInvokedMethod[i].value.trim()} />)
         }
 
         this.setState({ questionListRows: rows })

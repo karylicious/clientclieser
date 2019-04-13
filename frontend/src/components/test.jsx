@@ -4,7 +4,7 @@ import axios from 'axios'
 
 export default class Test extends Component {
     state = {
-        testResultList: null
+        testResultList: []
     }
 
     setURLparameters() {
@@ -25,6 +25,8 @@ export default class Test extends Component {
     getResults() {
         axios.get('http://localhost:5000' + this.setURLparameters())
             .then(response => {
+                if (response.data['responseList'].length == 0)
+                    document.getElementById("progressDiv").innerHTML += "The system is currently unavailable. Please try again later."
 
                 for (var i = 0; i < response.data['responseList'].length; i++) {
                     document.getElementById("progressDiv").innerHTML += response.data['responseList'][i] + "<br />"
@@ -61,7 +63,7 @@ export default class Test extends Component {
 
     render() {
         const rowsWithTestResults = [], rowWithHeading = []
-        if (this.state.testResultList !== null) {
+        if (this.state.testResultList.length > 0) {
 
 
 

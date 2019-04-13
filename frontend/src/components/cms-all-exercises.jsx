@@ -6,7 +6,7 @@ import Collapse from './collapse-exercises'
 import axios from 'axios'
 import Modal from './modal'
 import ModalContent from './modalcontent'
-import EditExerciseForm from './edit-exercise-form'
+import EditExerciseForm from './cms-edit-exercise-form'
 
 var rowsWithQuestions = []
 export default class ListExercises extends Component {
@@ -47,7 +47,7 @@ export default class ListExercises extends Component {
                 uploadedfile: this.state.dir,
                 description: document.getElementById("description").value,
                 selectedFileName: this.state.uploadedFileName,
-                expectedClientEntryPoint: document.getElementById("expectedClientEntryPoint").value,
+                expectedClientEntryPoint: document.getElementById("expectedClientEntryPoint").value.trim(),
                 id: this.state.selectedExerciseID,
                 questions: listOfQuestionsObjects
             }
@@ -60,15 +60,19 @@ export default class ListExercises extends Component {
                 .then(response => {
                     window.scrollTo(0, 0)
 
-                    if (this.state.uploadedFileName !== "")
-                        this.setState({ resetUploadFileComponent: true, selectedExerciseFile: this.state.dir, dir: "", uploadedFileName: "" })
 
                     var message
                     if (response.data["succeed"] === true) {
                         message = "Exercise has been updated successfully."
+                        if (this.state.uploadedFileName !== "")
+                            this.setState({ resetUploadFileComponent: true, selectedExerciseFile: this.state.dir, dir: "", uploadedFileName: "" })
+
                     }
                     else if (response.data["succeed"] === false) {
                         message = response.data["info"]
+                        if (this.state.uploadedFileName !== "")
+                            this.setState({ resetUploadFileComponent: true, dir: "", uploadedFileName: "" })
+
                     }
 
                     this.setState({
@@ -252,9 +256,9 @@ export default class ListExercises extends Component {
             listOfQuestionObjects.push({
                 title: listTitle[i].value,
                 description: listDescr[i].value,
-                expectedOutput: listExpectedOuput[i].value,
-                points: listPoints[i].value,
-                expectedInvokedMethod: listExpectedInvokedMethod[i].value
+                expectedOutput: listExpectedOuput[i].value.trim(),
+                points: listPoints[i].value.trim(),
+                expectedInvokedMethod: listExpectedInvokedMethod[i].value.trim()
             })
         }
         return listOfQuestionObjects
@@ -312,15 +316,6 @@ export default class ListExercises extends Component {
             document.getElementById('pWarning').innerHTML = "No password is set! This system is at risk. Set a password."
         else
             document.getElementById('pWarning').innerHTML = ""
-
-
-        /*if (this.state.resetUploadFileComponent === true) {
-            console.log(this.state.uploadedFileName)
-            document.getElementById("attachedFileName").innerHTML = this.state.uploadedFileName
-            this.setState({ dir: "", uploadedFileName: "" })
-            console.log("uplooo")
-        }*/
-
     }
 
     renderForm() {

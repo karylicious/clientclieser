@@ -6,7 +6,7 @@ import Collapse from './collapse-tutorials'
 import axios from 'axios'
 import Modal from './modal'
 import ModalContent from './modalcontent'
-import EditTutorialForm from './edit-tutorial-form'
+import EditTutorialForm from './cms-edit-tutorial-form'
 
 var rowsWithLessons = []
 export default class ListTutorials extends Component {

@@ -60,13 +60,13 @@ export default class TestResult extends Component {
                         <div className="col">
                             <p>{this.props.projectOwner}
                                 <br />
-                                <span className="vDetails" onClick={this.togglePanel} id={'details-' + this.props.resId} >View Details</span>
+                                <span className="vDetails" onClick={this.togglePanel} id={'details-' + this.props.resultID} >View Details</span>
                                 <img src={process.env.PUBLIC_URL + '/imgs/' + result + '.png'} alt="res" className="imageright" />
                             </p>
                         </div>
                     </div>
                     <div className="row">
-                        <div className="container details-content" id={'panel-' + this.props.resId}>
+                        <div className="container details-content" id={'panel-' + this.props.resultID}>
                             {rowWithDetails}
                             {rowWithFinalResult}
                         </div>

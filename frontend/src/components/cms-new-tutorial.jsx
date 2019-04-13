@@ -5,7 +5,7 @@ import Lesson from './lesson'
 import axios from 'axios'
 import Modal from './modal'
 import ModalContent from './modalcontent'
-import NewTutorialForm from './new-tutorial-form'
+import NewTutorialForm from './cms-new-tutorial-form'
 
 var rowsWithLessons = []
 export default class NewTutorial extends Component {

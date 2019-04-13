@@ -81,29 +81,43 @@ export default class Validator extends Component {
                 this.setState({ step: this.state.step + 1 })
             }
             else if (this.state.step === 4) {
+                this.resetState()
                 this.setState({
-                    step: 1,
-                    selectedComponent: '',
-                    clientEntryPoint: '',
-                    serverEntryPoint: '',
-                    uploadedFile: '',
-                    dir: ''
+                    step: 1
+                    //selectedComponent: '',
+                    //clientEntryPoint: '',
+                    //serverEntryPoint: '',
+                    // uploadedFile: '',
+                    // dir: ''
                 })
             }
         }
     }
 
+
+    resetState = () => {
+        this.setState({
+            selectedComponent: '',
+            clientEntryPoint: '',
+            serverEntryPoint: '',
+            uploadedFile: '',
+            dir: ''
+        })
+    }
+
     prevStep = () => {
         if (this.state.selectedComponent !== '') {
 
-            if (this.state.step === 3) {
-                this.setState({ step: this.state.step - 1 })
+            //if (this.state.step === 3 || ) {
+            this.setState({ step: this.state.step - 1 })
+            if (this.state.dir !== '') {
                 var directory = this.state.dir.split("/")
+                this.resetState()
                 axios.delete('http://localhost:5000/zipfile?dir=' + directory[0])
-
             }
-            else
-                this.setState({ step: this.state.step - 1 })
+            //}
+            //else
+            //  this.setState({ step: this.state.step - 1 })
         }
     }
 
