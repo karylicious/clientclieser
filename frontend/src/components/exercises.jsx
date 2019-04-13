@@ -185,7 +185,15 @@ export default class Exercises extends Component {
     }
 
     renderQuestions() {
-        if (this.state.selectedExerciseID !== "") {
+        if (this.state.selectedExerciseID == "") {
+            return (
+                <div className="col">
+                    <p>Select an exercise too see more.</p>
+                </div>
+            )
+        }
+
+        else if (this.state.selectedExerciseID !== "") {
             var downloadFileHeadings
             if (this.state.selectedExerciseType == "client") {
                 downloadFileHeadings = "Attached complete Web Service file: "

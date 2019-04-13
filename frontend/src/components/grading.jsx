@@ -82,9 +82,6 @@ export default class Grading extends Component {
                 </div>
             )
 
-
-
-
         }
 
         return (
