@@ -3,15 +3,20 @@ import Footer from './footer'
 import TopContainer from './topcontainer'
 import axios from 'axios'
 
+var clieserRestApiHostName = 'http://localhost:5000'
+
 export default class Tutorials extends Component {
     state = {
         tutorialList: []
     }
+
     renderTutorials = () => {
         var listOfTutorialObjects = this.state.tutorialList
         var rowsWithTutorials = []
+
         for (var i = 0; i < listOfTutorialObjects.length; i++) {
             var tutorial = listOfTutorialObjects[i]
+
             rowsWithTutorials.push(
                 <div key={i} data-id={tutorial.id} className="blurredElement panelOptions" onClick={this.renderSelectedTutorial}>
                     <img data-id={tutorial.id} src={process.env.PUBLIC_URL + '/imgs/tutorials.png'} alt="tutorials" className="img-fluid imageCentered" />
@@ -28,7 +33,7 @@ export default class Tutorials extends Component {
 
 
     componentDidMount() {
-        axios.get('http://localhost:5000/tutorial')
+        axios.get(clieserRestApiHostName + '/tutorial')
             .then(response => {
                 this.setState({ tutorialList: response.data })
             })

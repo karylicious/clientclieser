@@ -2,6 +2,8 @@ import React, { Component } from 'react'
 import TestResult from './testresult'
 import axios from 'axios'
 
+var clieserRestApiHostName = 'http://localhost:5000'
+
 export default class Test extends Component {
     state = {
         testResultList: []
@@ -16,23 +18,24 @@ export default class Test extends Component {
             else if (this.props.selectedComponent === "both")
                 return '/testclientserver?clientEntryPoint=' + this.props.clientEntryPoint + '&dir=' + this.props.dir + '&selectedFileName=' + selectedFile[0]
         }
-        catch (err) {
-            console.log("An error has occured")
+        catch (error) {
             return null
         }
     }
 
     getResults() {
-        axios.get('http://localhost:5000' + this.setURLparameters())
+        axios.get(clieserRestApiHostName + this.setURLparameters())
             .then(response => {
-                if (response.data['responseList'].length == 0)
+                if (response.data['responseList'].length === 0)
                     document.getElementById("progressDiv").innerHTML += "The system is currently unavailable. Please try again later."
 
                 for (var i = 0; i < response.data['responseList'].length; i++) {
                     document.getElementById("progressDiv").innerHTML += response.data['responseList'][i] + "<br />"
                 }
+
                 var newTestButton = document.getElementById("newTest")
                 newTestButton.style.display = "block"
+
                 this.deleteDirectory()
                 this.setState({ testResultList: response.data['testResultList'] })
             })
@@ -40,7 +43,7 @@ export default class Test extends Component {
 
     deleteDirectory() {
         var directory = this.props.dir.split("/")
-        axios.delete('http://localhost:5000/zipfile?dir=' + directory[0])
+        axios.delete(clieserRestApiHostName + '/zipfile?dir=' + directory[0])
     }
 
     componentDidMount() {
@@ -53,22 +56,16 @@ export default class Test extends Component {
         if (this.props.selectedComponent === "client")
             return "Client component"
 
-        else if (this.props.selectedComponent === "server")
-            return "Server component"
         else if (this.props.selectedComponent === "both")
             return "Client and Server components"
     }
 
-
-
     render() {
         const rowsWithTestResults = [], rowWithHeading = []
+
         if (this.state.testResultList.length > 0) {
-
-
-
-            var passedTest = true
             var prevOwner = ""
+
             for (var i = 0; i < this.state.testResultList.length; i++) {
                 if (prevOwner === "") {
                     prevOwner = this.state.testResultList[i]['projectOwner']
@@ -93,10 +90,6 @@ export default class Test extends Component {
                     </div>
                 </div>
             )
-
-
-
-
         }
 
         return (

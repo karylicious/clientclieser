@@ -2,20 +2,20 @@ import React, { Component } from 'react'
 import Footer from './footer'
 import TopContainer from './topcontainer'
 
-class ClientServerSystem extends Component {
+export default class ClientServerSystem extends Component {
 
     renderWriteClient = () => {
-        this.props.history.push("/client-server-system/write-client");
+        this.props.history.push("/client-server-system/write-client")
     }
 
     renderWriteServer = () => {
-        this.props.history.push("/client-server-system/write-server");
+        this.props.history.push("/client-server-system/write-server")
     }
 
     render() {
         return (
             <div>
-                <div><TopContainer standardOpening={false} /></div>
+                <TopContainer standardOpening={false} />
                 <div className="fullheight">
                     <h2 className="myh2">Learn how to build a client server system</h2>
                     <div className="row bottomspace topspace">
@@ -35,9 +35,8 @@ class ClientServerSystem extends Component {
                         </div>
                     </div>
                 </div>
-                <div className="otherFooter"><Footer /></div>
+                <Footer />
             </div>
-        );
+        )
     }
-}
-export default ClientServerSystem
+} 

@@ -1,6 +1,8 @@
 import React, { Component } from 'react'
 import axios from 'axios'
 
+var clieserRestApiHostName = 'http://localhost:5000'
+
 export default class FileUpload extends Component {
     state = {
         selectedFile: null,
@@ -24,16 +26,11 @@ export default class FileUpload extends Component {
             this.validateFile(file)
         }
         else {
-            //this means that the user after having chosen a file tried to choose a file again but
+            // This means that the user after having chosen a file tried to choose a file again but
             // pressed cancel button
             if (this.state.dir !== null)
                 this.deletePreviousDirectory()
-            /*this.setState({
-                isFileUploaded: false,
-                selectedFile: null,
-                dir: null,
-                validFile: false
-            })*/
+
             this.resetComponent()
         }
     }
@@ -57,7 +54,7 @@ export default class FileUpload extends Component {
 
     deletePreviousDirectory() {
         this.setState({ isFileUploaded: false })
-        axios.delete('http://localhost:5000/zipfile?dir=' + this.state.dir)
+        axios.delete(clieserRestApiHostName + '/zipfile?dir=' + this.state.dir)
     }
 
     handleFileUpload = () => {
@@ -65,14 +62,11 @@ export default class FileUpload extends Component {
             return
 
         if (this.state.validFile) {
-            //if (document.getElementById("uploadvalidation").innerHTML == "") {
-            //    console.log("found it")
-            //   return
-            // }
+
             const formData = new FormData();
             formData.append('file', this.state.selectedFile, this.state.selectedFile.name)
 
-            axios.post('http://localhost:5000/zipfile', formData)
+            axios.post(clieserRestApiHostName + '/zipfile', formData)
                 .then(response => {
 
                     if (response.data['succeed'] === true) {
@@ -84,19 +78,14 @@ export default class FileUpload extends Component {
 
                         var path = process.env.PUBLIC_URL + '/imgs/check.png'
                         document.getElementById("uploadFeedback").innerHTML = "<img src=" + path + " />"
-                        //document.getElementById("uploadFeedback").innerHTML += "<input type='hidden' id='hid' value='" + response.data['d'] + "'>"
 
                         if (this.props.uploadedFile !== null)
                             this.props.uploadedFile(response.data['d'] + "/" + this.state.selectedFile.name, this.state.selectedFile.name)
                     }
                 })
         }
-        else {
-            //this.setState({ isFileUploaded: false })
-            //document.getElementById("fileChooserTextField").className += " is-invalid"
+        else
             document.getElementById("uploadFeedback").innerHTML = ''
-            //this.props.uploadedFile("")
-        }
     }
 
     validateFile(selectedFile) {
@@ -116,22 +105,9 @@ export default class FileUpload extends Component {
         if (valid)
             document.getElementById("fileChooserTextField").classList.remove("is-invalid")
         document.getElementById("uploadvalidation").innerHTML = reason
-
-        //The following will prevent the user to upload again a file that was already uploaded before having the exercise updated
-        //if (this.state.isFileUploaded === true)
-        //  this.setState({ validFile: false })
     }
 
-    //validationFeedback(valid, reason) {
-    //   if (valid)
-    //       document.getElementById("fileChooserTextField").classList.remove("is-invalid")
-    // document.getElementById("uploadvalidation").innerHTML = reason
-    // }
-
     componentDidUpdate() {
-        //console.log(this.props)
-        //if (this.props.reset === false)
-        //    return
         if (this.props.reset === true) {
             this.resetComponent()
             this.props.setResetToFalse()

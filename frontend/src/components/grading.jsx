@@ -2,6 +2,8 @@ import React, { Component } from 'react'
 import GradingResult from './gradingresult'
 import axios from 'axios'
 
+var clieserRestApiHostName = 'http://localhost:5000'
+
 export default class Grading extends Component {
     state = {
         gradingResultList: [],
@@ -17,23 +19,24 @@ export default class Grading extends Component {
             else if (this.props.selectedComponent === "clientserver")
                 return '/gradeclientserver?clientEntryPoint=' + this.props.clientEntryPoint + '&dir=' + this.props.dir + '&selectedFileName=' + selectedFile[0] + "&exerciseid=" + this.props.selectedExerciseID
         }
-        catch (err) {
-            console.log("An error has occured")
+        catch (error) {
             return null
         }
     }
 
     getResults() {
-        axios.get('http://localhost:5000' + this.setURLparameters())
+        axios.get(clieserRestApiHostName + this.setURLparameters())
             .then(response => {
-                if (response.data['responseList'].length == 0)
+                if (response.data['responseList'].length === 0)
                     document.getElementById("progressDiv").innerHTML += "The system is currently unavailable. Please try again later."
 
                 for (var i = 0; i < response.data['responseList'].length; i++) {
                     document.getElementById("progressDiv").innerHTML += response.data['responseList'][i] + "<br />"
                 }
+
                 var newAnswerButton = document.getElementById("newAnswer")
                 newAnswerButton.style.display = "block"
+
                 this.deleteDirectory()
                 this.setState({ gradingResultList: response.data['gradingResultList'], finalGrade: response.data['finalGrade'] })
             })
@@ -41,7 +44,7 @@ export default class Grading extends Component {
 
     deleteDirectory = () => {
         var directory = this.props.dir.split("/")
-        axios.delete('http://localhost:5000/zipfile?dir=' + directory[0])
+        axios.delete(clieserRestApiHostName + '/zipfile?dir=' + directory[0])
     }
 
     componentDidMount() {
@@ -54,7 +57,6 @@ export default class Grading extends Component {
         const rowsWithGradingResults = [], rowWithHeading = []
         if (this.state.gradingResultList.length > 0) {
 
-            //var passedTest = true
             var prevOwner = ""
             for (var i = 0; i < this.state.gradingResultList.length; i++) {
                 if (prevOwner === "") {
@@ -69,9 +71,8 @@ export default class Grading extends Component {
                         />
                     )
                 }
-                else if (prevOwner !== this.state.gradingResultList[i]['projectOwner']) {
+                else if (prevOwner !== this.state.gradingResultList[i]['projectOwner'])
                     prevOwner = ""
-                }
             }
 
             rowWithHeading.push(
@@ -81,7 +82,6 @@ export default class Grading extends Component {
                     </div>
                 </div>
             )
-
         }
 
         return (

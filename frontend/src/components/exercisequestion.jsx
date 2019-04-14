@@ -1,9 +1,11 @@
 import React, { Component } from 'react'
 
 export default class Question extends Component {
+
     handleRemoveQuestion = (e) => {
         var questionID = e.target.id
         questionID = questionID.split("-")
+
         var listOfQuestionObjects = this.getCurrentSiblingsContent(questionID[1])
         this.props.removeQuestion(listOfQuestionObjects)
     }

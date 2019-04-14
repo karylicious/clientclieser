@@ -1,9 +1,17 @@
 import React, { Component } from 'react'
 import { NavLink } from 'react-router-dom'
 
-class Navbar extends Component {
-    render() {
+export default class Navbar extends Component {
 
+    openNav() {
+        document.getElementById("myNav").style.width = "100%";
+    }
+
+    closeNav() {
+        document.getElementById("myNav").style.width = "0%";
+    }
+
+    render() {
         return (
             <div>
                 <div className="topnav" id="myTopnav">
@@ -19,8 +27,6 @@ class Navbar extends Component {
                         <div className="menuicon"></div>
                         <div className="menuicon"></div>
                     </a>
-
-
                 </div>
                 <div id="myNav" className="overlay">
                     <div className="overlay-content">
@@ -33,14 +39,6 @@ class Navbar extends Component {
                     </div>
                 </div>
             </div>
-        );
+        )
     }
-    openNav() {
-        document.getElementById("myNav").style.width = "100%";
-    }
-
-    closeNav() {
-        document.getElementById("myNav").style.width = "0%";
-    }
-}
-export default Navbar
+} 

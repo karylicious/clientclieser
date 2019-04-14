@@ -12,16 +12,18 @@ export default class Collapse extends Component {
 
         for (var i = 0; i < listOfObjs.length; i++) {
             var tutorial = listOfObjs[i]
-            rowsWithItems.push(<CollapseItem key={i}
-                id={tutorial.id}
-                name={tutorial.title}
-                getItemByID={this.getTutorialByID} />)
-
+            rowsWithItems.push(
+                <CollapseItem
+                    key={i}
+                    id={tutorial.id}
+                    name={tutorial.title}
+                    getItemByID={this.getTutorialByID}
+                />
+            )
         }
 
         if (rowsWithItems.length === 0)
             rowsWithItems.push(<div key={0} className="noItem">There is no tutorial</div>)
-
 
         return (
             <div id="accordion">

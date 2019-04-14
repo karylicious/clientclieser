@@ -7,8 +7,6 @@ body {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
-
-
 .main{
   background-image: url( './imgs/coding.jpg'); 
   height: 100vh; 
@@ -16,32 +14,41 @@ body {
   margin-left: -20px;
   margin-right: 0px;
   border-bottom-left-radius: 45%;
-
 }
-
 .mainresponsive{
   background-image: url( './imgs/coding.jpg'); 
   height: 100%; 
   background-size: cover;
 }
-
+.darkRow{
+  background:#021730;
+  color:white;
+  border-top-left-radius: 80%;
+  padding: 50px;
+}.darkRow{
+  background:#021730;
+  color:white;
+  border-top-left-radius: 80%;
+  padding: 50px;
+}
+.darRowCol{
+  margin-top: 100px;
+  padding-left: 100px;
+  font-size: x-large;
+}
 .row{
   margin-left: 0px;
   margin-right: 0px;
 }
-
 .myh4{
   margin-top: 30px;
 }
-
 .featuresHeadings{
   color:#003E57;
 }
-
 .featuresSubHeadings{
   color: #006E89;
 }
-
 .myk{
   width: 10vw;
   height: 10vw;
@@ -50,7 +57,6 @@ body {
   color:white;
   margin-top:15%;
   border-radius: 50%
-
 }
 .p70{
   padding-top: 70px;
@@ -63,62 +69,16 @@ body {
   padding-bottom: 50px;
   padding-top: 30px;
 }
-
 .featuresRow .row{
   transform: skewY(-2deg);
   padding-bottom: 50px;
 }
-
 #getStarted{
   transform: skewY(-2deg);
 }
 .communicationImg{
   margin-left: 100px;
   margin-top: 8px;
-
-}
-
-
-.darkSubHeading{
-  color: white;
-  background-color:#001540;
-  padding: 15px;
-  transform: skewX(-20deg);
-  margin-left: -11px;
-}
-
-.darkRowStep{
-  background:#022958;
-  color:white;
-}
-
-.darkStep{
-  background-color: #5B6EA5;
-  color: white;
-  font-weight: 600;
-  padding: 10px;
-  transform: skewX(-20deg);
-  box-shadow: 5px 8px;
-}
-
-
-
-.darkRow{
-  background:#021730;
-  color:white;
-  border-top-left-radius: 80%;
-  padding: 50px;
-}
-
-.darRowCol{
-  margin-top: 100px;
-  padding-left: 100px;
-  font-size: x-large;
-}
-.redRow{
-  background-color: #e18d87;
-  padding-bottom: 50px;
-  color:white;
 }
 .italicFont{
   font-style: italic;
@@ -130,73 +90,25 @@ body {
 .StepCentered{
   justify-content: center;
 }
-
 .alignRowCenter{
   justify-content: center;
 }
-
-.redStep{
-  color: white;
-  font-weight: 600;
-  background-color: #9B4746;
-  padding: 10px;
-  transform: skewX(-20deg);
-  box-shadow: 5px 8px;
-}
-
-.numberStep{
-  color: white;
-  font-weight: 600;
-  padding: 10px;
-  transform: skewX(-20deg);
-  box-shadow: 5px 8px;
-  background-color: #021730;
-}
-
-.numberStep strong{
-  font-size: x-large;
-}
-
-.redStep p, .darkStep p{
-  transform: skewX(20deg);
-  margin-bottom: 0;
-  padding-left: 10px;
-  padding-top: 5px;
-}
-
-.redSubHeading{
-  color: white;
-  background-color: #D57A76;
-  padding: 15px;
-  transform: skewX(-20deg);
-  margin-left: -11px;
-}
-
-.redSubHeading h5, .darkSubHeading h5{
-  transform: skewX(20deg);
-}
-
 .topspace{
   margin-top: 100px;
 }
-
 .alignRight{
   justify-content: flex-end;
 }
-
 .dpadding{
   padding: 20px;
   margin-top: 20px;
 }
-
 .padding20{
   padding: 20px;
 }
-
 #answer-rules li{
   margin-bottom: 20px;
 }
-
 .blurredElement{
   border-radius: 20px;
   box-shadow: 0px 0px 18px 4px rgba(9, 211, 246, 0.2), 0 0px 30px 0 rgba(9, 211, 246, 0.19);
@@ -204,23 +116,18 @@ body {
 .blurredElement p:first-of-type{
   font-weight: 500;
 }
-
 .marginLeft-15{
   margin-left: -15px;
 }
-
 textarea {
   resize: none;
 }
-
 .paddingLeft15{
   padding-left: 15px;
 }
-
 .paddingLeft0{
   padding-left: 0px;
 }
-
 .lessonTag{
   background-color: #001540;
   clip-path: polygon(0 0, 100% 0%, calc(100% - 13px) 100%, 0% 100%);
@@ -228,40 +135,32 @@ textarea {
   color: #fff;
   font-size: 22px;
 }
-
 .lessonBody{
   min-height: 163px;
   text-align: center;
   line-height: 9;
   font-size: large;
 }
-
 .lessonFooter{
   background-color: #4CAF50;
   padding: 7px;
 }
-
 .lessonsDiv{
   margin: 0;
   padding: 0;
 }
-
 .lessonsDiv:hover{
   cursor: pointer;
 }
-
 .tutorialPanel .effectShadow{
   width: 33%;
 }
-
 .panelOptions:hover  p{
   background-color: #53DEF6;
 }
-
 .panelOptions:hover{
   cursor: pointer;
 }
-
 .bluep{
   background-color: #09d3f6;
   border-bottom-left-radius: 17px;
@@ -270,26 +169,24 @@ textarea {
   font-weight: 700;
   text-align: right;
 }
-
 .bottomRight{
   bottom: 0;
   position: absolute;
   right: 0;
 }
-
-
 .textMiddleCentered{
   display: flex;
 }
-
 .textMiddleCentered p{
   margin: auto 0;
 }
-
 .homeFooter{
   margin-top: -25px;
 }
-
+.paddingTopAndBottom{
+  padding-top: 60px;
+  padding-bottom: 60px;
+}
 .myFooter{
   background-color: #021730;   
     text-align: center;
@@ -298,23 +195,15 @@ textarea {
     padding-top: 20px;
     padding-bottom: 1px;
 }
-
 .highlighted{
-  
-  /*background:#021730;-*/
   font-family: 'Archivo Black', sans-serif;
   color:white;
   padding: 20px;
   margin-top:5%;
-  /*border-radius:20px*/
 }
-
 .blueborder{
-  /*border: 1px solid #1eaecb;*/
-  padding: 15px;
-  
+  padding: 15px;  
 }
-
 .openingtext{
   font-size: x-large;
 }
@@ -331,9 +220,8 @@ textarea {
   text-align: left;
 }
 .alignCenter{
-text-align: center;
+  text-align: center;
 }
-
 .elementCentered{
   margin: auto;
   width: 50%;
@@ -341,45 +229,35 @@ text-align: center;
 .logo{
   color: coral;
 }
-
 .featuresImages{
   border-radius: 50%;
   border: 11px solid #00BEDA;
-
 }
 .featuresSubHeadings + p{
   font-size: 23px;
 }
-
 .bluespan{
   color:#2CDAF7;
 }
-
 .navigation{
   color: white;
   background-color: #021730;
   border-radius:60vw;
   margin-top: 2%;
 }
-
 .navigation div ul li a{
   color: white;
 }
-
-
 .mylink{
   color:white !important; 
   font-weight: bold;
 }
-
 .mylink:hover{
   color: #cacbd1ef !important;
 }
-
 .paddingZero{
   padding: 0px;
 }
-
 .marginLeft0{
   margin-left:0px
 }
@@ -390,56 +268,44 @@ text-align: center;
 .cardbody{
   padding:0px
 }
-
 .noItem{
   font-style:italic;
   font-size: large; 
   padding: 20px;
 }
-
 .tutorialH4{
   margin-bottom: 50px;
 }
-
 .tutorialPanel{
   display: flex;
   flex-wrap:wrap;
 }
-
 .tutorialPanel .panelOptions{
  width: 27%;
   margin-right: 50px;
   margin-bottom: 50px;
   min-width: fit-content;
 }
-
-
-
 .tutorialPanel .panelOptions:hover{
   background-color:#F0FFFF;
 }
-
 .myCollapse{
   text-align: center;
     font-size: large;
     padding: 20px;
 }
-
 .myCollapse:hover:not(.myCollapseActive) {
   background-color: #E8E8E8;
   cursor: pointer;
 }
-
 .myCollapseActive{
   background-color: #4CAF50;
   color: white
 }
-
 .collapseContainer{
   margin-left: 0px;
   padding-left: 0px;
 }
-
 .collapseHeader{
   color: white;
   background-color: #021730;
@@ -448,24 +314,19 @@ text-align: center;
   font-size: x-large;
   border-radius: 3px;
 }
-
 .pCard{
   margin-bottom: 0px;
   padding: 20px;
 }
-
 .cardheader{
   background-color:#022958; 
   color: white;
   padding: 0px;
 }
-
 .cardheader:hover{
   background-color: #253F71;
   cursor: pointer;
 }
-
-/* Add a black background color to the top navigation */
 .topnav {
   color: white;
   background-color: #021730;
@@ -473,8 +334,6 @@ text-align: center;
   margin-top: 2%;
   overflow: hidden;
 }
-
-/* Style the links inside the navigation bar */
 .topnav a {
   float: left;
   display: block;
@@ -484,25 +343,18 @@ text-align: center;
   text-decoration: none;
   font-size: 17px;
 }
-
-/* Change the color of links on hover */
 .topnav a:hover:not(.active) {
   background-color: #022958;
   color: white;
   transition: 0.8s;
 }
-
-/* Add an active class to highlight the current page */
 .active {
   background-color: #4CAF50;
   color: white;
 }
-
-/* Hide the link that should open and close the topnav on small screens */
 .topnav .icon {
   display: none;
 }
-
 
 /* When the screen is less than 600 pixels wide, hide all links, except for the first one ("Home"). Show the link that contains should open and close the topnav (.icon) */
 @media screen and (max-width: 1200px) {
@@ -512,13 +364,11 @@ text-align: center;
     display: block;
   }
   .main{
-    background-image: url( './imgs/coding.jpg'); 
-   
+    background-image: url( './imgs/coding.jpg');    
     background-size: cover;
   }
   .mainreponsive{
-    background-image: url( './imgs/coding.jpg'); 
-    
+    background-image: url( './imgs/coding.jpg');     
     background-size: cover;
   }
 }
@@ -537,48 +387,32 @@ text-align: center;
     text-align: left;
   }
   .main{
-    background-image: url( './imgs/coding.jpg'); 
-   
+    background-image: url( './imgs/coding.jpg');    
     background-size: cover;
   }
   .mainresponsive{
-    background-image: url( './imgs/coding.jpg'); 
-   
+    background-image: url( './imgs/coding.jpg');    
     background-size: cover;
   }
 }
-
 .labelRadio{
   margin-right: 50px;
 }
-
 .divRadio{
   margin-left: 20px;
 }
-
 .marginLeft15{
   margin-left: 15px;
 }
-
 .modalmenu{
   background-color: #022958;
-
 }
-
 .menuicon {
   width: 35px;
   height: 4px;
   background-color: white;
   margin-top: 4px;
 }
-
-
-
-
-
-
-
-
 .overlay {
   height: 100%;
   width: 0;
@@ -591,7 +425,6 @@ text-align: center;
   overflow-x: hidden;
   transition: 0.5s;
 }
-
 .overlay-content {
   position: relative;
   top: 25%;
@@ -599,7 +432,6 @@ text-align: center;
   text-align: center;
   margin-top: 30px;
 }
-
 .overlay a {
   padding: 8px;
   text-decoration: none;
@@ -608,24 +440,20 @@ text-align: center;
   display: block;
   transition: 0.3s;
 }
-
 #loadSpinner{
   font-size:xx-large;
 }
-
 .overlay a:hover:not(.active) {
   color: #f1f1f1;
   background-color: #022958;
   transition: 0.8s;
 }
-
 .overlay .closebtn {
   position: absolute;
   top: 20px;
   right: 45px;
   font-size: 60px;
 }
-
 @media screen and (max-height: 450px) {
   .overlay a {font-size: 20px}
   .overlay .closebtn {
@@ -634,11 +462,6 @@ text-align: center;
   right: 35px;
   }
 }
-
-
-
-
-
 .mydot {
   height: 42px;
   width: 42px;
@@ -652,20 +475,16 @@ text-align: center;
   padding-top:2px;
   color:#bbb;
 }
-
 .activedot{
   background-color: #e6fbff;
   border: 3px solid #00d4ff;
   color:#00d4ff
 }
-
 .myprogress{
-text-align:center;
-margin-top: 60px;
-margin-bottom: 20px;
-
+  text-align:center;
+  margin-top: 60px;
+  margin-bottom: 20px;
 }
-
 .myline {
   width: 52px;
   height: 5px;
@@ -673,40 +492,32 @@ margin-bottom: 20px;
   border-bottom: 3px solid #bbb;
   margin-left:-10px;
   margin-right:-4px;
-
 }
-
 .activeline{
   border-bottom: 3px solid #00d4ff;
 }
-
-.effectShadow {
-   
+.effectShadow {   
   -webkit-box-shadow:0 0px 4px rgba(0, 0, 0, 0.3), 0 0 40px rgba(0, 0, 0, 0.0) inset;
   -moz-box-shadow:0 0px 4px rgba(0, 0, 0, 0.3), 0 0 40px rgba(0, 0, 0, 0.0) inset;
-  box-shadow:0 0px 4px rgba(0, 0, 0, 0.3), 0 0 40px rgba(0, 0, 0, 0.0) inset;
-  
+  box-shadow:0 0px 4px rgba(0, 0, 0, 0.3), 0 0 40px rgba(0, 0, 0, 0.0) inset;  
 }
-
 .mycomponents{
   height: 45vh;
   font-size: x-large;
   padding: 4%;
   margin:2%;
   border-radius:10vh;
-  background-color: white;
- 
+  background-color: white; 
   -webkit-box-shadow:0 0px 4px rgba(0, 0, 0, 0.3), 0 0 40px rgba(0, 0, 0, 0.0) inset;
   -moz-box-shadow:0 0px 4px rgba(0, 0, 0, 0.3), 0 0 40px rgba(0, 0, 0, 0.0) inset;
-  box-shadow:0 0px 4px rgba(0, 0, 0, 0.3), 0 0 40px rgba(0, 0, 0, 0.0) inset;
-  
+  box-shadow:0 0px 4px rgba(0, 0, 0, 0.3), 0 0 40px rgba(0, 0, 0, 0.0) inset;  
 }
 .mycomponents:hover{
-background-color: #FFFCFC;
-cursor:pointer;
--webkit-box-shadow:0 0px 4px rgba(255, 0, 0, 0.3), 0 0 40px rgba(0, 0, 0, 0.0) inset;
--moz-box-shadow:0 0px 4px rgba(255, 0, 0, 0.3), 0 0 40px rgba(0, 0, 0, 0.0) inset;
-box-shadow:0 0px 4px rgba(255, 0, 0, 0.3), 0 0 40px rgba(0, 0, 0, 0.0) inset;
+  background-color: #FFFCFC;
+  cursor:pointer;
+  -webkit-box-shadow:0 0px 4px rgba(255, 0, 0, 0.3), 0 0 40px rgba(0, 0, 0, 0.0) inset;
+  -moz-box-shadow:0 0px 4px rgba(255, 0, 0, 0.3), 0 0 40px rgba(0, 0, 0, 0.0) inset;
+  box-shadow:0 0px 4px rgba(255, 0, 0, 0.3), 0 0 40px rgba(0, 0, 0, 0.0) inset;
 }
 .mycomponentselected{
   height: 45vh;
@@ -715,17 +526,13 @@ box-shadow:0 0px 4px rgba(255, 0, 0, 0.3), 0 0 40px rgba(0, 0, 0, 0.0) inset;
   margin:2%;
   border-radius:10vh;
   background-color: #ffe6e6;
--webkit-box-shadow:0 0px 4px rgba(255, 0, 0, 0.3), 0 0 40px rgba(0, 0, 0, 0.0) inset;
--moz-box-shadow:0 0px 4px rgba(255, 0, 0, 0.3), 0 0 40px rgba(0, 0, 0, 0.0) inset;
-box-shadow:0 0px 4px rgba(255, 0, 0, 0.3), 0 0 40px rgba(0, 0, 0, 0.0) inset;
+  -webkit-box-shadow:0 0px 4px rgba(255, 0, 0, 0.3), 0 0 40px rgba(0, 0, 0, 0.0) inset;
+  -moz-box-shadow:0 0px 4px rgba(255, 0, 0, 0.3), 0 0 40px rgba(0, 0, 0, 0.0) inset;
+  box-shadow:0 0px 4px rgba(255, 0, 0, 0.3), 0 0 40px rgba(0, 0, 0, 0.0) inset;
 }
-
-
 .myhr{
   margin-top: 0%;
 }
-
-
 .btngetstarted{
   background-color: #022958;
   border: 1px solid #022958;
@@ -743,8 +550,6 @@ box-shadow:0 0px 4px rgba(255, 0, 0, 0.3), 0 0 40px rgba(0, 0, 0, 0.0) inset;
   color: #1eaecb;
   border-color:  #1eaecb;
 }
-
-
 .mybtn {
   background-color: white;
   border: 1px solid #1eaecb;
@@ -755,10 +560,7 @@ box-shadow:0 0px 4px rgba(255, 0, 0, 0.3), 0 0 40px rgba(0, 0, 0, 0.0) inset;
   margin: 4px 2px;
   transition: 0.8s;
   width: 172px;
-
-
 }
-
 .mybtn:hover {
   background-color: #022958;
   border-color: #022958;
@@ -768,135 +570,105 @@ box-shadow:0 0px 4px rgba(255, 0, 0, 0.3), 0 0 40px rgba(0, 0, 0, 0.0) inset;
 .marginRight10{
   margin-right: 10px;
 }
-
 .textright{
   text-align: right;
 }
-
 .myh2{
   text-align: center;
-  margin: 30px
-
+  margin: 30px;
 }
-
 .myinputtext{
   margin-bottom: 30px;
 }
-
 .systemwarning{
   color: gray;
   font-size: smaller;
 }
-
-
 fieldset.scheduler-border {
   border: 1px groove #ddd !important;
   padding: 0 1.4em 1.4em 1.4em !important;
   margin: 0 0 1.5em 0 !important;
   -webkit-box-shadow:  0px 0px 0px 0px #000;
-          box-shadow:  0px 0px 0px 0px #000;
+  box-shadow:  0px 0px 0px 0px #000;
 }
-
 legend.scheduler-border {
-      font-size: 1.2em !important;
-      font-weight: 300 !important;
-      text-align: left !important;
-      width:auto;
-      padding:0 10px;
-      border-bottom:none;
-  }
-
-  .psummary{
+  font-size: 1.2em !important;
+  font-weight: 300 !important;
+  text-align: left !important;
+  width:auto;
+  padding:0 10px;
+  border-bottom:none;
+}
+.psummary{
     font-weight: 500;
     margin-bottom: 0;
-  }
-
-  .testprogress{
-    border-radius: 10px;
-    background-color: #F7F7F9;
-    height: 40vh;
-    margin: 15px;
-    font-family: 'Calibri', sans-serif;
-    border: 1px solid #e2e2e9;
-  }
-
-
-
+}
+.testprogress{
+  border-radius: 10px;
+  background-color: #F7F7F9;
+  height: 40vh;
+  margin: 15px;
+  font-family: 'Calibri', sans-serif;
+  border: 1px solid #e2e2e9;
+}
 .fullheight{
  /* height: 100vh;*/
   margin-top: 100px;
 }
-
 .bottomspace{
   margin-bottom: 20px;
   padding-bottom: 20px;
 }
-
 ul{
   margin-bottom: 0;
 }
-
-
-  .scrollbar
-{
-    float: left;
-    height: 60vh;
-    width: 65px;
-    overflow-y: scroll;
+.scrollbar{
+  float: left;
+  height: 60vh;
+  width: 65px;
+  overflow-y: scroll;
 }
-
-.force-overflow
-{
-    min-height: 41vh;
+.force-overflow {
+  min-height: 41vh;
 }
-
 .userGradePanel{
   min-width: 100%;
 }
-
 .pCentered{
   margin: auto;
 }
-
-#style-2::-webkit-scrollbar-track
-{
-    -webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.3);
-    border-radius: 10px;
-    background-color: #F7F7F9;
+#style-2::-webkit-scrollbar-track {
+  -webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.3);
+  box-shadow: inset 0 0 6px rgba(0,0,0,0.3);
+  border-radius: 10px;
+  background-color: #F7F7F9;
 }
 
-#style-2::-webkit-scrollbar
-{
-    width: 11px;
-    background-color: #F7F7F9;
+#style-2::-webkit-scrollbar {
+  width: 11px;
+  background-color: #F7F7F9;
 }
 
-#style-2::-webkit-scrollbar-thumb
-{
-    border-radius: 10px;
-    -webkit-box-shadow: inset 0 0 6px rgba(0,0,0,.3);
-    background-color: #e2e2e9;
+#style-2::-webkit-scrollbar-thumb {
+  border-radius: 10px;
+  -webkit-box-shadow: inset 0 0 6px rgba(0,0,0,.3);
+  box-shadow: inset 0 0 6px rgba(0,0,0,0.3);
+  background-color: #e2e2e9;
 }
-
-
 .redWarning{
   color: red;
 }
-
 .imageright{
   float: right;
 }
-
 .resultline{
   margin-top: -5px;
   margin-left: 14px;
   margin-right: 20px;
 }
-
 .presults{
   margin: 20px 0 10px 0;
 }
-
 .psuccess{
   color: green;
   text-align: center;
@@ -904,7 +676,6 @@ ul{
 .textCentered{
   text-align:center;
 }
-
 .buttoncentered{
   text-align:center;
 }
@@ -913,7 +684,6 @@ ul{
   color: indianred;
   text-align: center;
 }
-
 .vDetails{
   color: #1eaecb;
   font-weight: 500;
@@ -922,48 +692,38 @@ ul{
   border-left: 4px solid;
   padding: 2px 5px 2px 5px;
 }
-
 .vDetails:hover{
   cursor: pointer;
   background-color: #D9D9D9;
 }
-
 .custom-file-input{
   z-index: 1;
 }
-
 .input-group-append .btn{
   z-index: 1;
 }
-
 .custom-file-label{
   z-index: 0;
 }
-
 .details-content{
   display: none;
   margin-left: 14px;
 }
-
 .details-content-visible{
   display: block;
 }
-
 /* The Modal (background) */
 .modal {
-  display: none; /* Hidden by default */
-  position: fixed; /* Stay in place */
-  z-index: 1; /* Sit on top */
+  display: none; 
+  position: fixed; 
+  z-index: 1; 
   left: 0;
   top: 0;
-  width: 100%; /* Full width */
-  height: 100%; /* Full height */
-  overflow: auto; /* Enable scroll if needed */
-  background-color: rgb(0,0,0); /* Fallback color */
-  background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
+  width: 100%; 
+  height: 100%; 
+  overflow: auto; 
+  background-color: rgba(0,0,0,0.4); 
 }
-
-/* Modal Content */
 .modal-content {
   position: relative;
   background-color: #fefefe;
@@ -976,16 +736,11 @@ ul{
   animation-name: animatetop;
   animation-duration: 0.6s
 }
-
 /* Add Animation */
 @keyframes animatetop {
   from {top: 0; opacity: 0}
   to {top: 25%; opacity: 1}
 }
-
-
-
-
 /* The Close Button text-decoration: none; */
 .closeModal {
   color: #fff;
@@ -996,15 +751,11 @@ ul{
   font-size: 1.8em;
   line-height: 1;
 }
-
-.closeModal:hover,
-.closeModal:focus {
+.closeModal:hover,.closeModal:focus {
   color: #fff;
   cursor: pointer;
   background-color: #007995;
 }
-
-/* Modal Header */
 .modal-header {
   background-color: #1eaecb;
   color: white;
@@ -1012,104 +763,82 @@ ul{
   font-weight: 600;
   padding: 7px;
 }
-
-/* Modal Body */
-.modal-body {padding: 2px 16px;}
-
-/* Modal Footer */
+.modal-body {
+  padding: 2px 16px;
+}
 .modal-footer {
   padding: 20px;
   justify-content: flex-end;
 }
-
-
 .imageCentered{
   display: block;
   margin-left: auto;
   margin-right: auto;
   padding-top: 50px;
 }
-
 /* Create two equal columns that floats next to each other */
 .column {
   float: left;
   width: 33.33%;
   padding: 10px;
 }
-
-/* Clear floats after the columns */
 .mrow:after {
   content: "";
   display: table;
   clear: both;
 }
-
-
-
-
 .mytooltip {
-  position: relative;
-  
-  
+  position: relative; 
 }
-
 .mytooltip .tooltiptext {
-	visibility: hidden;
-    position: absolute;
-    width: 350px;
-    background: rgba(255, 137, 55, 0.7);
-    color: #fff;
-    text-align: center;
-    padding: 20px;
-    border-radius: 6px;
-    z-index: 1;
-    opacity: 0;
-    transition: opacity 0.7s;
-  	margin-left: -10px;
-  	top: 40px;
-    left: 70%;
-    line-height: 25px;
-    font-size: initial;
+  visibility: hidden;
+  position: absolute;
+  width: 350px;
+  background: rgba(255, 137, 55, 0.7);
+  color: #fff;
+  text-align: center;
+  padding: 20px;
+  border-radius: 6px;
+  z-index: 1;
+  opacity: 0;
+  transition: opacity 0.7s;
+  margin-left: -10px;
+  top: 40px;
+  left: 70%;
+  line-height: 25px;
+  font-size: initial;
 }
-
 .mytooltip .tooltiptext::after {
-	padding:20x;
-    content: "";
-    position: absolute;
-    top: 25%;
-    right: 100%;
-    margin-top: -5px;
-    border-width: 10px;
-    border-style: solid;
-    border-color: transparent rgba(255, 137, 55, 0.7) transparent transparent;
-
+  padding:20x;
+  content: "";
+  position: absolute;
+  top: 25%;
+  right: 100%;
+  margin-top: -5px;
+  border-width: 10px;
+  border-style: solid;
+  border-color: transparent rgba(255, 137, 55, 0.7) transparent transparent;
 }
-
 .mytooltip:hover .tooltiptext {
   visibility: visible;
-  opacity: 1;
-  
+  opacity: 1;  
 }
-
 .tooltiptext:hover{
-cursor: default;
+  cursor: default;
 }
-
 .stepOnLeft {
   border: 1px solid;
   padding: 10px;
   box-shadow: -10px 10px rgb(0, 21, 64);
   text-align: center; 
 }
-
 .stepOnRight {
   border: 1px solid;
   padding: 10px;
   box-shadow: 10px 10px rgb(0, 21, 64);
   text-align: center; 
 }
-
 .stepFig{
-max-width: 100%;
-    max-height: 100%;
-    }
+  max-width: 100%;
+  max-height: 100%;
+}

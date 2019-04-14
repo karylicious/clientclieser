@@ -6,6 +6,7 @@ export default class NewExerciseForm extends Component {
         var headings
         if (this.props.selectedComponent === "client")
             headings = 'Upload a complete working Web Service as .zip file'
+
         else if (this.props.selectedComponent === "both")
             headings = 'Upload a dummy Client and a dummy Server as .zip file'
 
@@ -20,6 +21,7 @@ export default class NewExerciseForm extends Component {
                 </div>
             )
     }
+
     render() {
         return (
             <div>

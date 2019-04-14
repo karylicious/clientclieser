@@ -1,4 +1,5 @@
 import React, { Component } from 'react'
+
 export default class TestResult extends Component {
 
     togglePanel(e) {
@@ -7,26 +8,26 @@ export default class TestResult extends Component {
         panel.classList.toggle('details-content-visible')
     }
 
-
     render() {
 
         const rowWithDetails = [], rowWithFinalResult = []
 
         var passedTest = true
         var found = false
-        var passedTest = true
+
         for (var i = 0; i < this.props.resultsList.length; i++) {
-            if (found === false && this.props.projectOwner === this.props.resultsList[i]['projectOwner']) {
+            if (found === false && this.props.projectOwner === this.props.resultsList[i]['projectOwner'])
                 found = true
-            }
-            if (found === true && this.props.projectOwner !== this.props.resultsList[i]['projectOwner']) {
-                break;
-            }
+
+            if (found === true && this.props.projectOwner !== this.props.resultsList[i]['projectOwner'])
+                break
+
             if (found === true) {
-                if (this.props.resultsList[i]['hasPassed'] === "false") {
+                if (this.props.resultsList[i]['hasPassed'] === "false")
                     passedTest = false
-                }
+
                 var image = (this.props.resultsList[i]['hasPassed'] === 'true') ? 'check' : 'error'
+
                 rowWithDetails.push(
                     <div key={i} className="row">
                         <div className="col">
@@ -39,7 +40,6 @@ export default class TestResult extends Component {
                     </div>
                 )
             }
-
         }
 
         const result = (passedTest === true) ? 'check' : 'error'
@@ -50,8 +50,6 @@ export default class TestResult extends Component {
                 </div>
             </div>
         )
-
-
 
         return (
             <div className="row">
@@ -73,7 +71,6 @@ export default class TestResult extends Component {
                     </div>
                     <hr className="resultline" />
                 </div>
-
             </div>
         )
     }

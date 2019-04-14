@@ -7,25 +7,18 @@ export default class GradingResult extends Component {
         panel.classList.toggle('details-content-visible')
     }
 
-
     render() {
-
         const rowWithDetails = []
-
-        var passedTest = true
         var found = false
-        var passedTest = true
+
         for (var i = 0; i < this.props.resultsList.length; i++) {
-            if (found === false && this.props.projectOwner === this.props.resultsList[i]['projectOwner']) {
+            if (found === false && this.props.projectOwner === this.props.resultsList[i]['projectOwner'])
                 found = true
-            }
-            if (found === true && this.props.projectOwner !== this.props.resultsList[i]['projectOwner']) {
-                break;
-            }
+
+            if (found === true && this.props.projectOwner !== this.props.resultsList[i]['projectOwner'])
+                break
+
             if (found === true) {
-                //if (this.props.resultsList[i]['hasPassed'] === "false") {
-                //    passedTest = false
-                // }
                 var image = (this.props.resultsList[i]['hasPassed'] === 'true') ? 'check' : 'error'
                 rowWithDetails.push(
                     <div key={i} className="row">
@@ -41,7 +34,6 @@ export default class GradingResult extends Component {
                     </div>
                 )
             }
-
         }
 
         return (
@@ -64,7 +56,6 @@ export default class GradingResult extends Component {
                     </div>
                     <hr className="resultline" />
                 </div>
-
             </div>
         )
     }

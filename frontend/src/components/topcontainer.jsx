@@ -3,7 +3,7 @@ import Navbar from './navbar'
 import OpeningText from './openingtext'
 import Logo from './logo'
 
-class TopContainer extends Component {
+export default class TopContainer extends Component {
     renderOpening() {
         if (this.props.standardOpening) {
             return (
@@ -12,12 +12,12 @@ class TopContainer extends Component {
                         <div className="row">
                             <div className="col-sm-4"></div>
                             <div className="col-sm-8">
-                                <Navbar></Navbar>
+                                <Navbar />
                             </div>
                         </div>
-                        <div className="row" id="openingTestRow">
+                        <div className="row">
                             <div className="col-sm-8">
-                                <OpeningText></OpeningText>
+                                <OpeningText />
                             </div>
                         </div>
                     </div>
@@ -28,20 +28,18 @@ class TopContainer extends Component {
             return (
                 <div className="row">
                     <div className="col-sm-4">
-                        <Logo></Logo>
+                        <Logo />
                     </div>
                     <div className="col-sm-8">
-                        <Navbar></Navbar>
+                        <Navbar />
                     </div>
                 </div>
             )
         }
     }
-
     render() {
         return (
             <div>{this.renderOpening()}</div>
         )
     }
 }
-export default TopContainer

@@ -1,18 +1,18 @@
 import React, { Component } from 'react'
 
 export default class Summary extends Component {
+
     getSelectedComponent() {
         switch (this.props.selectedComponent) {
             case 'client':
                 return 'Client'
-            case 'server':
-                return 'Server'
             case 'both':
                 return 'Both Client and Server'
             default:
                 return null
         }
     }
+
     getClientDetails() {
         if (this.props.selectedComponent === 'client' || this.props.selectedComponent === 'both') {
             return (
@@ -20,18 +20,6 @@ export default class Summary extends Component {
                     <legend className="scheduler-border">Client Details</legend>
                     <p className="psummary">Class with the main method and its package</p>
                     <p>{this.props.clientEntryPoint}</p>
-                </fieldset>
-            )
-        }
-
-    }
-    getServerDetails() {
-        if (this.props.selectedComponent === 'server' || this.props.selectedComponent === 'both') {
-            return (
-                <fieldset className="scheduler-border">
-                    <legend className="scheduler-border">Server Details</legend>
-                    <p className="psummary">Class with the main method and its package</p>
-                    <p>{this.props.serverEntryPoint}</p>
                 </fieldset>
             )
         }
@@ -48,7 +36,6 @@ export default class Summary extends Component {
                         <p className="psummary">Component to be tested</p>
                         <p>{this.getSelectedComponent()}</p>
                         {this.getClientDetails()}
-                        {this.getServerDetails()}
                         <p className="psummary">Uploaded file</p>
                         <p>{this.props.uploadedFile}</p>
                     </div>
@@ -57,4 +44,3 @@ export default class Summary extends Component {
         )
     }
 }
-

@@ -10,7 +10,8 @@ export default class EditExerciseForm extends Component {
     renderFileUpload = () => {
         var headings
         if (this.props.selectedExerciseType === "client")
-            headings = 'Upload a Web Service as .zip file'
+            headings = 'Upload a complete working Web Service as .zip file'
+
         else if (this.props.selectedExerciseType === "clientserver")
             headings = 'Upload a dummy Client and a dummy Server as .zip file'
 

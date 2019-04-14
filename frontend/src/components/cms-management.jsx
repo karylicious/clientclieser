@@ -5,6 +5,8 @@ import axios from 'axios'
 import Modal from './modal'
 import ModalContent from './modalcontent'
 
+var clieserRestApiHostName = 'http://localhost:5000'
+
 export default class Management extends Component {
 
     state = {
@@ -19,8 +21,9 @@ export default class Management extends Component {
         var username = document.getElementById('username').value
         var password = document.getElementById('password').value
 
-        axios.get('http://localhost:5000/user?username=' + username + "&password=" + password)
+        axios.get(clieserRestApiHostName + '/user?username=' + username + "&password=" + password)
             .then(response => {
+
                 if (!response.data['succeed']) {
                     this.setState({
                         displayModal: true,
@@ -43,6 +46,7 @@ export default class Management extends Component {
         const { username } = this.props.match.params
         this.props.history.push("/cms/all-tutorials/" + username)
     }
+
     handleCloseModal() {
         document.getElementById('modal-root').style.display = "none"
     }
@@ -62,7 +66,7 @@ export default class Management extends Component {
 
         const { username } = this.props.match.params
 
-        axios.get('http://localhost:5000/session?username=' + username)
+        axios.get(clieserRestApiHostName + '/session?username=' + username)
             .then(response => {
                 if (response.data['loggedin']) {
                     this.setState({ isLoggedIn: true })
@@ -70,6 +74,7 @@ export default class Management extends Component {
             })
 
     }
+
     handleLogout = () => {
         this.props.history.push("/cms")
     }
@@ -78,7 +83,7 @@ export default class Management extends Component {
         if (!this.state.isLoggedIn) {
             const { username } = this.props.match.params
 
-            axios.get('http://localhost:5000/session?username=' + username)
+            axios.get(clieserRestApiHostName + '/session?username=' + username)
                 .then(response => {
                     if (!response.data['loggedin']) {
                         this.props.history.push("/cms")
@@ -89,9 +94,7 @@ export default class Management extends Component {
         return (
             <div>
                 <div className="row">
-                    <div className="col-sm-4">
-                        <Logo></Logo>
-                    </div>
+                    <div className="col-sm-4"><Logo /></div>
                     <div className="col">
                         <div className="row alignRight">
                             <button className="btn btn-outline-secondary" type="button" onClick={this.handleLogout}>Logout</button>
@@ -117,13 +120,14 @@ export default class Management extends Component {
                         </div>
                     </div>
                 </div>
-                <div className="otherFooter"><Footer /></div>
-                <Modal children={<ModalContent
-                    title={this.state.modalTitle}
-                    message={this.state.modalMessage}
-                    isConfirmationModalType={this.state.isConfirmationModalType}
-                    handleCloseModal={this.handleCloseModal} />}>
-                </Modal>
+                <Footer />
+                <Modal children={
+                    <ModalContent
+                        title={this.state.modalTitle}
+                        message={this.state.modalMessage}
+                        isConfirmationModalType={this.state.isConfirmationModalType}
+                        handleCloseModal={this.handleCloseModal} />
+                } />
             </div>
         )
     }

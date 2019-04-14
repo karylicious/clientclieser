@@ -9,12 +9,13 @@ import Information from './testinformation'
 import TopContainer from './topcontainer'
 import axios from 'axios'
 
+var clieserRestApiHostName = 'http://localhost:5000'
+
 export default class Validator extends Component {
     state = {
         step: 1,
         selectedComponent: '',
         clientEntryPoint: '',
-        serverEntryPoint: '', // remove this
         uploadedFile: '',
         dir: ''
     }
@@ -27,16 +28,18 @@ export default class Validator extends Component {
             case 2:
                 return <Client />
             case 3:
-                return <Summary selectedComponent={this.state.selectedComponent}
+                return <Summary
+                    selectedComponent={this.state.selectedComponent}
                     clientEntryPoint={this.state.clientEntryPoint}
-                    serverEntryPoint={this.state.serverEntryPoint}
-                    uploadedFile={this.state.uploadedFile} />
-            case 4:
-                return <Test selectedComponent={this.state.selectedComponent}
-                    clientEntryPoint={this.state.clientEntryPoint}
-                    serverEntryPoint={this.state.serverEntryPoint}
                     uploadedFile={this.state.uploadedFile}
-                    dir={this.state.dir} />
+                />
+            case 4:
+                return <Test
+                    selectedComponent={this.state.selectedComponent}
+                    clientEntryPoint={this.state.clientEntryPoint}
+                    uploadedFile={this.state.uploadedFile}
+                    dir={this.state.dir}
+                />
             default:
                 return null
         }
@@ -54,14 +57,8 @@ export default class Validator extends Component {
         }
     }
 
-
-
     chooseClient = () => {
         this.setState({ selectedComponent: 'client' })
-    }
-
-    chooseServer = () => {
-        this.setState({ selectedComponent: 'server' })
     }
 
     chooseBoth = () => {
@@ -77,29 +74,20 @@ export default class Validator extends Component {
                 if (this.validateControlsAndGetUserInput())
                     this.setState({ step: this.state.step + 1 })
             }
-            else if (this.state.step === 3) {
+            else if (this.state.step === 3)
                 this.setState({ step: this.state.step + 1 })
-            }
+
             else if (this.state.step === 4) {
                 this.resetState()
-                this.setState({
-                    step: 1
-                    //selectedComponent: '',
-                    //clientEntryPoint: '',
-                    //serverEntryPoint: '',
-                    // uploadedFile: '',
-                    // dir: ''
-                })
+                this.setState({ step: 1 })
             }
         }
     }
-
 
     resetState = () => {
         this.setState({
             selectedComponent: '',
             clientEntryPoint: '',
-            serverEntryPoint: '',
             uploadedFile: '',
             dir: ''
         })
@@ -108,16 +96,13 @@ export default class Validator extends Component {
     prevStep = () => {
         if (this.state.selectedComponent !== '') {
 
-            //if (this.state.step === 3 || ) {
             this.setState({ step: this.state.step - 1 })
+
             if (this.state.dir !== '') {
                 var directory = this.state.dir.split("/")
                 this.resetState()
-                axios.delete('http://localhost:5000/zipfile?dir=' + directory[0])
+                axios.delete(clieserRestApiHostName + '/zipfile?dir=' + directory[0])
             }
-            //}
-            //else
-            //  this.setState({ step: this.state.step - 1 })
         }
     }
 
@@ -157,21 +142,22 @@ export default class Validator extends Component {
 
     renderFileUpload() {
         if (this.state.step === 2) {
-            switch (this.state.selectedComponent) {
-                case 'client':
-                    return (
-                        <FileUpload uploadedFile={this.setPath} colClass={"col-sm-7"} fileUploadHeadings='Upload your Client project as .zip file'></FileUpload>
-                    )
-                case 'server':
-                    return (
-                        <FileUpload uploadedFile={this.setPath} colClass={"col-sm-7"} fileUploadHeadings='Upload your Server project as .zip file'></FileUpload>
-                    )
-                case 'both':
-                    return (
-                        <FileUpload uploadedFile={this.setPath} colClass={"col-sm-7"} fileUploadHeadings='Upload your Client Server project as .zip file'></FileUpload>
-                    )
-                default:
-                    return null
+
+            var component
+            if (this.state.selectedComponent === "client")
+                component = 'Client'
+
+            else if (this.state.selectedComponent === "both")
+                component = 'Client Server'
+
+            if (this.state.selectedComponent === "client" || this.state.selectedComponent === "both") {
+                return (
+                    <FileUpload
+                        uploadedFile={this.setPath}
+                        colClass={"col-sm-7"}
+                        fileUploadHeadings={'Upload your ' + component + ' project as .zip file'}
+                    />
+                )
             }
         }
     }
@@ -226,9 +212,9 @@ export default class Validator extends Component {
         else {
             document.getElementById("fileChooserTextField").classList.remove("is-invalid")
             var value = document.getElementById("uploadvalidation").innerHTML
-            if (value !== '') {
+
+            if (value !== '')
                 valid = false
-            }
         }
 
         if (valid) {
@@ -250,7 +236,7 @@ export default class Validator extends Component {
     render() {
         return (
             <div>
-                <div><TopContainer standardOpening={false} /></div>
+                <TopContainer standardOpening={false} />
                 <div className="fullheight">
                     <h2 className="myh2">Test your Client Server System</h2>
                     <div className="row bottomspace">
@@ -261,7 +247,7 @@ export default class Validator extends Component {
                         {this.renderNavigation()}
                     </div>
                 </div>
-                <div className="otherFooter"><Footer /></div>
+                <Footer />
             </div>
         )
     }

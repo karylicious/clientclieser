@@ -4,6 +4,7 @@ export default class Lesson extends Component {
     handleRemoveLesson = (e) => {
         var lessonID = e.target.id
         lessonID = lessonID.split("-")
+
         var listOfLessonObjects = this.getCurrentSiblingsContent(lessonID[1])
         this.props.removeLesson(listOfLessonObjects)
     }

@@ -2,7 +2,7 @@ import React, { Component } from 'react'
 import Footer from './footer'
 import TopContainer from './topcontainer'
 
-class Home extends Component {
+export default class Home extends Component {
     redirectToTutorials = () => {
         this.props.history.push("/tutorials");
     }
@@ -10,7 +10,7 @@ class Home extends Component {
     render() {
         return (
             <div>
-                <div><TopContainer standardOpening={true} /> </div>
+                <TopContainer standardOpening={true} />
                 <div>
                     <div className="row">
                         <div className="col">
@@ -74,7 +74,6 @@ class Home extends Component {
                 </div>
                 <div className="homeFooter"><Footer /></div>
             </div>
-        );
+        )
     }
-}
-export default Home
+} 

@@ -2,12 +2,11 @@ import React, { Component } from 'react'
 import Footer from './footer'
 import TopContainer from './topcontainer'
 
-class About extends Component {
-
+export default class About extends Component {
     render() {
         return (
             <div>
-                <div><TopContainer standardOpening={false} /></div>
+                <TopContainer standardOpening={false} />
                 <div className="fullheight container bottomspace">
                     <h2 className="myh2">About Us</h2>
                     <h4>What is Clieser</h4>
@@ -27,5 +26,4 @@ class About extends Component {
             </div>
         )
     }
-}
-export default About
+} 

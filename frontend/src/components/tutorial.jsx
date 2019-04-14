@@ -3,12 +3,13 @@ import Footer from './footer'
 import TopContainer from './topcontainer'
 import axios from 'axios'
 
+var clieserRestApiHostName = 'http://localhost:5000'
+
 export default class Tutorials extends Component {
     state = {
         lessonList: [],
         tutorialTitle: ''
     }
-
 
     handleLessonListener = (e) => {
         if (e.target.classList.contains("tooltiptext"))
@@ -25,18 +26,18 @@ export default class Tutorials extends Component {
     renderLessons = () => {
         var listOfLessonObjects = this.state.lessonList
         var rowsWithLessons = []
+
         for (var i = 0; i < listOfLessonObjects.length; i++) {
             var lesson = listOfLessonObjects[i]
+
             rowsWithLessons.push(
                 <div key={i} data-id={i} data-link={lesson.link} className="effectShadow mytooltip" onClick={this.handleLessonListener}>
                     <div className="container lessonsDiv" data-id={i} data-link={lesson.link}>
                         <div className="row" data-id={i} data-link={lesson.link}>
                             <div className="col-sm-3 lessonTag" data-id={i} data-link={lesson.link}>{(i + 1)}</div>
                         </div>
-
                         <div className="lessonBody" data-id={i} data-link={lesson.link} >
                             {lesson.title}
-
                             <div className="tooltiptext">{lesson.description}</div>
                         </div>
                         <div className="lessonFooter textright" data-id={i} data-link={lesson.link}>
@@ -51,10 +52,10 @@ export default class Tutorials extends Component {
 
     componentDidMount() {
         const { tutorialid } = this.props.match.params
-        axios.get('http://localhost:5000/lesson?tutorialid=' + tutorialid)
+        axios.get(clieserRestApiHostName + '/lesson?tutorialid=' + tutorialid)
             .then(response => {
                 this.setState({ lessonList: response.data })
-                axios.get('http://localhost:5000/tutorial?tutorialid=' + tutorialid)
+                axios.get(clieserRestApiHostName + '/tutorial?tutorialid=' + tutorialid)
                     .then(response => {
                         this.setState({ tutorialTitle: response.data['title'] })
                     })
@@ -64,7 +65,7 @@ export default class Tutorials extends Component {
     render() {
         return (
             <div>
-                <div><TopContainer standardOpening={false} /></div>
+                <TopContainer standardOpening={false} />
                 <div className="fullheight container bottomspace">
                     <h2 className="myh2">Learn what happens behind the scene</h2>
                     <div className="container">
@@ -75,7 +76,6 @@ export default class Tutorials extends Component {
                             {this.renderLessons()}
                         </div>
                     </div>
-
                     <div className="textright">
                         <button className="mybtn" onClick={this.handleReturnButton}>Return</button>
                     </div>

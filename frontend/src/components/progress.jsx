@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 
-class Progress extends Component {
+export default class Progress extends Component {
     render() {
         return (
             <div className="container">
@@ -16,7 +16,6 @@ class Progress extends Component {
                     </div>
                 </div>
             </div>
-        );
+        )
     }
-}
-export default Progress
+} 

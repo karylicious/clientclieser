@@ -2,12 +2,14 @@ import React, { Component } from 'react'
 import CollapseItem from './collapseitem'
 
 export default class Collapse extends Component {
+
     toggleCollapse = (e) => {
         var targetID = e.target.dataset.target
         document.getElementById(targetID).classList.toggle("show");
 
         if (targetID === "collapseOne")
             document.getElementById("collapseTwo").classList.remove("show")
+
         else if (targetID === "collapseTwo")
             document.getElementById("collapseOne").classList.remove("show")
     }
@@ -20,22 +22,30 @@ export default class Collapse extends Component {
         var rowsWithItemsClient = []
         var rowsWithItemsClientServer = []
         var listOfObjs = this.props.exerciseList
-
         var clientExerciseTypeCounter = 0
         var serverExerciseTypeCounter = 0
+
         for (var i = 0; i < listOfObjs.length; i++) {
             var exercise = listOfObjs[i]
             if (exercise.exerciseType === "client") {
-                rowsWithItemsClient.push(<CollapseItem key={i}
-                    id={exercise.id}
-                    name={"Exercise " + (++clientExerciseTypeCounter)}
-                    getItemByID={this.getExerciseByID} />)
+                rowsWithItemsClient.push(
+                    <CollapseItem
+                        key={i}
+                        id={exercise.id}
+                        name={"Exercise " + (++clientExerciseTypeCounter)}
+                        getItemByID={this.getExerciseByID}
+                    />
+                )
             }
             else if (exercise.exerciseType === "clientserver") {
-                rowsWithItemsClientServer.push(<CollapseItem key={rowsWithItemsClientServer.length}
-                    id={exercise.id}
-                    name={"Exercise " + (++serverExerciseTypeCounter)}
-                    getItemByID={this.getExerciseByID} />)
+                rowsWithItemsClientServer.push(
+                    <CollapseItem
+                        key={rowsWithItemsClientServer.length}
+                        id={exercise.id}
+                        name={"Exercise " + (++serverExerciseTypeCounter)}
+                        getItemByID={this.getExerciseByID}
+                    />
+                )
             }
         }
 

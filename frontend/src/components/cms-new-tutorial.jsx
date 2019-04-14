@@ -8,6 +8,8 @@ import ModalContent from './modalcontent'
 import NewTutorialForm from './cms-new-tutorial-form'
 
 var rowsWithLessons = []
+var clieserRestApiHostName = 'http://localhost:5000'
+
 export default class NewTutorial extends Component {
     state = {
         hasAddedNewLesson: false,
@@ -26,10 +28,7 @@ export default class NewTutorial extends Component {
     handleAddTutorial = () => {
 
         if (this.isValidForm()) {
-
             var listOfLessonsObjects = this.getListOfLessonObjects()
-            //var path = this.state.dir
-            //var selectedFile = this.state.uploadedFile.split(".zip")
 
             var data = {
                 title: document.getElementById("title").value,
@@ -40,7 +39,7 @@ export default class NewTutorial extends Component {
 
             this.setState({ displayWaitImage: true })
 
-            axios.post('http://localhost:5000/tutorial', jsonData, { headers: { 'Content-Type': 'application/json' } })
+            axios.post(clieserRestApiHostName + '/tutorial', jsonData, { headers: { 'Content-Type': 'application/json' } })
                 .then(response => {
                     var message, hasSucceed
                     if (response.data["succeed"] === true) {
@@ -92,9 +91,8 @@ export default class NewTutorial extends Component {
             document.getElementById("title").className += " is-invalid"
             valid = false
         }
-        else {
+        else
             document.getElementById("title").classList.remove("is-invalid")
-        }
 
         if (valid) {
             this.setState({
@@ -119,11 +117,15 @@ export default class NewTutorial extends Component {
                 link: listLink[i].value
             })
 
-            rows.push(<Lesson key={i}
-                id={i}
-                title={listTitle[i].value}
-                description={listDescr[i].value}
-                link={listLink[i].value} />)
+            rows.push(
+                <Lesson
+                    key={i}
+                    id={i}
+                    title={listTitle[i].value}
+                    description={listDescr[i].value}
+                    link={listLink[i].value}
+                />
+            )
         }
 
         this.setState({ lessonListRows: rows })
@@ -144,12 +146,16 @@ export default class NewTutorial extends Component {
 
     handleAddLessonButtonListener = () => {
         document.getElementById("pLessonValidatorFeedback").innerHTML = ""
-        rowsWithLessons.push(<Lesson key={rowsWithLessons.length}
-            id={rowsWithLessons.length}
-            title=""
-            description=""
-            link=""
-            removeLesson={this.removeLesson} />)
+        rowsWithLessons.push(
+            <Lesson
+                key={rowsWithLessons.length}
+                id={rowsWithLessons.length}
+                title=""
+                description=""
+                link=""
+                removeLesson={this.removeLesson}
+            />
+        )
         this.setState({ hasAddedNewLesson: true, lessonListRows: '' })
     }
 
@@ -167,12 +173,16 @@ export default class NewTutorial extends Component {
         for (var i = 0; i < listOfLessonsObjects.length; i++) {
             var lesson = listOfLessonsObjects[i]
 
-            newArray.push(<Lesson key={i}
-                id={i}
-                removeLesson={this.removeLesson}
-                title={lesson.title}
-                description={lesson.description}
-                link={lesson.link} />)
+            newArray.push(
+                <Lesson
+                    key={i}
+                    id={i}
+                    removeLesson={this.removeLesson}
+                    title={lesson.title}
+                    description={lesson.description}
+                    link={lesson.link}
+                />
+            )
         }
         rowsWithLessons = newArray
         this.setState({ hasAddedNewLesson: false, displayModal: false, lessonListRows: '' })
@@ -185,7 +195,7 @@ export default class NewTutorial extends Component {
         }
         const { username } = this.props.match.params
 
-        axios.get('http://localhost:5000/session?username=' + username)
+        axios.get(clieserRestApiHostName + '/session?username=' + username)
             .then(response => {
                 if (response.data['loggedin']) {
                     this.setState({ isLoggedIn: true })
@@ -198,7 +208,6 @@ export default class NewTutorial extends Component {
             document.getElementById('modal-root').style.display = "block"
             this.setState({ displayModal: false })
         }
-
     }
 
     renderForm = () => {
@@ -214,7 +223,8 @@ export default class NewTutorial extends Component {
             if (this.state.lessonListRows !== '')
                 rowsWithLessons = this.state.lessonListRows
 
-            return <NewTutorialForm rowsWithLessons={rowsWithLessons}
+            return <NewTutorialForm
+                rowsWithLessons={rowsWithLessons}
                 title={this.state.title}
                 handleAddLessonButtonListener={this.handleAddLessonButtonListener}
                 displayConfirmationDialog={this.displayConfirmationDialog}
@@ -226,7 +236,7 @@ export default class NewTutorial extends Component {
         if (!this.state.isLoggedIn) {
             const { username } = this.props.match.params
 
-            axios.get('http://localhost:5000/session?username=' + username)
+            axios.get(clieserRestApiHostName + '/session?username=' + username)
                 .then(response => {
                     if (!response.data['loggedin']) {
                         this.props.history.push("/cms")
@@ -237,9 +247,7 @@ export default class NewTutorial extends Component {
         return (
             <div>
                 <div className="row">
-                    <div className="col-sm-4">
-                        <Logo></Logo>
-                    </div>
+                    <div className="col-sm-4"><Logo /></div>
                 </div>
                 <div className="container">
                     <h2 className="myh2">Tutorials</h2>
@@ -248,14 +256,15 @@ export default class NewTutorial extends Component {
                     </div>
                     {this.renderForm()}
                 </div>
-                <div className="otherFooter"><Footer /></div>
-                <Modal children={<ModalContent
-                    title={this.state.modalTitle}
-                    message={this.state.modalMessage}
-                    isConfirmationModalType={this.state.isConfirmationModalType}
-                    handleCloseModal={this.handleCloseModal}
-                    handleConfirmation={this.returnToListView} />}>
-                </Modal>
+                <Footer />
+                <Modal children={
+                    <ModalContent
+                        title={this.state.modalTitle}
+                        message={this.state.modalMessage}
+                        isConfirmationModalType={this.state.isConfirmationModalType}
+                        handleCloseModal={this.handleCloseModal}
+                        handleConfirmation={this.returnToListView} />
+                } />
             </div>
         )
     }

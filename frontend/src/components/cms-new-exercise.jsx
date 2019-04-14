@@ -8,6 +8,8 @@ import ModalContent from './modalcontent'
 import NewExerciseForm from './cms-new-exercise-form'
 
 var rowsWithQuestions = []
+var clieserRestApiHostName = 'http://localhost:5000'
+
 export default class NewExercise extends Component {
     state = {
         hasAddedNewQuestion: false,
@@ -32,9 +34,6 @@ export default class NewExercise extends Component {
         if (this.isValidForm()) {
 
             var listOfQuestionsObjects = this.getListOfQuestionObjects()
-            //var path = this.state.dir
-            //var selectedFile = this.state.uploadedFile.split(".zip")
-
             var data = {
                 uploadedfile: this.state.dir,
                 description: document.getElementById("description").value,
@@ -48,7 +47,7 @@ export default class NewExercise extends Component {
 
             this.setState({ displayWaitImage: true })
 
-            axios.post('http://localhost:5000/exercise', jsonData, { headers: { 'Content-Type': 'application/json' } })
+            axios.post(clieserRestApiHostName + '/exercise', jsonData, { headers: { 'Content-Type': 'application/json' } })
                 .then(response => {
                     var message, hasSucceed
                     if (response.data["succeed"] === true) {
@@ -89,6 +88,7 @@ export default class NewExercise extends Component {
             else {
                 document.getElementById("fileChooserTextField").classList.remove("is-invalid")
                 var value = document.getElementById("uploadvalidation").innerHTML
+
                 if (value !== '')
                     valid = false
             }
@@ -105,6 +105,7 @@ export default class NewExercise extends Component {
             document.getElementById("pQuestionValidatorFeedback").innerHTML = ""
             for (var i = 0; i < allElements.length; i++) {
                 var userInput = allElements[i].value.trim()
+
                 if (userInput === '') {
                     valid = false
                     allElements[i].className += " is-invalid"
@@ -114,17 +115,14 @@ export default class NewExercise extends Component {
             }
         }
 
-
         var descriptionOfExercise = document.getElementById("description").value
 
         if (descriptionOfExercise.trim() === '') {
             document.getElementById("description").className += " is-invalid"
             valid = false
         }
-        else {
+        else
             document.getElementById("description").classList.remove("is-invalid")
-        }
-
 
         var entryPoint = document.getElementById("expectedClientEntryPoint").value
 
@@ -132,15 +130,11 @@ export default class NewExercise extends Component {
             document.getElementById("expectedClientEntryPoint").className += " is-invalid"
             valid = false
         }
-        else {
+        else
             document.getElementById("expectedClientEntryPoint").classList.remove("is-invalid")
-        }
 
         if (valid) {
-            //This needs to be revised. compare it with the all exercises
-            //var fileName = document.getElementById("fileChooserLabel").innerHTML
             this.setState({
-                //uploadedFile: fileName,
                 expectedClientEntryPoint: entryPoint,
                 description: descriptionOfExercise
             })
@@ -167,14 +161,17 @@ export default class NewExercise extends Component {
                 expectedInvokedMethod: listExpectedInvokedMethod[i].value.trim()
             })
 
-            rows.push(<Question key={i}
-                id={i}
-                title={listTitle[i].value}
-                description={listDescr[i].value}
-                expectedOutput={listExpectedOuput[i].value.trim()}
-                points={listPoints[i].value.trim()}
-                removeQuestion={this.removeQuestion}
-                expectedInvokedMethod={listExpectedInvokedMethod[i].value.trim()} />)
+            rows.push(
+                <Question key={i}
+                    id={i}
+                    title={listTitle[i].value}
+                    description={listDescr[i].value}
+                    expectedOutput={listExpectedOuput[i].value.trim()}
+                    points={listPoints[i].value.trim()}
+                    removeQuestion={this.removeQuestion}
+                    expectedInvokedMethod={listExpectedInvokedMethod[i].value.trim()}
+                />
+            )
         }
 
         this.setState({ questionListRows: rows })
@@ -205,15 +202,19 @@ export default class NewExercise extends Component {
 
     handleAddQuestionButtonListener = () => {
         document.getElementById("pQuestionValidatorFeedback").innerHTML = ""
-        rowsWithQuestions.push(<Question key={rowsWithQuestions.length}
-            id={rowsWithQuestions.length}
-            title=""
-            description=""
-            expectedOutput=""
-            points=""
-            removeQuestion={this.removeQuestion}
-            expectedInvokedMethod="" />)
-        this.setState({ hasAddedNewQuestion: true, questionListRows: '' }) // this is just to trigger the render method
+        rowsWithQuestions.push(
+            <Question
+                key={rowsWithQuestions.length}
+                id={rowsWithQuestions.length}
+                title=""
+                description=""
+                expectedOutput=""
+                points=""
+                removeQuestion={this.removeQuestion}
+                expectedInvokedMethod=""
+            />
+        )
+        this.setState({ hasAddedNewQuestion: true, questionListRows: '' })
     }
 
     setPath = (path, fileName) => {
@@ -234,17 +235,20 @@ export default class NewExercise extends Component {
         for (var i = 0; i < listOfQuestionsObjects.length; i++) {
             var question = listOfQuestionsObjects[i]
 
-            newArray.push(<Question key={i}
-                id={i}
-                removeQuestion={this.removeQuestion}
-                title={question.title}
-                description={question.description}
-                expectedOutput={question.expectedOutput}
-                expectedInvokedMethod={question.expectedInvokedMethod}
-                points={question.points} />)
+            newArray.push(
+                <Question key={i}
+                    id={i}
+                    removeQuestion={this.removeQuestion}
+                    title={question.title}
+                    description={question.description}
+                    expectedOutput={question.expectedOutput}
+                    expectedInvokedMethod={question.expectedInvokedMethod}
+                    points={question.points}
+                />
+            )
         }
         rowsWithQuestions = newArray
-        this.setState({ hasAddedNewQuestion: false, displayModal: false, questionListRows: '' }) // this is just to trigger the render method
+        this.setState({ hasAddedNewQuestion: false, displayModal: false, questionListRows: '' })
     }
 
     componentDidMount() {
@@ -252,9 +256,10 @@ export default class NewExercise extends Component {
             document.getElementById('modal-root').classList.add("modal")
             document.getElementById('modal-root').style.display = "none"
         }
+
         const { username } = this.props.match.params
 
-        axios.get('http://localhost:5000/session?username=' + username)
+        axios.get(clieserRestApiHostName + '/session?username=' + username)
             .then(response => {
                 if (response.data['loggedin']) {
                     this.setState({ isLoggedIn: true })
@@ -277,9 +282,7 @@ export default class NewExercise extends Component {
                     document.getElementById("radioClientServer").checked = true
                 }
             }
-
         }
-
     }
 
 
@@ -296,7 +299,8 @@ export default class NewExercise extends Component {
             if (this.state.questionListRows !== '')
                 rowsWithQuestions = this.state.questionListRows
 
-            return <NewExerciseForm rowsWithQuestions={rowsWithQuestions}
+            return <NewExerciseForm
+                rowsWithQuestions={rowsWithQuestions}
                 selectedComponent={this.state.selectedComponent}
                 setPath={this.setPath}
                 clientRadioButtonListener={this.clientRadioButtonListener}
@@ -313,7 +317,7 @@ export default class NewExercise extends Component {
         if (!this.state.isLoggedIn) {
             const { username } = this.props.match.params
 
-            axios.get('http://localhost:5000/session?username=' + username)
+            axios.get(clieserRestApiHostName + '/session?username=' + username)
                 .then(response => {
                     if (!response.data['loggedin']) {
                         this.props.history.push("/cms")
@@ -324,9 +328,7 @@ export default class NewExercise extends Component {
         return (
             <div>
                 <div className="row">
-                    <div className="col-sm-4">
-                        <Logo></Logo>
-                    </div>
+                    <div className="col-sm-4"><Logo /></div>
                 </div>
                 <div className="container">
                     <h2 className="myh2">Exercises</h2>
@@ -335,14 +337,15 @@ export default class NewExercise extends Component {
                     </div>
                     {this.renderForm()}
                 </div>
-                <div className="otherFooter"><Footer /></div>
-                <Modal children={<ModalContent
-                    title={this.state.modalTitle}
-                    message={this.state.modalMessage}
-                    isConfirmationModalType={this.state.isConfirmationModalType}
-                    handleCloseModal={this.handleCloseModal}
-                    handleConfirmation={this.returnToListView} />}>
-                </Modal>
+                <Footer />
+                <Modal children={
+                    <ModalContent
+                        title={this.state.modalTitle}
+                        message={this.state.modalMessage}
+                        isConfirmationModalType={this.state.isConfirmationModalType}
+                        handleCloseModal={this.handleCloseModal}
+                        handleConfirmation={this.returnToListView} />
+                } />
             </div>
         )
     }

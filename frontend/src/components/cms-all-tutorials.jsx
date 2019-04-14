@@ -9,12 +9,14 @@ import ModalContent from './modalcontent'
 import EditTutorialForm from './cms-edit-tutorial-form'
 
 var rowsWithLessons = []
+var clieserRestApiHostName = 'http://localhost:5000'
+
 export default class ListTutorials extends Component {
     state = {
         hasAddedNewLesson: false,
         validForm: false,
         uploadedFileName: "",
-        lessonList: "",
+        lessonList: [],
         selectedTutorialID: "",
         selectedTutorialTitle: "",
         hasDeletedLesson: false,
@@ -45,18 +47,16 @@ export default class ListTutorials extends Component {
 
             this.setState({ displayWaitImage: true })
 
-            axios.put('http://localhost:5000/tutorial', jsonData, { headers: { 'Content-Type': 'application/json' } })
+            axios.put(clieserRestApiHostName + '/tutorial', jsonData, { headers: { 'Content-Type': 'application/json' } })
                 .then(response => {
                     window.scrollTo(0, 0)
 
-
                     var message
-                    if (response.data["succeed"] === true) {
+                    if (response.data["succeed"] === true)
                         message = "Tutorial has been updated successfully."
-                    }
-                    else if (response.data["succeed"] === false) {
+
+                    else if (response.data["succeed"] === false)
                         message = response.data["info"]
-                    }
 
                     this.setState({
                         displayModal: true,
@@ -67,9 +67,8 @@ export default class ListTutorials extends Component {
                         hasDeletedLesson: false
                     })
 
-                    axios.get('http://localhost:5000/lesson?tutorialid=' + this.state.selectedTutorialID)
+                    axios.get(clieserRestApiHostName + '/lesson?tutorialid=' + this.state.selectedTutorialID)
                         .then(response => {
-
                             this.setState({
                                 lessonList: response.data
                             })
@@ -96,9 +95,10 @@ export default class ListTutorials extends Component {
     handleDeleteTutorial = () => {
         this.handleCloseModal()
         this.setState({ displayWaitImage: true })
-        axios.delete('http://localhost:5000/tutorial?tutorialid=' + this.state.selectedTutorialID)
+
+        axios.delete(clieserRestApiHostName + '/tutorial?tutorialid=' + this.state.selectedTutorialID)
             .then(response => {
-                //console.log(response.data)
+
                 this.setState({
                     hasAddedNewLesson: false,
                     validForm: false,
@@ -118,7 +118,7 @@ export default class ListTutorials extends Component {
                 if (elements.length === 1)
                     elements[0].classList.remove("myCollapseActive")
 
-                axios.get('http://localhost:5000/tutorial')
+                axios.get(clieserRestApiHostName + '/tutorial')
                     .then(response => {
                         this.setState({ tutorialList: response.data });
                     })
@@ -129,7 +129,7 @@ export default class ListTutorials extends Component {
         var valid = true
         var allElements = document.getElementsByClassName("form-control")
 
-        // (allElements.length == 3) 1 means the title input field of the tutorial details and the two inputs of the change of password form
+        // (allElements.length == 3) 3 means the title input field of the tutorial details and the two inputs of the change of password form
         if (allElements.length === 3) {
             document.getElementById("pLessonValidatorFeedback").innerHTML = "Please add a lesson"
             valid = false
@@ -153,9 +153,8 @@ export default class ListTutorials extends Component {
             document.getElementById("title").className += " is-invalid"
             valid = false
         }
-        else {
+        else
             document.getElementById("title").classList.remove("is-invalid")
-        }
 
         if (valid) {
             this.setState({
@@ -188,7 +187,7 @@ export default class ListTutorials extends Component {
     }
 
     getTutorialByID = (id) => {
-        axios.get('http://localhost:5000/tutorial?tutorialid=' + id)
+        axios.get(clieserRestApiHostName + '/tutorial?tutorialid=' + id)
             .then(response => {
 
                 this.setState({
@@ -200,7 +199,7 @@ export default class ListTutorials extends Component {
                     displayModal: false
                 })
 
-                axios.get('http://localhost:5000/lesson?tutorialid=' + id)
+                axios.get(clieserRestApiHostName + '/lesson?tutorialid=' + id)
                     .then(response => {
                         this.setState({
                             lessonList: response.data
@@ -252,12 +251,16 @@ export default class ListTutorials extends Component {
                 for (var i = 0; i < listOfLessonObjects.length; i++) {
                     var lesson = listOfLessonObjects[i]
 
-                    rowsWithLessons.push(<Lesson key={i}
-                        id={i}
-                        removeLesson={this.removeLesson}
-                        title={lesson.title}
-                        description={lesson.description}
-                        link={lesson.link} />)
+                    rowsWithLessons.push(
+                        <Lesson
+                            key={i}
+                            id={i}
+                            removeLesson={this.removeLesson}
+                            title={lesson.title}
+                            description={lesson.description}
+                            link={lesson.link}
+                        />
+                    )
                 }
 
             }
@@ -286,13 +289,18 @@ export default class ListTutorials extends Component {
 
     handleAddLessonButtonListener = () => {
         document.getElementById("pLessonValidatorFeedback").innerHTML = ""
-        rowsWithLessons.push(<Lesson key={rowsWithLessons.length}
-            id={rowsWithLessons.length}
-            title=""
-            description=""
-            link=""
-            removeLesson={this.removeLesson} />)
-        // The following line prevents the renderForm() function to reload the array rowsWithLessons with the lessons on the "this.state.lessonList" variable
+        rowsWithLessons.push(
+            <Lesson key={rowsWithLessons.length}
+                id={rowsWithLessons.length}
+                title=""
+                description=""
+                link=""
+                removeLesson={this.removeLesson}
+            />
+        )
+
+        // The following line prevents the renderForm() function to reload the array rowsWithLessons with 
+        // the lessons on the "this.state.lessonList" variable
         this.setState({ hasDeletedLesson: true, displayModal: false })
     }
 
@@ -310,7 +318,7 @@ export default class ListTutorials extends Component {
             const { username } = this.props.match.params
             var password = document.getElementById("password").value
 
-            axios.put('http://localhost:5000/user?username=' + username + "&password=" + password)
+            axios.put(clieserRestApiHostName + '/user?username=' + username + "&password=" + password)
                 .then(response => {
                     if (!response.data['succeed']) {
                         this.setState({
@@ -330,7 +338,6 @@ export default class ListTutorials extends Component {
                             displayWarningPasswordEmpty: false
                         })
                     }
-
                 })
         }
     }
@@ -369,13 +376,14 @@ export default class ListTutorials extends Component {
     handlePasswordManagemet = () => {
         if (this.state.displayPasswordManagementPanel)
             this.setState({ displayPasswordManagementPanel: false })
+
         else if (!this.state.displayPasswordManagementPanel)
             this.setState({ displayPasswordManagementPanel: true })
     }
     renderPasswordManagementPanel() {
-        if (this.state.displayModal === true) {
+        if (this.state.displayModal === true)
             document.getElementById('modal-root').style.display = "block"
-        }
+
         if (this.state.displayPasswordManagementPanel) {
             return (
                 <div className="effectShadow bottomspace padding20">
@@ -405,16 +413,21 @@ export default class ListTutorials extends Component {
     removeLesson = (listOfLessonObjects) => {
         var newArray = []
         for (var i = 0; i < listOfLessonObjects.length; i++) {
+
             var lesson = listOfLessonObjects[i]
-            newArray.push(<Lesson key={i}
-                id={i}
-                removeLesson={this.removeLesson}
-                title={lesson.title}
-                description={lesson.description}
-                link={lesson.link} />)
+            newArray.push(
+                <Lesson
+                    key={i}
+                    id={i}
+                    removeLesson={this.removeLesson}
+                    title={lesson.title}
+                    description={lesson.description}
+                    link={lesson.link}
+                />
+            )
         }
         rowsWithLessons = newArray
-        this.setState({ hasDeletedLesson: true }) // this is just to trigger the render method
+        this.setState({ hasDeletedLesson: true })
     }
 
     componentDidMount() {
@@ -426,11 +439,11 @@ export default class ListTutorials extends Component {
 
         const { username } = this.props.match.params
 
-        axios.get('http://localhost:5000/tutorial')
+        axios.get(clieserRestApiHostName + '/tutorial')
             .then(response => {
                 this.setState({ tutorialList: response.data })
 
-                axios.get('http://localhost:5000/user?username=' + username + "&password=")
+                axios.get(clieserRestApiHostName + '/user?username=' + username + "&password=")
                     .then(response => {
                         if (response.data['succeed'])
                             this.setState({ displayWarningPasswordEmpty: true, isLoggedIn: true })
@@ -439,12 +452,11 @@ export default class ListTutorials extends Component {
             })
     }
 
-
     render() {
         if (!this.state.isLoggedIn) {
             const { username } = this.props.match.params
 
-            axios.get('http://localhost:5000/session?username=' + username)
+            axios.get(clieserRestApiHostName + '/session?username=' + username)
                 .then(response => {
                     if (!response.data['loggedin'])
                         this.props.history.push("/cms")
@@ -454,7 +466,7 @@ export default class ListTutorials extends Component {
             <div>
                 <div className="row">
                     <div className="col-sm-4">
-                        <Logo></Logo>
+                        <Logo />
                     </div>
                     <div className="col">
                         <div className="row alignRight">
@@ -480,14 +492,15 @@ export default class ListTutorials extends Component {
                         {this.renderForm()}
                     </div>
                 </div>
-                <div className="otherFooter"><Footer /></div>
-                <Modal children={<ModalContent
-                    title={this.state.modalTitle}
-                    message={this.state.modalMessage}
-                    isConfirmationModalType={this.state.isConfirmationModalType}
-                    handleCloseModal={this.handleCloseModal}
-                    handleConfirmation={this.handleDeleteTutorial} />}>
-                </Modal>
+                <Footer />
+                <Modal children={
+                    <ModalContent
+                        title={this.state.modalTitle}
+                        message={this.state.modalMessage}
+                        isConfirmationModalType={this.state.isConfirmationModalType}
+                        handleCloseModal={this.handleCloseModal}
+                        handleConfirmation={this.handleDeleteTutorial} />
+                } />
             </div>
         )
     }
