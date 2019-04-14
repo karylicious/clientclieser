@@ -13,7 +13,7 @@ export default class WriteClient extends Component {
                         <div className="row bottomspace">
                             <div className="col-sm-5 paddingTopAndBottom">
                                 <div className="stepOnLeft">
-                                    <img className="stepFig" src={process.env.PUBLIC_URL + '/imgs/client1.png'} alt="step" />
+                                    <img className="stepFig" src={process.env.PUBLIC_URL + '/imgs/client1.PNG'} alt="step" />
                                 </div>
                             </div>
                             <div className="col textMiddleCentered paddingTopAndBottom">
@@ -26,7 +26,7 @@ export default class WriteClient extends Component {
                             </div>
                             <div className="col-sm-5 paddingTopAndBottom">
                                 <div className="stepOnRight">
-                                    <img className="stepFig" src={process.env.PUBLIC_URL + '/imgs/client2.png'} alt="step" />
+                                    <img className="stepFig" src={process.env.PUBLIC_URL + '/imgs/client2.PNG'} alt="step" />
                                 </div>
                             </div>
                         </div>
@@ -46,7 +46,7 @@ export default class WriteClient extends Component {
                             </div>
                             <div className="col-sm-5 paddingTopAndBottom">
                                 <div className="stepOnRight">
-                                    <img className="stepFig" src={process.env.PUBLIC_URL + '/imgs/client4.png'} alt="step" />
+                                    <img className="stepFig" src={process.env.PUBLIC_URL + '/imgs/client4.PNG'} alt="step" />
                                 </div>
                             </div>
                         </div>
@@ -66,14 +66,14 @@ export default class WriteClient extends Component {
                             </div>
                             <div className="col-sm-5 paddingTopAndBottom">
                                 <div className="stepOnRight">
-                                    <img className="stepFig" src={process.env.PUBLIC_URL + '/imgs/client6.png'} alt="step" />
+                                    <img className="stepFig" src={process.env.PUBLIC_URL + '/imgs/client6.PNG'} alt="step" />
                                 </div>
                             </div>
                         </div>
                         <div className="row bottomspace">
                             <div className="col-sm-5 paddingTopAndBottom">
                                 <div className="stepOnLeft">
-                                    <img className="stepFig" src={process.env.PUBLIC_URL + '/imgs/client7.png'} alt="step" />
+                                    <img className="stepFig" src={process.env.PUBLIC_URL + '/imgs/client7.PNG'} alt="step" />
                                 </div>
                             </div>
                             <div className="col textMiddleCentered paddingTopAndBottom">
@@ -93,7 +93,7 @@ export default class WriteClient extends Component {
                         <div className="row bottomspace">
                             <div className="col-sm-5 paddingTopAndBottom">
                                 <div className="stepOnLeft">
-                                    <img className="stepFig" src={process.env.PUBLIC_URL + '/imgs/client9.png'} alt="step" />
+                                    <img className="stepFig" src={process.env.PUBLIC_URL + '/imgs/client9.PNG'} alt="step" />
                                 </div>
                             </div>
                             <div className="col textMiddleCentered paddingTopAndBottom">
