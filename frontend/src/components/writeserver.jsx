@@ -46,14 +46,14 @@ export default class WriteServer extends Component {
                             </div>
                             <div className="col-sm-5 paddingTopAndBottom">
                                 <div className="stepOnRight">
-                                    <img className="stepFig" src={process.env.PUBLIC_URL + '/imgs/server5.PNG'} alt="step" />
+                                    <img className="stepFig" src={process.env.PUBLIC_URL + '/imgs/server5.png'} alt="step" />
                                 </div>
                             </div>
                         </div>
                         <div className="row bottomspace">
                             <div className="col-sm-5 paddingTopAndBottom">
                                 <div className="stepOnLeft">
-                                    <img className="stepFig" src={process.env.PUBLIC_URL + '/imgs/server6.png'} alt="step" />
+                                    <img className="stepFig" src={process.env.PUBLIC_URL + '/imgs/server6.PNG'} alt="step" />
                                 </div>
                             </div>
                             <div className="col textMiddleCentered paddingTopAndBottom">
@@ -66,7 +66,7 @@ export default class WriteServer extends Component {
                             </div>
                             <div className="col-sm-5 paddingTopAndBottom">
                                 <div className="stepOnRight">
-                                    <img className="stepFig" src={process.env.PUBLIC_URL + '/imgs/server7.PNG'} alt="step" />
+                                    <img className="stepFig" src={process.env.PUBLIC_URL + '/imgs/server7.png'} alt="step" />
                                 </div>
                             </div>
                         </div>

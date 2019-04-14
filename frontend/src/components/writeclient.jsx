@@ -73,7 +73,7 @@ export default class WriteClient extends Component {
                         <div className="row bottomspace">
                             <div className="col-sm-5 paddingTopAndBottom">
                                 <div className="stepOnLeft">
-                                    <img className="stepFig" src={process.env.PUBLIC_URL + '/imgs/client7.PNG'} alt="step" />
+                                    <img className="stepFig" src={process.env.PUBLIC_URL + '/imgs/client7.png'} alt="step" />
                                 </div>
                             </div>
                             <div className="col textMiddleCentered paddingTopAndBottom">
