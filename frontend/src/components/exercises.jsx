@@ -8,7 +8,7 @@ import ModalContent from './modalcontent'
 import FileUpload from './fileupload'
 import Grading from './grading';
 
-var clieserRestApiHostName = 'http://localhost:5000'
+var clieserRestApiHostName = 'https://clieser-restapi.herokuapp.com'
 
 export default class Exercises extends Component {
 

@@ -8,7 +8,7 @@ import ModalContent from './modalcontent'
 import NewExerciseForm from './cms-new-exercise-form'
 
 var rowsWithQuestions = []
-var clieserRestApiHostName = 'http://localhost:5000'
+var clieserRestApiHostName = 'https://clieser-restapi.herokuapp.com'
 
 export default class NewExercise extends Component {
     state = {

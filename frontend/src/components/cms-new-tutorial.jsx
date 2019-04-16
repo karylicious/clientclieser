@@ -8,7 +8,7 @@ import ModalContent from './modalcontent'
 import NewTutorialForm from './cms-new-tutorial-form'
 
 var rowsWithLessons = []
-var clieserRestApiHostName = 'http://localhost:5000'
+var clieserRestApiHostName = 'https://clieser-restapi.herokuapp.com'
 
 export default class NewTutorial extends Component {
     state = {

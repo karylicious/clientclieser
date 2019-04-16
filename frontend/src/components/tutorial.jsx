@@ -3,7 +3,7 @@ import Footer from './footer'
 import TopContainer from './topcontainer'
 import axios from 'axios'
 
-var clieserRestApiHostName = 'http://localhost:5000'
+var clieserRestApiHostName = 'https://clieser-restapi.herokuapp.com'
 
 export default class Tutorials extends Component {
     state = {

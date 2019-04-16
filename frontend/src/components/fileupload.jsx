@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import axios from 'axios'
 
-var clieserRestApiHostName = 'http://localhost:5000'
+var clieserRestApiHostName = 'https://clieser-restapi.herokuapp.com'
 
 export default class FileUpload extends Component {
     state = {

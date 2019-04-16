@@ -5,7 +5,7 @@ import axios from 'axios'
 import Modal from './modal'
 import ModalContent from './modalcontent'
 
-var clieserRestApiHostName = 'http://localhost:5000'
+var clieserRestApiHostName = 'https://clieser-restapi.herokuapp.com'
 
 export default class CMS extends Component {
 

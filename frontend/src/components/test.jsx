@@ -2,7 +2,7 @@ import React, { Component } from 'react'
 import TestResult from './testresult'
 import axios from 'axios'
 
-var clieserRestApiHostName = 'http://localhost:5000'
+var clieserRestApiHostName = 'https://clieser-restapi.herokuapp.com'
 
 export default class Test extends Component {
     state = {

@@ -9,7 +9,7 @@ import ModalContent from './modalcontent'
 import EditTutorialForm from './cms-edit-tutorial-form'
 
 var rowsWithLessons = []
-var clieserRestApiHostName = 'http://localhost:5000'
+var clieserRestApiHostName = 'https://clieser-restapi.herokuapp.com'
 
 export default class ListTutorials extends Component {
     state = {

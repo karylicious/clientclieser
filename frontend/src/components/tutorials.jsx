@@ -3,7 +3,7 @@ import Footer from './footer'
 import TopContainer from './topcontainer'
 import axios from 'axios'
 
-var clieserRestApiHostName = 'http://localhost:5000'
+var clieserRestApiHostName = 'https://clieser-restapi.herokuapp.com'
 
 export default class Tutorials extends Component {
     state = {
@@ -44,7 +44,7 @@ export default class Tutorials extends Component {
             <div>
                 <div><TopContainer standardOpening={false} /></div>
                 <div className="fullheight container bottomspace">
-                    <h2 className="myh2">Learn what happens behind the scene</h2>
+                    <h2 className="myh2">Learn what happens behind the scenes</h2>
                     <div className="bottomspace topspace tutorialPanel">
                         {this.renderTutorials()}
                     </div>
