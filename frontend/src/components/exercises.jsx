@@ -194,7 +194,7 @@ export default class Exercises extends Component {
         if (this.state.selectedExerciseID === "") {
             return (
                 <div className="col">
-                    <p>Select an exercise too see more.</p>
+                    <p>Select an exercise to see more.</p>
                 </div>
             )
         }
