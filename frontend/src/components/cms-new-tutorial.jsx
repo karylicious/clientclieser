@@ -57,7 +57,8 @@ export default class NewTutorial extends Component {
                         modalMessage: message,
                         isConfirmationModalType: false,
                         displayWaitImage: false,
-                        hasNewTutorialBeenCreated: hasSucceed
+                        hasNewTutorialBeenCreated: hasSucceed,
+                        lessonListRows: ''
                     })
                 })
         }

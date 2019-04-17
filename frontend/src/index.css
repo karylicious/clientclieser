@@ -156,6 +156,7 @@ textarea {
 }
 .tutorialPanel .effectShadow{
   width: 33%;
+  margin-right: 20px;
 }
 .panelOptions:hover  p{
   background-color: #53DEF6;

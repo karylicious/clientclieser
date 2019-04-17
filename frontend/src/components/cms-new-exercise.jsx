@@ -65,7 +65,8 @@ export default class NewExercise extends Component {
                         modalMessage: message,
                         isConfirmationModalType: false,
                         displayWaitImage: false,
-                        hasNewExerciseBeenCreated: hasSucceed
+                        hasNewExerciseBeenCreated: hasSucceed,
+                        questionListRows: ""
                     })
                 })
         }
