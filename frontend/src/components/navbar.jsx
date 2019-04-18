@@ -20,6 +20,8 @@ export default class Navbar extends Component {
                     <NavLink to="/client-server-system">Client Server System</NavLink>
                     <NavLink to="/validator">Validator</NavLink>
                     <NavLink to="/exercises">Exercises</NavLink>
+                    <a href="https://uowenabled.herokuapp.com/">EnAbled</a>
+                    <a href="https://learning.westminster.ac.uk/">Blackboard</a>
                     <NavLink to="/about">About</NavLink>
 
                     <a href="javascript:void(0)" className="icon" onClick={this.openNav}>
@@ -35,6 +37,8 @@ export default class Navbar extends Component {
                         <NavLink to="/client-server-system" onClick={this.closeNav}><span>Client Server System</span></NavLink>
                         <NavLink to="/validator" onClick={this.closeNav}><span>Validator</span></NavLink>
                         <NavLink to="/exercises" onClick={this.closeNav}><span>Exercises</span></NavLink>
+                        <a href="https://uowenabled.herokuapp.com/">EnAbled</a>
+                        <a href="https://learning.westminster.ac.uk/">Blackboard</a>
                         <NavLink to="/about" onClick={this.closeNav}><span>About</span></NavLink>
                     </div>
                 </div>

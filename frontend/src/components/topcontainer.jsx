@@ -10,8 +10,8 @@ export default class TopContainer extends Component {
                 <div className="row main" id="main">
                     <div className="container">
                         <div className="row">
-                            <div className="col-sm-4"></div>
-                            <div className="col-sm-8">
+                            <div className="col-sm-2"></div>
+                            <div className="col">
                                 <Navbar />
                             </div>
                         </div>
@@ -27,10 +27,10 @@ export default class TopContainer extends Component {
         else {
             return (
                 <div className="row">
-                    <div className="col-sm-4">
+                    <div className="col-sm-3">
                         <Logo />
                     </div>
-                    <div className="col-sm-8">
+                    <div className="col">
                         <Navbar />
                     </div>
                 </div>
