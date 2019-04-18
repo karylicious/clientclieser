@@ -180,10 +180,9 @@ export default class ListExercises extends Component {
 
     isValidForm() {
         var valid = true
-        var allElements = document.getElementsByClassName("form-control")
+        var allElements = document.getElementsByClassName("question")
 
-        // (allElements.length == 4) means the two input fields of the exercise details and the two inputs of the change of password form
-        if (allElements.length === 4) {
+        if (allElements.length === 0) {
             document.getElementById("pQuestionValidatorFeedback").innerHTML = "Please add a question"
             valid = false
         }
@@ -376,8 +375,9 @@ export default class ListExercises extends Component {
         }
     }
 
-    handleCloseModal() {
+    handleCloseModal = () => {
         document.getElementById('modal-root').style.display = "none"
+        this.setState({ displayModal: false })
     }
 
     handleNewExercise = () => {
@@ -605,7 +605,7 @@ export default class ListExercises extends Component {
                         isConfirmationModalType={this.state.isConfirmationModalType}
                         handleCloseModal={this.handleCloseModal}
                         handleConfirmation={this.handleDeleteExercise} />
-                }/>
+                } />
             </div>
         )
     }

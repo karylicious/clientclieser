@@ -40,8 +40,9 @@ export default class CMS extends Component {
     }
 
 
-    handleCloseModal() {
+    handleCloseModal = () => {
         document.getElementById('modal-root').style.display = "none"
+        this.setState({ displayModal: false })
     }
 
     componentDidUpdate() {

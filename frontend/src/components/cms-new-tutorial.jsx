@@ -45,6 +45,7 @@ export default class NewTutorial extends Component {
                     if (response.data["succeed"] === true) {
                         message = "Tutorial has been created successfully."
                         hasSucceed = true
+                        this.setState({ lessonListRows: '' })
                     }
                     else if (response.data["succeed"] === false) {
                         message = response.data["info"]
@@ -57,8 +58,7 @@ export default class NewTutorial extends Component {
                         modalMessage: message,
                         isConfirmationModalType: false,
                         displayWaitImage: false,
-                        hasNewTutorialBeenCreated: hasSucceed,
-                        lessonListRows: ''
+                        hasNewTutorialBeenCreated: hasSucceed
                     })
                 })
         }
@@ -66,10 +66,9 @@ export default class NewTutorial extends Component {
 
     isValidForm() {
         var valid = true
-        var allElements = document.getElementsByClassName("form-control")
+        var allElements = document.getElementsByClassName("lesson")
 
-        // (allElements.length == 1) 1 means the title input field of the tutorial details
-        if (allElements.length === 1) {
+        if (allElements.length === 0) {
             document.getElementById("pLessonValidatorFeedback").innerHTML = "Please add a lesson"
             valid = false
         }
@@ -135,7 +134,11 @@ export default class NewTutorial extends Component {
 
     handleCloseModal = () => {
         document.getElementById('modal-root').style.display = "none"
+        this.setState({ displayModal: false })
+
         if (this.state.hasNewTutorialBeenCreated === true) {
+            rowsWithLessons = []
+            this.setState({ hasNewTutorialBeenCreated: false })
             this.returnToListView()
         }
     }
@@ -194,6 +197,10 @@ export default class NewTutorial extends Component {
             document.getElementById('modal-root').classList.add("modal")
             document.getElementById('modal-root').style.display = "none"
         }
+
+        this.setState({ lessonListRows: '' })
+        rowsWithLessons = []
+
         const { username } = this.props.match.params
 
         axios.get(clieserRestApiHostName + '/session?username=' + username)
@@ -223,7 +230,8 @@ export default class NewTutorial extends Component {
         else if (this.state.hasNewTutorialBeenCreated === false) {
             if (this.state.lessonListRows !== '')
                 rowsWithLessons = this.state.lessonListRows
-
+            console.log(this.state.lessonListRows)
+            console.log(rowsWithLessons.length)
             return <NewTutorialForm
                 rowsWithLessons={rowsWithLessons}
                 title={this.state.title}

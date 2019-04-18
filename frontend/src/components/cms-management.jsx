@@ -47,8 +47,9 @@ export default class Management extends Component {
         this.props.history.push("/cms/all-tutorials/" + username)
     }
 
-    handleCloseModal() {
+    handleCloseModal = () => {
         document.getElementById('modal-root').style.display = "none"
+        this.setState({ displayModal: false })
     }
 
     componentDidUpdate() {

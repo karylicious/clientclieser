@@ -79,7 +79,7 @@ export default class ListTutorials extends Component {
     }
 
     setResetUploadFileComponent = () => {
-        this.setState({ resetUploadFileComponent: false, displayModal: false })
+        this.setState({ resetUploadFileComponent: false })
     }
 
     displayConfirmationDialog = () => {
@@ -127,10 +127,9 @@ export default class ListTutorials extends Component {
 
     isValidForm() {
         var valid = true
-        var allElements = document.getElementsByClassName("form-control")
+        var allElements = document.getElementsByClassName("lesson")
 
-        // (allElements.length == 3) 3 means the title input field of the tutorial details and the two inputs of the change of password form
-        if (allElements.length === 3) {
+        if (allElements.length === 0) {
             document.getElementById("pLessonValidatorFeedback").innerHTML = "Please add a lesson"
             valid = false
         }
@@ -195,8 +194,7 @@ export default class ListTutorials extends Component {
                     selectedTutorialTitle: response.data['title'],
                     hasSelectedTutorial: true,
                     hasDeletedTutorial: false,
-                    hasDeletedLesson: false,
-                    displayModal: false
+                    hasDeletedLesson: false
                 })
 
                 axios.get(clieserRestApiHostName + '/lesson?tutorialid=' + id)
@@ -276,11 +274,14 @@ export default class ListTutorials extends Component {
         }
     }
 
-    handleCloseModal() {
+    handleCloseModal = () => {
         document.getElementById('modal-root').style.display = "none"
+        this.setState({ displayModal: false })
     }
 
     handleNewTutorial = () => {
+        rowsWithLessons = []
+        this.setState({ hasDeletedLesson: false })
         if (this.state.displayWaitImage === false) {
             const { username } = this.props.match.params
             this.props.history.push("/cms/new-tutorial/" + username)
@@ -301,7 +302,7 @@ export default class ListTutorials extends Component {
 
         // The following line prevents the renderForm() function to reload the array rowsWithLessons with 
         // the lessons on the "this.state.lessonList" variable
-        this.setState({ hasDeletedLesson: true, displayModal: false })
+        this.setState({ hasDeletedLesson: true })
     }
 
     setPath = (path, fileName) => {

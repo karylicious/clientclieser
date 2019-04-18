@@ -40,19 +40,19 @@ export default class Lesson extends Component {
                     <div className="col">
                         <p><strong>Lesson {this.props.id + 1}</strong></p>
                         <label>Title</label>
-                        <input className="form-control myinputtext lessontitle" id={"title-" + this.props.id} type="text" defaultValue={this.props.title} />
+                        <input className="form-control myinputtext lessontitle lesson" id={"title-" + this.props.id} type="text" defaultValue={this.props.title} />
                     </div>
                 </div>
                 <div className="row bottomspace">
                     <div className="col">
                         <label>Description</label>
-                        <textarea className="form-control lessondescription" id={"descr-" + this.props.id} rows="3" defaultValue={this.props.description}></textarea>
+                        <textarea className="form-control lessondescription lesson" id={"descr-" + this.props.id} rows="3" defaultValue={this.props.description}></textarea>
                     </div>
                 </div>
                 <div className="row bottomspace">
                     <div className="col">
                         <label>BlackBoard Resource Link</label>
-                        <input className="form-control myinputtext lessonlink" id={"link-" + this.props.id} type="text" defaultValue={this.props.link} />
+                        <input className="form-control myinputtext lessonlink lesson" id={"link-" + this.props.id} type="text" defaultValue={this.props.link} />
                     </div>
                 </div>
                 <div className="row alignRight">

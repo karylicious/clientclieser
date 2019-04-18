@@ -47,31 +47,31 @@ export default class Question extends Component {
                     <div className="col">
                         <p><strong>Question {this.props.id + 1}</strong></p>
                         <label>Title</label>
-                        <input className="form-control myinputtext questiontitle" id={"title-" + this.props.id} type="text" defaultValue={this.props.title} />
+                        <input className="form-control myinputtext questiontitle question" id={"title-" + this.props.id} type="text" defaultValue={this.props.title} />
                     </div>
                 </div>
                 <div className="row bottomspace">
                     <div className="col">
                         <label>Description</label>
-                        <textarea className="form-control questiondescription" id={"descr-" + this.props.id} rows="3" defaultValue={this.props.description}></textarea>
+                        <textarea className="form-control questiondescription question" id={"descr-" + this.props.id} rows="3" defaultValue={this.props.description}></textarea>
                     </div>
                 </div>
                 <div className="row">
                     <div className="col">
                         <label>Expected Invoked Method <span className="systemwarning"> (without parentesis)</span></label>
-                        <input className="form-control myinputtext questionexpectedinvokedmethod" id={"expectedinvokedmethod-" + this.props.id} type="text" defaultValue={this.props.expectedInvokedMethod} />
+                        <input className="form-control myinputtext questionexpectedinvokedmethod question" id={"expectedinvokedmethod-" + this.props.id} type="text" defaultValue={this.props.expectedInvokedMethod} />
                     </div>
                 </div>
                 <div className="row">
                     <div className="col">
                         <label>Expected Output</label>
-                        <input className="form-control myinputtext questionexpectedoutput" id={"expectedoutput-" + this.props.id} type="text" defaultValue={this.props.expectedOutput} />
+                        <input className="form-control myinputtext questionexpectedoutput question" id={"expectedoutput-" + this.props.id} type="text" defaultValue={this.props.expectedOutput} />
                     </div>
                 </div>
                 <div className="row bottomspace">
                     <div className="col-sm-2">
                         <label>Points</label>
-                        <input className="form-control myinputtext questionpoints" id={"points-" + this.props.id} type="number" defaultValue={this.props.points} />
+                        <input className="form-control myinputtext questionpoints question" id={"points-" + this.props.id} type="number" defaultValue={this.props.points} />
                     </div>
                 </div>
                 <div className="row alignRight">

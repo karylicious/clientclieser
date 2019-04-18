@@ -53,6 +53,7 @@ export default class NewExercise extends Component {
                     if (response.data["succeed"] === true) {
                         message = "Exercise has been created successfully."
                         hasSucceed = true
+                        this.setState({ questionListRows: '' })
                     }
                     else if (response.data["succeed"] === false) {
                         message = response.data["info"]
@@ -65,8 +66,7 @@ export default class NewExercise extends Component {
                         modalMessage: message,
                         isConfirmationModalType: false,
                         displayWaitImage: false,
-                        hasNewExerciseBeenCreated: hasSucceed,
-                        questionListRows: ""
+                        hasNewExerciseBeenCreated: hasSucceed
                     })
                 })
         }
@@ -95,10 +95,9 @@ export default class NewExercise extends Component {
             }
         }
 
-        var allElements = document.getElementsByClassName("form-control")
+        var allElements = document.getElementsByClassName("question")
 
-        // (allElements.length == 2) 2 means the two input fields of the exercise details
-        if (allElements.length === 2) {
+        if (allElements.length === 0) {
             document.getElementById("pQuestionValidatorFeedback").innerHTML = "Please add a question"
             valid = false
         }
@@ -191,6 +190,8 @@ export default class NewExercise extends Component {
 
     handleCloseModal = () => {
         document.getElementById('modal-root').style.display = "none"
+        this.setState({ displayModal: false })
+
         if (this.state.hasNewExerciseBeenCreated === true) {
             this.returnToListView()
         }
@@ -257,6 +258,9 @@ export default class NewExercise extends Component {
             document.getElementById('modal-root').classList.add("modal")
             document.getElementById('modal-root').style.display = "none"
         }
+
+        this.setState({ questionListRows: '' })
+        rowsWithQuestions = []
 
         const { username } = this.props.match.params
 
