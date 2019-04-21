@@ -23,9 +23,9 @@ export default class Question extends Component {
                 listOfQuestionObjects.push({
                     title: listTitle[i].value,
                     description: listDescr[i].value,
-                    expectedOutput: listExpectedOuput[i].value,
+                    expectedoutput: listExpectedOuput[i].value,
                     points: listPoints[i].value,
-                    expectedInvokedMethod: listExpectedInvokedMethod[i].value
+                    expectedinvokedmethod: listExpectedInvokedMethod[i].value
                 })
             }
         }
@@ -35,9 +35,9 @@ export default class Question extends Component {
     componentDidUpdate() {
         document.getElementById("title-" + this.props.id).value = this.props.title
         document.getElementById("descr-" + this.props.id).value = this.props.description
-        document.getElementById("expectedoutput-" + this.props.id).value = this.props.expectedOutput
+        document.getElementById("expectedoutput-" + this.props.id).value = this.props.expectedoutput
         document.getElementById("points-" + this.props.id).value = this.props.points
-        document.getElementById("expectedinvokedmethod-" + this.props.id).value = this.props.expectedInvokedMethod
+        document.getElementById("expectedinvokedmethod-" + this.props.id).value = this.props.expectedinvokedmethod
     }
 
     render() {
@@ -53,19 +53,19 @@ export default class Question extends Component {
                 <div className="row bottomspace">
                     <div className="col">
                         <label>Description</label>
-                        <textarea className="form-control questiondescription question" id={"descr-" + this.props.id} rows="3" defaultValue={this.props.description}></textarea>
+                        <textarea className="form-control questiondescription question" id={"descr-" + this.props.id} rows="6" defaultValue={this.props.description}></textarea>
                     </div>
                 </div>
                 <div className="row">
                     <div className="col">
                         <label>Expected Invoked Method <span className="systemwarning"> (without parentesis)</span></label>
-                        <input className="form-control myinputtext questionexpectedinvokedmethod question" id={"expectedinvokedmethod-" + this.props.id} type="text" defaultValue={this.props.expectedInvokedMethod} />
+                        <input className="form-control myinputtext questionexpectedinvokedmethod question" id={"expectedinvokedmethod-" + this.props.id} type="text" defaultValue={this.props.expectedinvokedmethod} />
                     </div>
                 </div>
                 <div className="row">
                     <div className="col">
                         <label>Expected Output</label>
-                        <input className="form-control myinputtext questionexpectedoutput question" id={"expectedoutput-" + this.props.id} type="text" defaultValue={this.props.expectedOutput} />
+                        <input className="form-control myinputtext questionexpectedoutput question" id={"expectedoutput-" + this.props.id} type="text" defaultValue={this.props.expectedoutput} />
                     </div>
                 </div>
                 <div className="row bottomspace">

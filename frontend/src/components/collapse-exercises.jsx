@@ -27,7 +27,7 @@ export default class Collapse extends Component {
 
         for (var i = 0; i < listOfObjs.length; i++) {
             var exercise = listOfObjs[i]
-            if (exercise.exerciseType === "client") {
+            if (exercise.exercisetype === "client") {
                 rowsWithItemsClient.push(
                     <CollapseItem
                         key={i}

@@ -39,7 +39,7 @@ export default class NewExercise extends Component {
                 description: document.getElementById("description").value,
                 type: this.state.typeOfExercise,
                 selectedFileName: this.state.uploadedFileName,
-                expectedClientEntryPoint: document.getElementById("expectedClientEntryPoint").value.trim(),
+                expectedcliententrypoint: document.getElementById("expectedClientEntryPoint").value.trim(),
                 questions: listOfQuestionsObjects
             }
 
@@ -156,9 +156,9 @@ export default class NewExercise extends Component {
             listOfQuestionObjects.push({
                 title: listTitle[i].value,
                 description: listDescr[i].value,
-                expectedOutput: listExpectedOuput[i].value.trim(),
+                expectedoutput: listExpectedOuput[i].value.trim(),
                 points: listPoints[i].value.trim(),
-                expectedInvokedMethod: listExpectedInvokedMethod[i].value.trim()
+                expectedinvokedmethod: listExpectedInvokedMethod[i].value.trim()
             })
 
             rows.push(
@@ -166,10 +166,10 @@ export default class NewExercise extends Component {
                     id={i}
                     title={listTitle[i].value}
                     description={listDescr[i].value}
-                    expectedOutput={listExpectedOuput[i].value.trim()}
+                    expectedoutput={listExpectedOuput[i].value.trim()}
                     points={listPoints[i].value.trim()}
                     removeQuestion={this.removeQuestion}
-                    expectedInvokedMethod={listExpectedInvokedMethod[i].value.trim()}
+                    expectedinvokedmethod={listExpectedInvokedMethod[i].value.trim()}
                 />
             )
         }
@@ -210,10 +210,10 @@ export default class NewExercise extends Component {
                 id={rowsWithQuestions.length}
                 title=""
                 description=""
-                expectedOutput=""
+                expectedoutput=""
                 points=""
                 removeQuestion={this.removeQuestion}
-                expectedInvokedMethod=""
+                expectedinvokedmethod=""
             />
         )
         this.setState({ hasAddedNewQuestion: true, questionListRows: '' })
@@ -243,8 +243,8 @@ export default class NewExercise extends Component {
                     removeQuestion={this.removeQuestion}
                     title={question.title}
                     description={question.description}
-                    expectedOutput={question.expectedOutput}
-                    expectedInvokedMethod={question.expectedInvokedMethod}
+                    expectedoutput={question.expectedoutput}
+                    expectedinvokedmethod={question.expectedinvokedmethod}
                     points={question.points}
                 />
             )
@@ -310,7 +310,7 @@ export default class NewExercise extends Component {
                 setPath={this.setPath}
                 clientRadioButtonListener={this.clientRadioButtonListener}
                 clientserverRadioButtonListener={this.clientserverRadioButtonListener}
-                expectedClientEntryPoint={this.state.expectedClientEntryPoint}
+                expectedcliententrypoint={this.state.expectedClientEntryPoint}
                 description={this.state.description}
                 handleAddQuestionButtonListener={this.handleAddQuestionButtonListener}
                 displayConfirmationDialog={this.displayConfirmationDialog}

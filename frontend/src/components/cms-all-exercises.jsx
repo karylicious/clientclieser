@@ -47,7 +47,7 @@ export default class ListExercises extends Component {
                 uploadedfile: this.state.dir,
                 description: document.getElementById("description").value,
                 selectedFileName: this.state.uploadedFileName,
-                expectedClientEntryPoint: document.getElementById("expectedClientEntryPoint").value.trim(),
+                expectedcliententrypoint: document.getElementById("expectedClientEntryPoint").value.trim(),
                 id: this.state.selectedExerciseID,
                 questions: listOfQuestionsObjects
             }
@@ -242,9 +242,9 @@ export default class ListExercises extends Component {
             listOfQuestionObjects.push({
                 title: listTitle[i].value,
                 description: listDescr[i].value,
-                expectedOutput: listExpectedOuput[i].value.trim(),
+                expectedoutput: listExpectedOuput[i].value.trim(),
                 points: listPoints[i].value.trim(),
-                expectedInvokedMethod: listExpectedInvokedMethod[i].value.trim()
+                expectedinvokedmethod: listExpectedInvokedMethod[i].value.trim()
             })
         }
         return listOfQuestionObjects
@@ -265,8 +265,8 @@ export default class ListExercises extends Component {
                 this.setState({
                     selectedExerciseID: id,
                     selectedExerciseFile: response.data['uploadedfile'],
-                    selectedExerciseType: response.data['exerciseType'],
-                    selectedExerciseExpectedClientEntryPoint: response.data['expectedClientEntryPoint'],
+                    selectedExerciseType: response.data['exercisetype'],
+                    selectedExerciseExpectedClientEntryPoint: response.data['expectedcliententrypoint'],
                     selectedExerciseDescription: response.data['description'],
                     hasSelectedExercise: true,
                     hasDeletedExercise: false,
@@ -348,8 +348,8 @@ export default class ListExercises extends Component {
                             removeQuestion={this.removeQuestion}
                             title={question.title}
                             description={question.description}
-                            expectedOutput={question.expectedOutput}
-                            expectedInvokedMethod={question.expectedInvokedMethod}
+                            expectedoutput={question.expectedoutput}
+                            expectedinvokedmethod={question.expectedinvokedmethod}
                             points={question.points}
                         />
                     )
@@ -395,10 +395,10 @@ export default class ListExercises extends Component {
                 id={rowsWithQuestions.length}
                 title=""
                 description=""
-                expectedOutput=""
+                expectedoutput=""
                 points=""
                 removeQuestion={this.removeQuestion}
-                expectedInvokedMethod=""
+                expectedinvokedmethod=""
             />
         )
 
@@ -525,8 +525,8 @@ export default class ListExercises extends Component {
                     removeQuestion={this.removeQuestion}
                     title={question.title}
                     description={question.description}
-                    expectedOutput={question.expectedOutput}
-                    expectedInvokedMethod={question.expectedInvokedMethod}
+                    expectedoutput={question.expectedoutput}
+                    expectedinvokedmethod={question.expectedinvokedmethod}
                     points={question.points}
                 />
             )

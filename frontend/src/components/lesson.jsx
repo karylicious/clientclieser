@@ -46,7 +46,7 @@ export default class Lesson extends Component {
                 <div className="row bottomspace">
                     <div className="col">
                         <label>Description</label>
-                        <textarea className="form-control lessondescription lesson" id={"descr-" + this.props.id} rows="3" defaultValue={this.props.description}></textarea>
+                        <textarea className="form-control lessondescription lesson" id={"descr-" + this.props.id} rows="6" defaultValue={this.props.description}></textarea>
                     </div>
                 </div>
                 <div className="row bottomspace">

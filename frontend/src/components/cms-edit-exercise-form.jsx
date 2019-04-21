@@ -48,7 +48,7 @@ export default class EditExerciseForm extends Component {
                 <div className="row bottomspace">
                     <div className="col">
                         <label>Description</label>
-                        <textarea className="form-control" id="description" rows="3" defaultValue={this.props.selectedExerciseDescription}></textarea>
+                        <textarea className="form-control" id="description" rows="6" defaultValue={this.props.selectedExerciseDescription}></textarea>
                     </div>
                 </div>
                 <div className="row paddingLeft15">

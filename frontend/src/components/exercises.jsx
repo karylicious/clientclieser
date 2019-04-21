@@ -160,7 +160,7 @@ export default class Exercises extends Component {
                     <div className="effectShadow bottomspace padding20 userGradePanel">
                         <Grading
                             selectedComponent={this.state.selectedExerciseType}
-                            clientEntryPoint={this.state.selectedExerciseExpectedClientEntryPoint}
+                            cliententrypoint={this.state.selectedExerciseExpectedClientEntryPoint}
                             uploadedFile={this.state.uploadedFileName}
                             dir={this.state.dir}
                             handleNewAnswer={this.handleNewAnswer}
@@ -285,8 +285,8 @@ export default class Exercises extends Component {
                 this.setState({
                     selectedExerciseID: id,
                     selectedExerciseFile: response.data['uploadedfile'],
-                    selectedExerciseType: response.data['exerciseType'],
-                    selectedExerciseExpectedClientEntryPoint: response.data['expectedClientEntryPoint'],
+                    selectedExerciseType: response.data['exercisetype'],
+                    selectedExerciseExpectedClientEntryPoint: response.data['expectedcliententrypoint'],
                     selectedExerciseDescription: response.data['description'],
                     hasSelectedExercise: true,
                     hasDeletedExercise: false,
