@@ -4,11 +4,11 @@ import { NavLink } from 'react-router-dom'
 export default class Navbar extends Component {
 
     openNav() {
-        document.getElementById("myNav").style.width = "100%";
+        document.getElementById("myNav").style.width = "100%"
     }
 
     closeNav() {
-        document.getElementById("myNav").style.width = "0%";
+        document.getElementById("myNav").style.width = "0%"
     }
 
     render() {
