@@ -20,7 +20,7 @@ export default class Tutorials extends Component {
     }
 
     handleReturnButton = () => {
-        this.props.history.push("/tutorials")
+        this.props.history.push("/theory")
     }
 
     renderLessons = () => {

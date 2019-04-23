@@ -5,11 +5,11 @@ import TopContainer from './topcontainer'
 export default class Development extends Component {
 
     renderWriteClient = () => {
-        this.props.history.push("/client-server-system/write-client")
+        this.props.history.push("/development/write-client")
     }
 
     renderWriteServer = () => {
-        this.props.history.push("/client-server-system/write-server")
+        this.props.history.push("/development/write-server")
     }
 
     render() {

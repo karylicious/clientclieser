@@ -28,7 +28,7 @@ export default class Tutorials extends Component {
     }
 
     renderSelectedTutorial = (e) => {
-        this.props.history.push("/tutorials/" + e.target.dataset.id)
+        this.props.history.push("/theory/" + e.target.dataset.id)
     }
 
 
