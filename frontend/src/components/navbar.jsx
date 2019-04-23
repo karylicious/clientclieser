@@ -16,8 +16,8 @@ export default class Navbar extends Component {
             <div>
                 <div className="topnav" id="myTopnav">
                     <NavLink exact to="/">Home</NavLink>
-                    <NavLink to="/tutorials">Tutorials</NavLink>
-                    <NavLink to="/client-server-system">Client Server System</NavLink>
+                    <NavLink to="/tutorials">Theory</NavLink>
+                    <NavLink to="/client-server-system">Development</NavLink>
                     <NavLink to="/validator">Validator</NavLink>
                     <NavLink to="/exercises">Exercises</NavLink>
                     <a href="https://uowenabled.herokuapp.com/">EnAbled</a>
@@ -33,8 +33,8 @@ export default class Navbar extends Component {
                 <div id="myNav" className="overlay">
                     <div className="overlay-content">
                         <NavLink exact to="/" onClick={this.closeNav}><span>Home</span></NavLink>
-                        <NavLink to="/tutorials" onClick={this.closeNav}><span>Tutorials</span></NavLink>
-                        <NavLink to="/client-server-system" onClick={this.closeNav}><span>Client Server System</span></NavLink>
+                        <NavLink to="/tutorials" onClick={this.closeNav}><span>Theory</span></NavLink>
+                        <NavLink to="/client-server-system" onClick={this.closeNav}><span>Development</span></NavLink>
                         <NavLink to="/validator" onClick={this.closeNav}><span>Validator</span></NavLink>
                         <NavLink to="/exercises" onClick={this.closeNav}><span>Exercises</span></NavLink>
                         <a href="https://uowenabled.herokuapp.com/">EnAbled</a>

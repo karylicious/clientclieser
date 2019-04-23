@@ -3,7 +3,7 @@ import { Route, Switch } from 'react-router-dom'
 import Validator from './validator'
 import Home from './home'
 import About from './about'
-import ClientServerSystem from './clientserversystem'
+import Development from './development'
 import WriteClient from './writeclient'
 import WriteServer from './writeserver'
 import Tutorials from './tutorials'
@@ -24,14 +24,14 @@ export default class App extends Component {
                 <div>
                     <Switch>
                         <Route path="/validator" exact component={Validator} />
-                        <Route path="/client-server-system" exact component={ClientServerSystem} />
+                        <Route path="/development" exact component={Development} />
                         <Route path="/about" exact component={About} />
                         <Route path="/exercises" exact component={Exercises} />
                         <Route path="/" exact component={Home} />
-                        <Route path="/client-server-system/write-client" exact component={WriteClient} />
-                        <Route path="/client-server-system/write-server" exact component={WriteServer} />
-                        <Route path="/tutorials" exact component={Tutorials} />
-                        <Route path="/tutorials/:tutorialid" exact component={Tutorial} />
+                        <Route path="/development/write-client" exact component={WriteClient} />
+                        <Route path="/development/write-server" exact component={WriteServer} />
+                        <Route path="/theory" exact component={Tutorials} />
+                        <Route path="/theory/:tutorialid" exact component={Tutorial} />
                         <Route path="/cms" exact component={CMS} />
                         <Route path="/cms/new-exercise/:username" exact component={NewExercise} />
                         <Route path="/cms/all-exercises/:username" exact component={ListExercises} />

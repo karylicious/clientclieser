@@ -2,7 +2,7 @@ import React, { Component } from 'react'
 import Footer from './footer'
 import TopContainer from './topcontainer'
 
-export default class ClientServerSystem extends Component {
+export default class Development extends Component {
 
     renderWriteClient = () => {
         this.props.history.push("/client-server-system/write-client")
