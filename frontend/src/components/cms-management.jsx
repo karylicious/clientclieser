@@ -8,7 +8,6 @@ import ModalContent from './modalcontent'
 var clieserRestApiHostName = 'https://clieser-restapi.herokuapp.com'
 
 export default class Management extends Component {
-
     state = {
         displayModal: false,
         modalTitle: '',
@@ -20,10 +19,11 @@ export default class Management extends Component {
     handleLogin = () => {
         var username = document.getElementById('username').value
         var password = document.getElementById('password').value
-
+        console.log('eeee');
         axios.get(clieserRestApiHostName + '/user?username=' + username + "&password=" + password)
             .then(response => {
 
+                console.log(response.data['succeed'])
                 if (!response.data['succeed']) {
                     this.setState({
                         displayModal: true,
@@ -65,14 +65,14 @@ export default class Management extends Component {
             document.getElementById('modal-root').style.display = "none"
         }
 
-        const { username } = this.props.match.params
+        /*const { username } = this.props.match.params
 
         axios.get(clieserRestApiHostName + '/session?username=' + username)
             .then(response => {
                 if (response.data['loggedin']) {
                     this.setState({ isLoggedIn: true })
                 }
-            })
+            })*/
 
     }
 
@@ -81,7 +81,7 @@ export default class Management extends Component {
     }
 
     render() {
-        if (!this.state.isLoggedIn) {
+        /*if (!this.state.isLoggedIn) {
             const { username } = this.props.match.params
 
             axios.get(clieserRestApiHostName + '/session?username=' + username)
@@ -90,7 +90,7 @@ export default class Management extends Component {
                         this.props.history.push("/cms")
                     }
                 })
-        }
+        }*/
 
         return (
             <div>

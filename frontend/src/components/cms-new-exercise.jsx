@@ -11,6 +11,7 @@ var rowsWithQuestions = []
 var clieserRestApiHostName = 'https://clieser-restapi.herokuapp.com'
 
 export default class NewExercise extends Component {
+
     state = {
         hasAddedNewQuestion: false,
         validForm: false,
@@ -68,6 +69,7 @@ export default class NewExercise extends Component {
                         displayWaitImage: false,
                         hasNewExerciseBeenCreated: hasSucceed
                     })
+
                 })
         }
     }
@@ -262,14 +264,14 @@ export default class NewExercise extends Component {
         this.setState({ questionListRows: '' })
         rowsWithQuestions = []
 
-        const { username } = this.props.match.params
+        /*const { username } = this.props.match.params
 
         axios.get(clieserRestApiHostName + '/session?username=' + username)
             .then(response => {
                 if (response.data['loggedin']) {
                     this.setState({ isLoggedIn: true })
                 }
-            })
+            })*/
     }
 
     componentDidUpdate() {
@@ -319,7 +321,7 @@ export default class NewExercise extends Component {
     }
 
     render() {
-        if (!this.state.isLoggedIn) {
+        /*if (!this.state.isLoggedIn) {
             const { username } = this.props.match.params
 
             axios.get(clieserRestApiHostName + '/session?username=' + username)
@@ -328,7 +330,7 @@ export default class NewExercise extends Component {
                         this.props.history.push("/cms")
                     }
                 })
-        }
+        }*/
 
         return (
             <div>

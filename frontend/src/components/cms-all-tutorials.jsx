@@ -12,6 +12,7 @@ var rowsWithLessons = []
 var clieserRestApiHostName = 'https://clieser-restapi.herokuapp.com'
 
 export default class ListTutorials extends Component {
+
     state = {
         hasAddedNewLesson: false,
         validForm: false,
@@ -73,6 +74,7 @@ export default class ListTutorials extends Component {
                                 lessonList: response.data
                             })
                         })
+
                 })
 
         }
@@ -98,7 +100,6 @@ export default class ListTutorials extends Component {
 
         axios.delete(clieserRestApiHostName + '/tutorial?tutorialid=' + this.state.selectedTutorialID)
             .then(response => {
-
                 this.setState({
                     hasAddedNewLesson: false,
                     validForm: false,
@@ -122,6 +123,7 @@ export default class ListTutorials extends Component {
                     .then(response => {
                         this.setState({ tutorialList: response.data });
                     })
+
             })
     }
 
@@ -188,7 +190,6 @@ export default class ListTutorials extends Component {
     getTutorialByID = (id) => {
         axios.get(clieserRestApiHostName + '/tutorial?tutorialid=' + id)
             .then(response => {
-
                 this.setState({
                     selectedTutorialID: id,
                     selectedTutorialTitle: response.data['title'],
@@ -203,6 +204,7 @@ export default class ListTutorials extends Component {
                             lessonList: response.data
                         })
                     })
+
             })
     }
 
@@ -339,6 +341,7 @@ export default class ListTutorials extends Component {
                             displayWarningPasswordEmpty: false
                         })
                     }
+
                 })
         }
     }
@@ -444,17 +447,18 @@ export default class ListTutorials extends Component {
             .then(response => {
                 this.setState({ tutorialList: response.data })
 
-                axios.get(clieserRestApiHostName + '/user?username=' + username + "&password=")
+                /*axios.get(clieserRestApiHostName + '/user?username=' + username + "&password=")
                     .then(response => {
                         if (response.data['succeed'])
                             this.setState({ displayWarningPasswordEmpty: true, isLoggedIn: true })
-                    })
+                    })*/
+
 
             })
     }
 
     render() {
-        if (!this.state.isLoggedIn) {
+        /*if (!this.state.isLoggedIn) {
             const { username } = this.props.match.params
 
             axios.get(clieserRestApiHostName + '/session?username=' + username)
@@ -462,7 +466,7 @@ export default class ListTutorials extends Component {
                     if (!response.data['loggedin'])
                         this.props.history.push("/cms")
                 })
-        }
+        }*/
         return (
             <div>
                 <div className="row">

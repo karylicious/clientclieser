@@ -11,6 +11,7 @@ var rowsWithLessons = []
 var clieserRestApiHostName = 'https://clieser-restapi.herokuapp.com'
 
 export default class NewTutorial extends Component {
+
     state = {
         hasAddedNewLesson: false,
         validForm: false,
@@ -60,6 +61,7 @@ export default class NewTutorial extends Component {
                         displayWaitImage: false,
                         hasNewTutorialBeenCreated: hasSucceed
                     })
+
                 })
         }
     }
@@ -201,14 +203,14 @@ export default class NewTutorial extends Component {
         this.setState({ lessonListRows: '' })
         rowsWithLessons = []
 
-        const { username } = this.props.match.params
+        /*const { username } = this.props.match.params
 
         axios.get(clieserRestApiHostName + '/session?username=' + username)
             .then(response => {
                 if (response.data['loggedin']) {
                     this.setState({ isLoggedIn: true })
                 }
-            })
+            })*/
     }
 
     componentDidUpdate() {
@@ -242,7 +244,7 @@ export default class NewTutorial extends Component {
     }
 
     render() {
-        if (!this.state.isLoggedIn) {
+        /*if (!this.state.isLoggedIn) {
             const { username } = this.props.match.params
 
             axios.get(clieserRestApiHostName + '/session?username=' + username)
@@ -251,7 +253,7 @@ export default class NewTutorial extends Component {
                         this.props.history.push("/cms")
                     }
                 })
-        }
+        }*/
 
         return (
             <div>

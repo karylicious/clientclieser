@@ -42,7 +42,7 @@ export default class NewExerciseForm extends Component {
                 <div className="row">
                     <div className="col">
                         <label>Expected name of the class with the main method and its package of a Client <span className="systemwarning"> (E.g com.example.MyMainClass)</span></label>
-                        <input className="form-control myinputtext" id="expectedClientEntryPoint" type="text" defaultValue={this.props.expectedClientEntryPoint} />
+                        <input className="form-control myinputtext" id="expectedClientEntryPoint" type="text" defaultValue={this.props.expectedcliententrypoint} />
                     </div>
                 </div>
                 <div className="row bottomspace">

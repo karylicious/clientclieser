@@ -57,7 +57,7 @@ export default class CMS extends Component {
             document.getElementById('modal-root').classList.add("modal")
             document.getElementById('modal-root').style.display = "none"
         }
-        axios.put(clieserRestApiHostName + '/session?username=admin&loggedin=false')
+        //axios.put(clieserRestApiHostName + '/session?username=admin&loggedin=false')
     }
 
     render() {

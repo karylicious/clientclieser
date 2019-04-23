@@ -24,9 +24,10 @@ export default class Collapse extends Component {
         var listOfObjs = this.props.exerciseList
         var clientExerciseTypeCounter = 0
         var serverExerciseTypeCounter = 0
-
+        console.log(listOfObjs.length)
         for (var i = 0; i < listOfObjs.length; i++) {
             var exercise = listOfObjs[i]
+
             if (exercise.exercisetype === "client") {
                 rowsWithItemsClient.push(
                     <CollapseItem
@@ -37,7 +38,7 @@ export default class Collapse extends Component {
                     />
                 )
             }
-            else if (exercise.exerciseType === "clientserver") {
+            else if (exercise.exercisetype === "clientserver") {
                 rowsWithItemsClientServer.push(
                     <CollapseItem
                         key={rowsWithItemsClientServer.length}

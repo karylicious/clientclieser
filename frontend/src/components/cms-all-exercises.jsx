@@ -12,6 +12,7 @@ var rowsWithQuestions = []
 var clieserRestApiHostName = 'https://clieser-restapi.herokuapp.com'
 
 export default class ListExercises extends Component {
+
     state = {
         hasAddedNewQuestion: false,
         validForm: false,
@@ -92,6 +93,7 @@ export default class ListExercises extends Component {
                                 questionList: response.data
                             })
                         })
+
                 })
         }
     }
@@ -175,6 +177,7 @@ export default class ListExercises extends Component {
                     .then(response => {
                         this.setState({ exerciseList: response.data });
                     })
+
             })
     }
 
@@ -261,7 +264,6 @@ export default class ListExercises extends Component {
 
         axios.get(clieserRestApiHostName + '/exercise?exerciseid=' + id)
             .then(response => {
-
                 this.setState({
                     selectedExerciseID: id,
                     selectedExerciseFile: response.data['uploadedfile'],
@@ -281,6 +283,7 @@ export default class ListExercises extends Component {
                             questionList: response.data
                         })
                     })
+
             })
     }
 
@@ -441,6 +444,7 @@ export default class ListExercises extends Component {
                         })
                     }
 
+
                 })
         }
     }
@@ -548,16 +552,17 @@ export default class ListExercises extends Component {
                 this.setState({ exerciseList: response.data })
 
                 // Verify whether the admin has the password empty
-                axios.get(clieserRestApiHostName + '/user?username=' + username + "&password=")
+                /*axios.get(clieserRestApiHostName + '/user?username=' + username + "&password=")
                     .then(response => {
                         if (response.data['succeed'])
                             this.setState({ displayWarningPasswordEmpty: true, isLoggedIn: true })
-                    })
+                    })*/
+
             })
     }
 
     render() {
-        if (!this.state.isLoggedIn) {
+        /*if (!this.state.isLoggedIn) {
             const { username } = this.props.match.params
 
             axios.get(clieserRestApiHostName + '/session?username=' + username)
@@ -565,7 +570,7 @@ export default class ListExercises extends Component {
                     if (!response.data['loggedin'])
                         this.props.history.push("/cms")
                 })
-        }
+        }*/
         return (
             <div>
                 <div className="row">
