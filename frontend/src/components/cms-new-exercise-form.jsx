@@ -5,7 +5,7 @@ export default class NewExerciseForm extends Component {
     renderFileUpload = () => {
         var headings
         if (this.props.selectedComponent === "client")
-            headings = 'Upload a complete working Web Service as .zip file'
+            headings = 'Upload a complete working Java SOAP Web Service NetBeans project as .zip file'
 
         else if (this.props.selectedComponent === "both")
             headings = 'Upload a dummy Client and a dummy Server as .zip file'
@@ -41,7 +41,7 @@ export default class NewExerciseForm extends Component {
                 {this.renderFileUpload()}
                 <div className="row">
                     <div className="col">
-                        <label>Expected name of the class with the main method and its package of a Client <span className="systemwarning"> (E.g com.example.MyMainClass)</span></label>
+                        <label>Expected names of the class with the main method and its package of a Client in this format <strong>com.example.MyMainClass</strong></label>
                         <input className="form-control myinputtext" id="expectedClientEntryPoint" type="text" defaultValue={this.props.expectedcliententrypoint} />
                     </div>
                 </div>
