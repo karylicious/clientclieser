@@ -41,7 +41,7 @@ export default class EditExerciseForm extends Component {
                 {this.renderFileUpload()}
                 <div className="row">
                     <div className="col">
-                        <label>Expected name of the class with the main method and its package of a Client <span className="systemwarning"> (E.g com.example.MyMainClass)</span></label>
+                        <label>Expected names of the class with the main method and its package of a Client in this format <strong>com.example.MyMainClass</strong></label>
                         <input className="form-control myinputtext" id="expectedClientEntryPoint" type="text" defaultValue={this.props.selectedExerciseExpectedClientEntryPoint} />
                     </div>
                 </div>
