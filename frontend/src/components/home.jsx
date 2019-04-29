@@ -4,7 +4,7 @@ import TopContainer from './topcontainer'
 
 export default class Home extends Component {
     redirectToTutorials = () => {
-        this.props.history.push("/tutorials");
+        this.props.history.push("/theory");
     }
 
     render() {

@@ -63,7 +63,7 @@ export default class FileUpload extends Component {
 
         if (this.state.validFile) {
 
-            const formData = new FormData();
+            const formData = new FormData()
             formData.append('file', this.state.selectedFile, this.state.selectedFile.name)
 
             axios.post(clieserRestApiHostName + '/zipfile', formData)

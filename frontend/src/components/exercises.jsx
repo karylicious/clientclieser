@@ -115,7 +115,7 @@ export default class Exercises extends Component {
                     details =
                         <ul id="answer-rules">
                             <li>This test will assume that both Client and Web Service components will try to communicate to each other.</li>
-                            <li>Both Client and Server have to be in separate project.</li>
+                            <li>Both Client and Server have to be separate projects.</li>
                             <li>Each project has to be a NetBeans IDE project.</li>
                             <li>Your Server component must be a SOAP web service.</li>
                             <li>Your Client and Web Service components must be written in Java.</li>
