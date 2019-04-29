@@ -9,7 +9,7 @@ export default class Client extends Component {
                 </div>
                 <div className="row">
                     <div className="col-sm-7">
-                        <p>Class with the main method and its package <span className="systemwarning"> (E.g com.example.MyMainClass)</span></p>
+                        <p>Names of the class with the main method and its package in this format <strong>com.example.MyMainClass</strong></p>
                         <input className="form-control myinputtext" type="text" name="clientEntryPoint" />
                     </div>
                 </div>
