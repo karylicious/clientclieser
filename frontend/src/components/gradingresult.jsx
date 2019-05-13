@@ -44,13 +44,13 @@ export default class GradingResult extends Component {
                             <p>{this.props.projectOwner}</p>
                             <p className="textright">Final Grade</p>
                             <p>
-                                <span className="vDetails" onClick={this.togglePanel} id={'details-' + this.props.resId} >View Details</span>
+                                <span className="vDetails" onClick={this.togglePanel} id={'details-' + this.props.resultID} >View Details</span>
                                 <span className="imageright">{this.props.finalGrade}</span>
                             </p>
                         </div>
                     </div>
                     <div className="row">
-                        <div className="container details-content" id={'panel-' + this.props.resId}>
+                        <div className="container details-content" id={'panel-' + this.props.resultID}>
                             {rowWithDetails}
                         </div>
                     </div>
