@@ -24,7 +24,7 @@ export default class Collapse extends Component {
         var listOfObjs = this.props.exerciseList
         var clientExerciseTypeCounter = 0
         var serverExerciseTypeCounter = 0
-        console.log(listOfObjs.length)
+
         for (var i = 0; i < listOfObjs.length; i++) {
             var exercise = listOfObjs[i]
 
