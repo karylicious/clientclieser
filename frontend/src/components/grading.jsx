@@ -13,6 +13,8 @@ export default class Grading extends Component {
     setURLparameters = () => {
         try {
             var selectedFile = this.props.uploadedFile.split(".zip")
+            console.log(this.props)
+            console.log(this.props.cliententrypoint)
             if (this.props.selectedComponent === "client")
                 return '/gradeclient?clientEntryPoint=' + this.props.cliententrypoint + '&dir=' + this.props.dir + '&selectedFileName=' + selectedFile[0] + "&exerciseid=" + this.props.selectedExerciseID
 
