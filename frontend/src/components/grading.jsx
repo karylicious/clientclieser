@@ -14,10 +14,10 @@ export default class Grading extends Component {
         try {
             var selectedFile = this.props.uploadedFile.split(".zip")
             if (this.props.selectedComponent === "client")
-                return '/gradeclient?clientEntryPoint=' + this.props.clientEntryPoint + '&dir=' + this.props.dir + '&selectedFileName=' + selectedFile[0] + "&exerciseid=" + this.props.selectedExerciseID
+                return '/gradeclient?clientEntryPoint=' + this.props.cliententrypoint + '&dir=' + this.props.dir + '&selectedFileName=' + selectedFile[0] + "&exerciseid=" + this.props.selectedExerciseID
 
             else if (this.props.selectedComponent === "clientserver")
-                return '/gradeclientserver?clientEntryPoint=' + this.props.clientEntryPoint + '&dir=' + this.props.dir + '&selectedFileName=' + selectedFile[0] + "&exerciseid=" + this.props.selectedExerciseID
+                return '/gradeclientserver?clientEntryPoint=' + this.props.cliententrypoint + '&dir=' + this.props.dir + '&selectedFileName=' + selectedFile[0] + "&exerciseid=" + this.props.selectedExerciseID
         }
         catch (error) {
             return null

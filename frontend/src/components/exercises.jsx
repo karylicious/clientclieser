@@ -46,7 +46,7 @@ export default class Exercises extends Component {
                 else {
                     var MIME_TYPE = "application/x-zip-compressed"
 
-                    // A Blob object represents a file-like object of immutable, raw data
+                    // A Blob object represents a file-like object of immutable raw data
                     var blob = new Blob([response.data], { type: MIME_TYPE })
 
                     var link = document.createElement('a')
