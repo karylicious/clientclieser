@@ -60,20 +60,20 @@ export default class Grading extends Component {
 
             var prevOwner = ""
             for (var i = 0; i < this.state.gradingResultList.length; i++) {
-                if (prevOwner === "") {
-                    prevOwner = this.state.gradingResultList[i]['projectOwner']
-                    rowsWithGradingResults.push(
-                        <GradingResult
-                            key={i}
-                            resultID={i}
-                            projectOwner={this.state.gradingResultList[i]['projectOwner']}
-                            resultsList={this.state.gradingResultList}
-                            finalGrade={this.state.finalGrade}
-                        />
-                    )
-                }
-                else if (prevOwner !== this.state.gradingResultList[i]['projectOwner'])
-                    prevOwner = ""
+                //if (prevOwner === "") {
+                //prevOwner = this.state.gradingResultList[i]['projectOwner']
+                rowsWithGradingResults.push(
+                    <GradingResult
+                        key={i}
+                        resultID={i}
+                        projectOwner={this.state.gradingResultList[i]['projectOwner']}
+                        resultsList={this.state.gradingResultList}
+                        finalGrade={this.state.finalGrade}
+                    />
+                )
+                //}
+                //else if (prevOwner !== this.state.gradingResultList[i]['projectOwner'])
+                //prevOwner = ""
             }
 
             rowWithHeading.push(
